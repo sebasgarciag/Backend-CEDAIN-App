@@ -21,39 +21,39 @@ module.exports = (sequelize, Sequelize) => {
         },
         fecha: {
             type: Sequelize.DATE,
-            allowNull: false
+            allowNull: true
         },
         folio: {
             type: Sequelize.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         serie: {
             type: Sequelize.STRING(5),
-            allowNull: false
+            allowNull: true
         },
         observaciones: {
             type: Sequelize.STRING(255),
-            allowNull: false
+            allowNull: true
         },
         id_usuario: {
             type: Sequelize.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         id_almacen: {
             type: Sequelize.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         emisor: {
             type: Sequelize.STRING(40),
-            allowNull: false
+            allowNull: true
         },
         id_comunidad: {
             type: Sequelize.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         id_evento: {
             type: Sequelize.INTEGER,
-            allowNull: false
+            allowNull: true
         }
     });
   

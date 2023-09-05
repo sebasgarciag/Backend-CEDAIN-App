@@ -82,6 +82,3 @@ exports.updateEntrada = async function(idEntrada, entrada) { //This one will onl
 
 
 
-// You're correct. The current implementation of updateEntrada expects all fields to be provided in the entrada object. If you only send a subset of fields, the other fields will be set to undefined, which is not what you want.
-// To handle partial updates, you can simply pass the entrada object directly to the update method. This way, only the fields provided in entrada will be updated, and fields not provided will remain unchanged.
-// Here's how you can modify the updateEntrada function to handle partial updates: SEE updateEntrada
