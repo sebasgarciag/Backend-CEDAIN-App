@@ -1,18 +1,18 @@
 module.exports = (sequelize, Sequelize) => {
-    const Comunidad = sequelize.define('Comunidad', {
-        id_comunidad: { //This information is taken from how the table is structured on the DB. (read the query)
+    const Evento = sequelize.define('Evento', {
+        id_evento: { //This information is taken from how the table is structured on the DB. (read the query)
             type: Sequelize.INTEGER.UNSIGNED,
             autoIncrement: true,
             primaryKey: true
         },
-        nombre: {
-            type: Sequelize.STRING(30),
+        descripcion: {
+            type: Sequelize.STRING(40),
             allowNull: true
         }
     }, {
-        tableName: 'comunidades',
+        tableName: 'eventos',
         timestamps: false // TRUE if there is createdAt and updatedAt on table.
     });
 
-    return Comunidad;
+    return Evento;
 };

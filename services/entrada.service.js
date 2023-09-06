@@ -25,11 +25,17 @@ exports.crear = async function(entrada) {   //CREATES NEW ENTRADA. RECEIVES ALL 
     //first, check if received values exist on the db
     //check if 'id_comunidad' existe
     comCheck = await db.Comunidad.findByPk(entrada.id_comunidad);
+    
     if (!comCheck) {
-        throw new Error("El id_comunidad #" + entrada.id_comunidad + " NO EXISTE en la BD <=======!!");
+        throw new Error("El id_comunidad #" + entrada.id_comunidad + "(or 0) NO EXISTE en la BD <=======!!");
     }
 
-    
+    //check if 'id_evento' exists
+    //no hay una columna que se llame 'descripcion'
+    eveCheck = await db.Evento.findByPk(entrada.id_evento);
+    if (!eveCheck) {
+        throw new Error("El id_evento #" + entrada.id_evento + " (or 0) NO EXISTE en la BD <=======!!");
+    }
     
     
     try {
