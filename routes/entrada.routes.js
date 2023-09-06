@@ -14,6 +14,7 @@ router.post("/entradas", [ //CREATE
     check("emisor").isLength({ max: 40 }).withMessage("Emisor no debe exceder 40 caracteres y es obligatorio"),
     check("id_comunidad").isNumeric().withMessage("ID de comunidad debe ser numérico y es obligatorio"),
     check("id_evento").isNumeric().withMessage("ID de evento debe ser numérico y es obligatorio")
+    
 ], entradaController.postCrear);
 
 // GET EM ALL
