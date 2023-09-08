@@ -36,6 +36,12 @@ exports.crear = async function(entrada) {   //CREATES NEW ENTRADA. RECEIVES ALL 
     if (!eveCheck) {
         throw new Error("El id_evento #" + entrada.id_evento + " (or 0) NO EXISTE en la BD <=======!!");
     }
+
+    //check if 'id_usuario' exists
+    usuCheck = await db.Usuario.findByPk(entrada.id_usuario);
+    if (!usuCheck) {
+        throw new Error("El id_usuario #" + entrada.id_usuario + " (or 0) NO EXISTE en la BD <=======!!");
+    }
     
     
     try {
