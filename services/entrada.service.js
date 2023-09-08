@@ -43,6 +43,11 @@ exports.crear = async function(entrada) {   //CREATES NEW ENTRADA. RECEIVES ALL 
         throw new Error("El id_usuario #" + entrada.id_usuario + " (or 0) NO EXISTE en la BD <=======!!");
     }
     
+    //check if 'id_almacen' exists
+    almCheck = await db.Almacen.findByPk(entrada.id_almacen);
+    if (!almCheck) {
+        throw new Error("El id_almacen #" + entrada.id_almacen + " (or 0) NO EXISTE en la BD <=======!!");
+    }
     
     try {
         nuevaEntrada = await db.Entrada.create(entrada);
