@@ -25,9 +25,18 @@ router.get("/entradas/:id", [
     param("id").isNumeric().withMessage("ID debe ser numerico")
 ], entradaController.getBuscarPorId);
 
+
+//GET ALL BY DATE
+router.get("/entradas/porFecha/:date", [
+    param("date").matches(/^\d{4}-\d{2}-\d{2}$/).withMessage("Formato de fecha: YYYY-MM-DD"),
+
+], entradaController.getEntradasPorFecha);
+
+
+    //(((((AS OF SEPTEMBER 19 2023, IT HAS BEEN DISCUSSED THAT THIS FUNCTION MIGHT BE DELETED))))))
 //UPDATE EXISTING
 router.put("/entradas/:id", [
-    // Validate the ID in the URL
+    //Validate the ID in the URL
     //THIS METHOD ASSUMES THE REQUIRED INFO TO UPDATE AN ENTRY IS THE ID ONLY.
     //YOU CAN ALSO UPDATE JUST ONE OF THE THINGS IN SAID ENTRY, INSTEAD OF REQUIERING EVERY SINGLE COLUMN ON THE DB TABLE.
     param("id").isNumeric().withMessage("Id debe ser numerico")

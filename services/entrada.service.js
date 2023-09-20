@@ -1,3 +1,5 @@
+const { Op } = require('sequelize');
+const dbConfig = require('../config/db.config');
 const db = require('../models');
 
 exports.buscarTodas = async function() { // RETURNS ALL
@@ -5,7 +7,7 @@ exports.buscarTodas = async function() { // RETURNS ALL
     return entradas;
 }
 
-exports.buscarPorId = async function(idEntrada) { //RETURNS INFO FROM THE ID GIVEN ONLY
+exports.buscarPorId = async function(idEntrada) { //RETURNS ENTRY INFO FROM THE ID GIVEN ONLY
     let entrada = undefined;
 
     entradas = await db.Entrada.findAll({ //entre todas, busca la que tenga idEntrada igual
@@ -20,6 +22,35 @@ exports.buscarPorId = async function(idEntrada) { //RETURNS INFO FROM THE ID GIV
 
     return entrada;
 }
+
+exports.entradasPorFecha = async function(date) { //RETURNS ALL ENTRIES ON GIVEN DATE (YYYY-MM-DD)
+
+    let desde = new Date(date);
+    let hasta = new Date(date);
+    hasta.setDate(hasta.getDate() + 1);
+
+    console.log("============================================");
+    console.log("Desde:", desde, "Hasta:", hasta);
+    console.log("============================================");
+
+    let entradas = await db.Entrada.findAll({
+        where: {
+            createdAt: {
+                [Op.gte]: desde, //.gte equals to  >= x
+                [Op.lt]: hasta     //.lt equals to < x
+            }
+
+        }
+    });
+
+    return entradas;
+}
+
+
+
+
+
+
 
 exports.crear = async function(entrada) {   //CREATES NEW ENTRADA. RECEIVES ALL THE REQUIRED DATA INSIDE THE OBJECT COUGHT BY THE FUNCTION. (entrada)
         
