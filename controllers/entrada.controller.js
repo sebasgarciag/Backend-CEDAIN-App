@@ -24,6 +24,25 @@ exports.postCrear = async function (req, res) {
     }
 };
 
+exports.postCrearProductos = async function (req, res){
+    let result = validationResult(req);
+    
+    //Do I need this ????
+    if (result.errors.length > 0) {
+        return res.status(400).json({ success: false, error: result }); //if routes.js sends error, controller catches and sends error #.
+    } 
+
+    try {
+        let entradaDetalle = req.body;     //todo lo que viene en el json payload, esta aqui.
+        let entradaDetalleCreada = await entradaService.crearEntradaDetalle(entradaDetalle);
+        return res.json(entradaDetalleCreada).status(201);
+    }
+    catch (error) { //En caso de error relacionado a la base de datos, enter here.
+        console.error("Error al intentar crear entrada: ", error);
+        return res.status(500).json({ success: false, message: "Error durante proceso de crear entrada_detalle" });
+    }
+}
+
 /**
  * Procesa el request GET para obtener todas las entradas
  * @param {Request} req - Request
