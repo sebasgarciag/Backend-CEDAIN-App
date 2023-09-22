@@ -1,3 +1,5 @@
+const { Op } = require('sequelize');
+const dbConfig = require('../config/db.config');
 const db = require('../models');
 
 exports.buscarTodas = async function() { // RETURNS ALL
@@ -5,7 +7,7 @@ exports.buscarTodas = async function() { // RETURNS ALL
     return entradas;
 }
 
-exports.buscarPorId = async function(idEntrada) { //RETURNS INFO FROM THE ID GIVEN ONLY
+exports.buscarPorId = async function(idEntrada) { //RETURNS ENTRY INFO FROM THE ID GIVEN ONLY
     let entrada = undefined;
 
     entradas = await db.Entrada.findAll({ //entre todas, busca la que tenga idEntrada igual
@@ -21,23 +23,70 @@ exports.buscarPorId = async function(idEntrada) { //RETURNS INFO FROM THE ID GIV
     return entrada;
 }
 
+exports.entradasPorFecha = async function(date) { //RETURNS ALL ENTRIES ON GIVEN DATE (YYYY-MM-DD)
+
+    let desde = new Date(date);
+    let hasta = new Date(date);
+    hasta.setDate(hasta.getDate() + 1);
+
+    console.log("============================================");
+    console.log("Desde:", desde, "Hasta:", hasta);
+    console.log("============================================");
+
+    let entradas = await db.Entrada.findAll({
+        where: {
+            createdAt: {
+                [Op.gte]: desde, //.gte equals to  >= x
+                [Op.lt]: hasta     //.lt equals to < x
+            }
+
+        }
+    });
+
+    return entradas;
+}
+
+
+
+
+
+
+
 exports.crear = async function(entrada) {   //CREATES NEW ENTRADA. RECEIVES ALL THE REQUIRED DATA INSIDE THE OBJECT COUGHT BY THE FUNCTION. (entrada)
-    //first, check if received values exist on the db
-    //check if 'id_comunidad' existe
-    comCheck = await db.Comunidad.findByPk(entrada.id_comunidad);
+        
+    // A) check if received values exist on the db
+
+        //check if 'id_comunidad' existe
+    const comCheck = await db.Comunidad.findByPk(entrada.id_comunidad);
     
     if (!comCheck) {
-        throw new Error("El id_comunidad #" + entrada.id_comunidad + "(or 0) NO EXISTE en la BD <=======!!");
+        throw new Error("El id_comunidad #" + entrada.id_comunidad + "(or 0) NO EXISTE en la BD!");
     }
 
-    //check if 'id_evento' exists
-    //no hay una columna que se llame 'descripcion'
-    eveCheck = await db.Evento.findByPk(entrada.id_evento);
+        //check if 'id_evento' exists
+    const eveCheck = await db.Evento.findByPk(entrada.id_evento);
     if (!eveCheck) {
-        throw new Error("El id_evento #" + entrada.id_evento + " (or 0) NO EXISTE en la BD <=======!!");
+        throw new Error("El id_evento #" + entrada.id_evento + " (or 0) NO EXISTE en la BD!");
+    }
+
+        //check if 'id_usuario' exists
+    const usuCheck = await db.Usuario.findByPk(entrada.id_usuario);
+    if (!usuCheck) {
+        throw new Error("El id_usuario #" + entrada.id_usuario + " (or 0) NO EXISTE en la BD!");
     }
     
+        //check if 'id_almacen' exists
+    const almCheck = await db.Almacen.findByPk(entrada.id_almacen);
+    if (!almCheck) {
+        throw new Error("El id_almacen #" + entrada.id_almacen + " (or 0) NO EXISTE en la BD!");
+    }
     
+
+    //B) get the last folio value from database, increase it by 1; this is the new folio value for the new entry.
+    entrada.folio = await checkFolio(db);
+
+
+        //Checks for errors. if not, create entrada.
     try {
         nuevaEntrada = await db.Entrada.create(entrada);
         console.log("Nueva entrada agregada " + nuevaEntrada.id_entrada);
@@ -81,26 +130,20 @@ exports.updateEntrada = async function(idEntrada, entrada) {
 }
 
 
-// exports.updateEntrada = async function(idEntrada, entrada) { //This one will only update parameters given.
-//     let entradaActualizada = false;
+    //Helper functions.
 
-//     const existingEntrada = await db.Entrada.findByPk(idEntrada)
+//Since function 'crear' (above) does a bunch of things before actually posting the new entrada,
+//helper functions are here to simplify understanding of code procedure. 
 
-//     if (existingEntrada !== null) {
-//         await db.Entrada.update(
-//             entrada,  // Pass the entrada object directly
-//             {
-//                 where: {
-//                     id_entrada: idEntrada
-//                 }
-//             }
-//         );
+async function checkFolio(db) {
 
-//         entradaActualizada = true; //success
-//     }
+        //gets last Folio from entradas tabble. To do so, it must be sorted in descending order.
+        //order: [[column 'folio' in 'descending' order]]
+    const lastFolio = await db.Entrada.findOne({
+        order: [['folio', 'DESC']]
+    });
 
-//     return entradaActualizada;
-// };
-
-
-
+        // If there's a last entry, increment its folio value by 1, otherwise start from 1
+    return lastFolio ? lastFolio.folio + 1 : 1;
+    
+}

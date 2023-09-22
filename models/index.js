@@ -22,4 +22,6 @@ db.sequelize = sequelize;
 db.Entrada = require("./entrada.model.js")(sequelize, Sequelize);
 db.Comunidad = require("./comunidad.model.js")(sequelize, Sequelize);
 db.Evento = require("./evento.model.js")(sequelize, Sequelize);
+db.Usuario = require("./evento.model.js")(sequelize, Sequelize);
+db.Almacen = require("./evento.model.js")(sequelize, Sequelize);
 module.exports = db;

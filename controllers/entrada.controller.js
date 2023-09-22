@@ -51,6 +51,29 @@ exports.getBuscarPorId = async function (req, res) {
     }
 };
 
+
+
+exports.getEntradasPorFecha = async function (req, res) {
+    const result = validationResult(req);
+
+    if (result.errors.length > 0) {
+        res.status(400).json({ success: false, error: result });
+    } else {
+        let date = req.params.date;
+        let entradas = await entradaService.entradasPorFecha(date);
+
+        if (entradas !== undefined) {
+            res.json(entradas).status(200);
+        } else {
+            res.status(204).json({ success: false });
+        }        
+    }
+};
+
+
+
+
+
 //UPDATE EXISTING
 exports.updateEntrada = async function (req, res) {
     let result = validationResult(req);
