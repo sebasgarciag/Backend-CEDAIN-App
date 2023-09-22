@@ -47,6 +47,11 @@ exports.entradasPorFecha = async function(date) { //RETURNS ALL ENTRIES ON GIVEN
 }
 
 
+
+
+
+
+
 exports.crear = async function(entrada) {   //CREATES NEW ENTRADA. RECEIVES ALL THE REQUIRED DATA INSIDE THE OBJECT COUGHT BY THE FUNCTION. (entrada)
         
     // A) check if received values exist on the db
@@ -92,15 +97,6 @@ exports.crear = async function(entrada) {   //CREATES NEW ENTRADA. RECEIVES ALL 
         throw new Error("Error en entrada.service.js; CHECK YOUR TERMINAL!\nProbablemente necesites informacion de una tabla que esta vacia.");
     }
 }
-
-exports.crearEntradaDetalle = async function(entradaDetalle){
-
-
-    
-}
-
-
-
 
 exports.updateEntrada = async function(idEntrada, entrada) {
     let entradaActualizada = false;
@@ -149,14 +145,5 @@ async function checkFolio(db) {
 
         // If there's a last entry, increment its folio value by 1, otherwise start from 1
     return lastFolio ? lastFolio.folio + 1 : 1;
-
-    //above is the same as:
-    // let result;
-    // if (lastFolio) {
-    //     result = lastFolio.folio + 1;
-    // } else {
-    //     result = 1;
-    // }
-
     
 }

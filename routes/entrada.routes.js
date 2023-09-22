@@ -17,16 +17,6 @@ router.post("/entradas", [ //CREATE
     
 ], entradaController.postCrear);
 
-//POST PRODUCTOS INTO entradas_detalles
-router.post("/entradas-productos", [
-    check("id_entrada_detalle").isNumeric().withMessage("id entrada detalle debe ser numerico"),
-    check("id_entrada").isNumeric().withMessage("id entrada debe ser numerico"),
-    check("id_producto").isNumeric().withMessage("id producto debe ser numerico"),
-    check("cantidad").isNumeric().withMessage("cantidad debe ser numerico"),
-    check("precio_unitario").isNumeric().withMessage("precio_unitario debe ser numerico"),
-
-], entradaController.postCrearProductos);
-
 // GET EM ALL
 router.get("/entradas", entradaController.getBuscarTodas);
 
