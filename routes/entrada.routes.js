@@ -3,8 +3,8 @@ const { check, param } = require('express-validator');
 
 let entradaController = require("../controllers/entrada.controller");
 
-
-router.post("/entradas", [ //CREATE
+//CREATE entrada
+router.post("/entradas", [ 
 
     check("folio").isNumeric().withMessage("Folio debe ser numérico y es obligatorio"),
     check("serie").isLength({ max: 5 }).withMessage("Serie no debe exceder 5 caracteres y es obligatorio"),
@@ -27,25 +27,19 @@ router.post("/entradas-productos", [
 
 ], entradaController.postCrearProductos);
 
-// GET EM ALL
-router.get("/entradas", entradaController.getBuscarTodas);
+// GET All the entradas OR trae entradas por fecha.
+router.get("", entradaController.getBuscarTodas);
 
-//GET SOM
-router.get("/entradas/:id", [ 
+//GET entradas por id
+router.get("/:id", [ 
     param("id").isNumeric().withMessage("ID debe ser numerico")
 ], entradaController.getBuscarPorId);
 
 
-//GET ALL BY DATE
-router.get("/entradas/porFecha/:date", [
-    param("date").matches(/^\d{4}-\d{2}-\d{2}$/).withMessage("Formato de fecha: YYYY-MM-DD"),
-
-], entradaController.getEntradasPorFecha);
-
 
     //(((((AS OF SEPTEMBER 19 2023, IT HAS BEEN DISCUSSED THAT THIS FUNCTION MIGHT BE DELETED))))))
 //UPDATE EXISTING
-router.put("/entradas/:id", [
+router.put("/:id", [
     //Validate the ID in the URL
     //THIS METHOD ASSUMES THE REQUIRED INFO TO UPDATE AN ENTRY IS THE ID ONLY.
     //YOU CAN ALSO UPDATE JUST ONE OF THE THINGS IN SAID ENTRY, INSTEAD OF REQUIERING EVERY SINGLE COLUMN ON THE DB TABLE.

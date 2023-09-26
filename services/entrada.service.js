@@ -88,25 +88,29 @@ exports.crear = async function(entrada) {   //CREATES NEW ENTRADA. RECEIVES ALL 
         return nuevaEntrada;
     }
     catch (error) {
-        console.error("Error en entrada.service.js: ", error); // <------------ ??? no sale
+        console.error("Error en entrada.service.js: ", error);
         throw new Error("Error en entrada.service.js; CHECK YOUR TERMINAL!\nProbablemente necesites informacion de una tabla que esta vacia.");
     }
 }
 
+
 exports.crearEntradaDetalle = async function(entradaDetalle){
-
-
+    //UNFINISHED END POINT
+    //DISREGARD FOR NOW
     
+    //foreach(entradaDetalle)
+    //validar ue id_prodcuto existe
+    const comCheck = await db.Comunidad.findByPk(entrada.id_comunidad); //este checa si existe la comunidad
+    //tengo que hacer qque cheque el producto.
+
+
 }
-
-
 
 
 exports.updateEntrada = async function(idEntrada, entrada) {
     let entradaActualizada = false;
 
     entradaActualizada = await db.Entrada.findByPk(idEntrada)
-    console.log("IM HERE UPDATE ENTRADA.SERVICE")
     if (entradaActualizada !== null) {
         const result = await db.Entrada.update(
             {
