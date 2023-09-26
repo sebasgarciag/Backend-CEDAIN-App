@@ -36,7 +36,6 @@ router.get("/:id", [
 ], entradaController.getBuscarPorId);
 
 
-
     //(((((AS OF SEPTEMBER 19 2023, IT HAS BEEN DISCUSSED THAT THIS FUNCTION MIGHT BE DELETED))))))
 //UPDATE EXISTING
 router.put("/:id", [
