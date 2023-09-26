@@ -15,7 +15,7 @@ exports.postCrear = async function (req, res) {
     
     try {
         let entrada = req.body;     //todo lo que viene en el json payload
-        let entradaCreada = await entradaService.crear(entrada);
+        let entradaCreada = await entradaService.crear(entrada); 
         return res.json(entradaCreada).status(201);
     }
     catch (error) { //En caso de error relacionado a la base de datos, enter here.
@@ -24,14 +24,42 @@ exports.postCrear = async function (req, res) {
     }
 };
 
-/**
- * Procesa el request GET para obtener todas las entradas
- * @param {Request} req - Request
- * @param {Response} res - Response que contiene una lista de todas las entradas y status 200
- */
+exports.postCrearProductos = async function (req, res){
+    let result = validationResult(req);
+    
+    
+    if (result.errors.length > 0) {
+        return res.status(400).json({ success: false, error: result }); //if routes.js sends error, controller catches and sends error #.
+    } 
+
+    try {
+        let entradaDetalle = req.body;     //todo lo que viene en el json payload, esta aqui.
+        let entradaDetalleCreada = await entradaService.crearEntradaDetalle(entradaDetalle);
+        return res.json(entradaDetalleCreada).status(201);
+    }
+    catch (error) { //En caso de error relacionado a la base de datos, enter here.
+        console.error("Error al intentar crear entrada: ", error);
+        return res.status(500).json({ success: false, message: "Error durante proceso de crear entrada_detalle" });
+    }
+}
+
+
 exports.getBuscarTodas = async function (req, res) {
-    let entrada = await entradaService.buscarTodas();
-    res.json(entrada).status(200);
+    
+    //if undifined, traer todas. else traete las fechas
+    let date = req.query.date;
+
+    if (date == undefined){
+        let entrada = await entradaService.buscarTodas();
+        res.json(entrada).status(200);
+    }
+    else {
+        console.log(date);
+        //mandar traer por fecha
+        let entradaPorFecha = await entradaService.entradasPorFecha(date);
+        return res.json(entradaPorFecha).status(201);
+    }
+
 };
 
 exports.getBuscarPorId = async function (req, res) {
@@ -50,27 +78,6 @@ exports.getBuscarPorId = async function (req, res) {
         }        
     }
 };
-
-
-
-exports.getEntradasPorFecha = async function (req, res) {
-    const result = validationResult(req);
-
-    if (result.errors.length > 0) {
-        res.status(400).json({ success: false, error: result });
-    } else {
-        let date = req.params.date;
-        let entradas = await entradaService.entradasPorFecha(date);
-
-        if (entradas !== undefined) {
-            res.json(entradas).status(200);
-        } else {
-            res.status(204).json({ success: false });
-        }        
-    }
-};
-
-
 
 
 
