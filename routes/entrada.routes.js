@@ -3,8 +3,8 @@ const { check, param } = require('express-validator');
 
 let entradaController = require("../controllers/entrada.controller");
 
-
-router.post("/entradas", [ //CREATE
+//CREATE entrada
+router.post("/entradas", [ 
 
     check("folio").isNumeric().withMessage("Folio debe ser numérico y es obligatorio"),
     check("serie").isLength({ max: 5 }).withMessage("Serie no debe exceder 5 caracteres y es obligatorio"),
@@ -17,25 +17,28 @@ router.post("/entradas", [ //CREATE
     
 ], entradaController.postCrear);
 
-// GET EM ALL
-router.get("/entradas", entradaController.getBuscarTodas);
+//POST PRODUCTOS INTO entradas_detalles
+router.post("/entradas-productos", [
+    check("id_entrada_detalle").isNumeric().withMessage("id entrada detalle debe ser numerico"),
+    check("id_entrada").isNumeric().withMessage("id entrada debe ser numerico"),
+    check("id_producto").isNumeric().withMessage("id producto debe ser numerico"),
+    check("cantidad").isNumeric().withMessage("cantidad debe ser numerico"),
+    check("precio_unitario").isNumeric().withMessage("precio_unitario debe ser numerico"),
 
-//GET SOM
-router.get("/entradas/:id", [ 
+], entradaController.postCrearProductos);
+
+// GET All the entradas OR trae entradas por fecha.
+router.get("", entradaController.getBuscarTodas);
+
+//GET entradas por id
+router.get("/:id", [ 
     param("id").isNumeric().withMessage("ID debe ser numerico")
 ], entradaController.getBuscarPorId);
 
 
-//GET ALL BY DATE
-router.get("/entradas/porFecha/:date", [
-    param("date").matches(/^\d{4}-\d{2}-\d{2}$/).withMessage("Formato de fecha: YYYY-MM-DD"),
-
-], entradaController.getEntradasPorFecha);
-
-
     //(((((AS OF SEPTEMBER 19 2023, IT HAS BEEN DISCUSSED THAT THIS FUNCTION MIGHT BE DELETED))))))
 //UPDATE EXISTING
-router.put("/entradas/:id", [
+router.put("/:id", [
     //Validate the ID in the URL
     //THIS METHOD ASSUMES THE REQUIRED INFO TO UPDATE AN ENTRY IS THE ID ONLY.
     //YOU CAN ALSO UPDATE JUST ONE OF THE THINGS IN SAID ENTRY, INSTEAD OF REQUIERING EVERY SINGLE COLUMN ON THE DB TABLE.
