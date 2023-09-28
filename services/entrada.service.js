@@ -96,31 +96,18 @@ exports.crear = async function(entrada) {   //CREATES NEW ENTRADA. RECEIVES ALL 
 
 exports.crearEntradaDetalle = async function(entradaDetalle){
 
-    // A) check if received values exist on the db
-
-    //check if 'id_producto', de cada producto en entradaDetalle, existe en la tabla de 'productos.'
-
-    //const productCheck = await db.Productos.findByPk(entradaDetalle.id_producto);
-    
-    // if (!productCheck) {
-    //     throw new Error("El id_producto #" + entradaDetalle.id_producto + "(or 0) NO EXISTE en la BD!");
-    // }
-
     nuevosDetalles = await db.EntradaDetalle.bulkCreate(entradaDetalle);
     return nuevosDetalles;
 
-
-
-
-    // const prodCheck = await db.EntradaDetalle.forEach(element => {
-    //     console.log(element.id_producto);
-    // });
-    // //(entradaDetalle.id_producto);
-    // if (!prodCheck) {
-    //     throw new Error("El id_producto #" + entradaDetalle.id_producto + "(or 0) NO EXISTE en la BD!");
+    // try {
+    //     nuevaEntrada = await db.Entrada.create(entrada);
+    //     console.log("Nueva entrada agregada " + nuevaEntrada.id_entrada);
+    //     return nuevaEntrada;
     // }
-    // //foreach(entradaDetalle)
-
+    // catch (error) {
+    //     console.error("Error en entrada.service.js: ", error);
+    //     throw new Error("Error en entrada.service.js; CHECK YOUR TERMINAL!\nProbablemente necesites informacion de una tabla que esta vacia.");
+    // }
 
 
 }
