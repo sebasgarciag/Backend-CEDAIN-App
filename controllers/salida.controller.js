@@ -9,3 +9,7 @@ exports.getBuscarTodasComunidades = async function (req, res) {
     let Comunidades = await salidaService.buscarTodasComunidades();
     res.json(Comunidades).status(200);
 };
+exports.getBuscarTodosEventos = async function (req, res) {
+    let Eventos = await salidaService.buscarTodosEventos();
+    res.json(Eventos).status(200);
+};
