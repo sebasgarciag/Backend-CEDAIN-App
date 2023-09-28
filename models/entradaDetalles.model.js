@@ -14,7 +14,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: false
         },
-        id_cantidad: {
+        cantidad: {
             type: Sequelize.INTEGER,
             allowNull: false
         },

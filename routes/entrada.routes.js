@@ -35,7 +35,6 @@ router.post("/entradas-detalles", [
 
 router.get("", entradaController.getBuscarTodas);
 
-=======
 router.post("/entradas-productos", [
     check("id_entrada_detalle").isNumeric().withMessage("id entrada detalle debe ser numerico"),
     check("id_entrada").isNumeric().withMessage("id entrada debe ser numerico"),
@@ -43,7 +42,7 @@ router.post("/entradas-productos", [
     check("cantidad").isNumeric().withMessage("cantidad debe ser numerico"),
     check("precio_unitario").isNumeric().withMessage("precio_unitario debe ser numerico"),
 
-], entradaController.postCrearProductos);
+], entradaController.postCrear);
 
 // GET All the entradas OR trae entradas por fecha.
 router.get("", entradaController.getBuscarTodas);
@@ -63,6 +62,12 @@ router.put("/:id", [
     //YOU CAN ALSO UPDATE JUST ONE OF THE THINGS IN SAID ENTRY, INSTEAD OF REQUIERING EVERY SINGLE COLUMN ON THE DB TABLE.
     param("id").isNumeric().withMessage("Id debe ser numerico")
 ], entradaController.updateEntrada);
+
+
+//GET detalles de entrada
+router.get("/entradasDetalle/:idEntrada", [ 
+    param("idEntrada").isNumeric().withMessage("ID debe ser numerico")
+], entradaController.getDetallesPorId);
 
 
 module.exports = router;
