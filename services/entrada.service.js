@@ -95,13 +95,32 @@ exports.crear = async function(entrada) {   //CREATES NEW ENTRADA. RECEIVES ALL 
 
 
 exports.crearEntradaDetalle = async function(entradaDetalle){
-    //UNFINISHED END POINT
-    //DISREGARD FOR NOW
+
+    // A) check if received values exist on the db
+
+    //check if 'id_producto', de cada producto en entradaDetalle, existe en la tabla de 'productos.'
+
+    //const productCheck = await db.Productos.findByPk(entradaDetalle.id_producto);
     
-    //foreach(entradaDetalle)
-    //validar ue id_prodcuto existe
-    const comCheck = await db.Comunidad.findByPk(entrada.id_comunidad); //este checa si existe la comunidad
-    //tengo que hacer qque cheque el producto.
+    // if (!productCheck) {
+    //     throw new Error("El id_producto #" + entradaDetalle.id_producto + "(or 0) NO EXISTE en la BD!");
+    // }
+
+    nuevosDetalles = await db.EntradaDetalle.bulkCreate(entradaDetalle);
+    return nuevosDetalles;
+
+
+
+
+    // const prodCheck = await db.EntradaDetalle.forEach(element => {
+    //     console.log(element.id_producto);
+    // });
+    // //(entradaDetalle.id_producto);
+    // if (!prodCheck) {
+    //     throw new Error("El id_producto #" + entradaDetalle.id_producto + "(or 0) NO EXISTE en la BD!");
+    // }
+    // //foreach(entradaDetalle)
+
 
 
 }

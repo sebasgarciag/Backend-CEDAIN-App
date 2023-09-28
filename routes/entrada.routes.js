@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { check, param } = require('express-validator');
+const { check, param, body } = require('express-validator');
 
 let entradaController = require("../controllers/entrada.controller");
 
@@ -18,16 +18,22 @@ router.post("/entradas", [
 ], entradaController.postCrear);
 
 //POST PRODUCTOS INTO entradas_detalles
-router.post("/entradas-productos", [
-    check("id_entrada_detalle").isNumeric().withMessage("id entrada detalle debe ser numerico"),
-    check("id_entrada").isNumeric().withMessage("id entrada debe ser numerico"),
-    check("id_producto").isNumeric().withMessage("id producto debe ser numerico"),
-    check("cantidad").isNumeric().withMessage("cantidad debe ser numerico"),
-    check("precio_unitario").isNumeric().withMessage("precio_unitario debe ser numerico"),
+router.post("/entradas-detalles", [
+    //valida que se este mandando un valor numerico.
+    //Are all these checks necessary?
 
-], entradaController.postCrearProductos);
+    //Se asume que este endpoint recibe un array. MODIFY THIS TO RECEIVE AN ARRAY
+
+    check("*.id_entrada_detalle").isNumeric().withMessage("id entrada detalle debe ser numerico"),
+    check("*.id_entrada").isNumeric().withMessage("id entrada debe ser numerico"),
+    check("*.id_producto").isNumeric().withMessage("id producto debe ser numerico"),
+    check("*.cantidad").isNumeric().withMessage("cantidad debe ser numerico"),
+    check("*.precio_unitario").isNumeric().withMessage("precio_unitario debe ser numerico"),
+
+], entradaController.postEntradasDetalles);
 
 // GET All the entradas OR trae entradas por fecha.
+
 router.get("", entradaController.getBuscarTodas);
 
 //GET entradas por id
