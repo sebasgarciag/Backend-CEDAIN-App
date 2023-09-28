@@ -52,7 +52,6 @@ router.get("/:id", [
     param("id").isNumeric().withMessage("ID debe ser numerico")
 ], entradaController.getBuscarPorId);
 
-
     //(((((AS OF SEPTEMBER 19 2023, IT HAS BEEN DISCUSSED THAT THIS FUNCTION MIGHT BE DELETED))))))
 //UPDATE EXISTING
 router.put("/:id", [
