@@ -26,5 +26,6 @@ db.EntradaDetalles = require("./entradaDetalles.model.js")(sequelize, Sequelize)
 db.Usuario = require("./evento.model.js")(sequelize, Sequelize);
 db.Almacen = require("./evento.model.js")(sequelize, Sequelize);
 db.Salida = require("./salida.model.js")(sequelize, Sequelize);
+db.SalidaDetalle = require("./salidaDetalles.model.js")(sequelize, Sequelize);
 db.Productos = require("./productos.model.js")(sequelize, Sequelize);
 module.exports = db;
