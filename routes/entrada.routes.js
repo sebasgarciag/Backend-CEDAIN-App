@@ -35,7 +35,7 @@ router.post("/entradas-detalles", [
 
 router.get("", entradaController.getBuscarTodas);
 
-=======
+
 router.post("/entradas-productos", [
     check("id_entrada_detalle").isNumeric().withMessage("id entrada detalle debe ser numerico"),
     check("id_entrada").isNumeric().withMessage("id entrada debe ser numerico"),
@@ -53,7 +53,6 @@ router.get("", entradaController.getBuscarTodas);
 router.get("/:id", [ 
     param("id").isNumeric().withMessage("ID debe ser numerico")
 ], entradaController.getBuscarPorId);
-
 
     //(((((AS OF SEPTEMBER 19 2023, IT HAS BEEN DISCUSSED THAT THIS FUNCTION MIGHT BE DELETED))))))
 //UPDATE EXISTING
