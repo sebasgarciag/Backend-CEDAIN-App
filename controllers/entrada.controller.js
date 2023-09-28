@@ -37,25 +37,7 @@ exports.postEntradasDetalles = async function (req, res){
         let detallesCreados = await entradaService.crearEntradaDetalle(productosEntrada);
         res.status(201).json(detallesCreados);
     } 
-
-    //jalo una lista, y al service le pasa una lista.
-    //no e snecesario ir a ver si el product id existe.
-    //el try catch en este caso va en el service.
-    // try {
-    //     let detalles = req.body;     //Se recibe un array de productos
-    //     let entradaDetalles = []; //los resultados del array, se meten en este nuevo array.
-
-    //     for(let detalle of detalles) { //for each item in entradaDetalle, we ite
-    //         let entradaDetalle = await entradaService.crearEntradaDetalle(detalle);
-    //         entradaDetalles.push(entradaDetalle);
-    //     }
-        
-    //     return res.json(entradaDetalles).status(201);
-    // }
-    // catch (error) { //En caso de error relacionado a la base de datos, enter here.
-    //     console.error("Error al intentar crear entrada: ", error);
-    //     return res.status(500).json({ success: false, message: "Error durante proceso de crear entrada_detalle" });
-    // }
+    
 };
 
 
