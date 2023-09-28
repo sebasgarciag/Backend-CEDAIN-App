@@ -41,7 +41,7 @@ router.post("/entradas-productos", [
     check("cantidad").isNumeric().withMessage("cantidad debe ser numerico"),
     check("precio_unitario").isNumeric().withMessage("precio_unitario debe ser numerico"),
 
-], entradaController.postCrearProductos);
+], entradaController.postEntradasDetalles);
 
 // GET All the entradas OR trae entradas por fecha.
 router.get("", entradaController.getBuscarTodas);
