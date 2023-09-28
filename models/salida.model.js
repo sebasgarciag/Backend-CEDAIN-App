@@ -52,5 +52,5 @@ module.exports = (sequelize, Sequelize) => {
         }
     });
   
-    return Entrada;
+    return Salida;
 };

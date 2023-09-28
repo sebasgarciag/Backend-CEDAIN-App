@@ -20,6 +20,8 @@ app.use(cors());
 // Routes will be written here
 app.use('/', apiRoutes);
 
+
+
 // Establish Database Connection (if concerned about data persistence)
 db.sequelize.sync()
   .then(() => {
