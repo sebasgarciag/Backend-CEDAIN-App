@@ -8,20 +8,29 @@ module.exports = (sequelize, Sequelize) => {
         },
         id_entrada: {
             type: Sequelize.INTEGER,
-            allowNull: true
+            allowNull: false
         },
         id_producto: {
             type: Sequelize.INTEGER,
-            allowNull: true
+            allowNull: false
         },
         id_cantidad: {
             type: Sequelize.INTEGER,
-            allowNull: true
+            allowNull: false
         },
         precio_unitario: {
             type: Sequelize.DECIMAL(10,2),
-            allowNull: true
-        }
+            allowNull: false
+        }, 
+    }, {
+            tableName: 'entradas_detalle',
+            timestamps: false, // TRUE if there is createdAt and updatedAt on table.
+
+            uniqueKeys: {
+                detalles_unique: {
+                    fields: ['id_entrada', 'id_producto']
+                }
+            }
     });
   
     return EntradaDetalles;
