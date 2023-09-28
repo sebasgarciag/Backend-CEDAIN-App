@@ -6,6 +6,7 @@ require('dotenv/config');
 
 // Local Modules
 const apiEntradas = require("./routes/entrada.routes");
+const apiSalidas = require("./routes/salida.routes");
 const db = require("./models");
 
 // Server Initialization
@@ -20,7 +21,10 @@ app.use(cors());
 // Routes will be written here
 //Cada equipo pone sus rutas aqui <----------------------------------------
 app.use('/entradas', apiEntradas);
+app.use('/salidas', apiSalidas);
 //app.use('/', apiSalidas);
+
+
 
 
 // Establish Database Connection (if concerned about data persistence)
