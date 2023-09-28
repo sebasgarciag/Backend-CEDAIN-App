@@ -34,9 +34,8 @@ exports.postEntradasDetalles = async function (req, res){
         return res.status(400).json({ success: false, error: result }); //if routes.js sends error, controller catches and sends error #.
     } else {
         let productosEntrada = req.body;
-        console.log("Productos en esta Entrada: " + productosEntrada);
-        let detallesCreadas = await personaService.crearEntradaDetalle(productosEntrada);
-        res.status(201).json(detallesCreadas);
+        let detallesCreados = await entradaService.crearEntradaDetalle(productosEntrada);
+        res.status(201).json(detallesCreados);
     } 
 
     //jalo una lista, y al service le pasa una lista.
