@@ -99,16 +99,6 @@ exports.crearEntradaDetalle = async function(entradaDetalle){
     nuevosDetalles = await db.EntradaDetalle.bulkCreate(entradaDetalle);
     return nuevosDetalles;
 
-    // try {
-    //     nuevaEntrada = await db.Entrada.create(entrada);
-    //     console.log("Nueva entrada agregada " + nuevaEntrada.id_entrada);
-    //     return nuevaEntrada;
-    // }
-    // catch (error) {
-    //     console.error("Error en entrada.service.js: ", error);
-    //     throw new Error("Error en entrada.service.js; CHECK YOUR TERMINAL!\nProbablemente necesites informacion de una tabla que esta vacia.");
-    // }
-
 
 }
 
