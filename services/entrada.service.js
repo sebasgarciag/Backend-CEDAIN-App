@@ -95,13 +95,9 @@ exports.crear = async function(entrada) {   //CREATES NEW ENTRADA. RECEIVES ALL 
 
 
 exports.crearEntradaDetalle = async function(entradaDetalle){
-    //UNFINISHED END POINT
-    //DISREGARD FOR NOW
-    
-    //foreach(entradaDetalle)
-    //validar ue id_prodcuto existe
-    const comCheck = await db.Comunidad.findByPk(entrada.id_comunidad); //este checa si existe la comunidad
-    //tengo que hacer qque cheque el producto.
+
+    nuevosDetalles = await db.EntradaDetalle.bulkCreate(entradaDetalle);
+    return nuevosDetalles;
 
 
 }
