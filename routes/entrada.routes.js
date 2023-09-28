@@ -35,7 +35,6 @@ router.post("/entradas-detalles", [
 
 router.get("", entradaController.getBuscarTodas);
 
-=======
 router.post("/entradas-productos", [
     check("id_entrada_detalle").isNumeric().withMessage("id entrada detalle debe ser numerico"),
     check("id_entrada").isNumeric().withMessage("id entrada debe ser numerico"),
