@@ -69,3 +69,21 @@ exports.putModificarInventario = async function (req, res){
     } 
 
 };
+
+
+exports.getDetallesPorId = async function (req, res) {
+    let result = validationResult(req);
+
+    if (result.errors.length > 0) {
+        res.status(400).json({ success: false, error: result });
+    } else {
+        let idSalida = req.params.idSalida;
+        let salidaDetalles = await salidaService.detallesPorId(idSalida);
+
+        if (salidaDetalles !== undefined) {
+            res.json(salidaDetalles).status(200);
+        } else {
+            res.status(204).json({ success: false });
+        }        
+    }
+};

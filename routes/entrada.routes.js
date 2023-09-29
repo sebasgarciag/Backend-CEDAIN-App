@@ -63,7 +63,7 @@ router.put("/:id", [
 
 
 //GET detalles de entrada
-router.get("/entradasDetalle/:idEntrada", [ 
+router.get("/entrada-detalles/:idEntrada", [ 
     param("idEntrada").isNumeric().withMessage("ID debe ser numerico")
 ], entradaController.getDetallesPorId);
 

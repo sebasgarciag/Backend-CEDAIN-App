@@ -47,6 +47,21 @@ exports.crearSalida = async function(salida) {   //CREATES NEW SALIDA. RECEIVES 
     }
 }
 
+exports.detallesPorId = async function(idSalida) { //RETURNS INFO FROM THE ID GIVEN ONLY
+    let salidaDetalles;
+
+    salidaDetalles = await db.SalidaDetalle.findAll({ //entre todas, busca la que tenga idEntrada igual
+        where: {
+            id_salida: idSalida
+        }
+    });
+
+    if (salidaDetalles.length > 0) {
+        salidaDetalles = salidaDetalles[0];
+    }
+
+    return salidaDetalles;
+};
 
 exports.crearSalidaDetalle = async function(salidaDetalle){
 

@@ -31,5 +31,8 @@ router.post("", [
     
 ], salidaController.postCrearSalida);
 
+router.get("/salida-detalles/:idSalida", [ 
+    param("idSalida").isNumeric().withMessage("ID debe ser numerico")
+], salidaController.getDetallesPorId);
 
 module.exports = router;
