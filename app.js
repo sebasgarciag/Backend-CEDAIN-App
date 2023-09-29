@@ -8,6 +8,7 @@ require('dotenv/config');
 const apiEntradas = require("./routes/entrada.routes");
 const apiSalidas = require("./routes/salida.routes");
 const db = require("./models");
+//db.Usuario.sync({ alter: true }); ((((TO BE USED BY EVERYONE IN THE FUTURE. NACHO, KIKE, ANGEL. DO NOT DELETE))))
 
 // Server Initialization
 const app = express();

@@ -24,6 +24,7 @@ exports.postCrear = async function (req, res) {
     }
 };
 
+
 exports.postEntradasDetalles = async function (req, res){
     let result = validationResult(req);
     
@@ -59,6 +60,7 @@ exports.getBuscarTodas = async function (req, res) {
 
 };
 
+
 exports.getBuscarPorId = async function (req, res) {
     let result = validationResult(req);
 
@@ -75,6 +77,26 @@ exports.getBuscarPorId = async function (req, res) {
         }        
     }
 };
+
+
+exports.getEntradasPorUsuario = async function (req, res) {
+    let result = validationResult(req);
+
+    if (result.errors.length > 0) {
+        res.status(400).json({ success: false, error: result });
+    } else {
+        let idUsuario = req.params.id;
+        let entrada = await entradaService.buscarEntradasDeUsuario(idUsuario);
+
+        if (entrada !== undefined) {
+            res.json(entrada).status(200);
+        } else {
+            res.status(204).json({ success: false });
+        }        
+    }
+};
+
+
 
 
 

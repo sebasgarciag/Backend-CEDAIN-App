@@ -1,6 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
     const Usuario = sequelize.define('Usuario', {
-        id_usuario: { //This information is taken from how the table is structured on the DB. (read the query)
+        id_usuarios: { //This information is taken from how the table is structured on the DB. (read the query)
             type: Sequelize.INTEGER.UNSIGNED,
             autoIncrement: true,
             primaryKey: true
