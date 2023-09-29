@@ -43,19 +43,28 @@ exports.postEntradasDetalles = async function (req, res){
 
 
 exports.getBuscarTodas = async function (req, res) {
-    
-    //if undifined, traer todas. else traete las fechas
-    let date = req.query.date;
 
+    //if undifined, traer todas. else traer entradas en fecha dada.
+    let date = req.query.date;
+    console.log(date);
     if (date == undefined){
         let entrada = await entradaService.buscarTodas();
         res.json(entrada).status(200);
     }
-    else {
-        console.log(date);
-        //mandar traer por fecha
-        let entradaPorFecha = await entradaService.entradasPorFecha(date);
-        return res.json(entradaPorFecha).status(201);
+    else {//mandar traer por fecha
+        
+        //This keeps the server from crashing if date is given in wrong format.
+        try{
+            let entradaPorFecha = await entradaService.entradasPorFecha(date);
+            return res.json(entradaPorFecha).status(201);
+        }
+        catch (error) {
+            console.error("Error en entradasPorFecha.service.js: ", error);
+            return res.status(500).json({ success: false, message: "Error durante getPorFecha." }); //This message can be seen by the user. We don't specify errors to the user.
+            
+        }
+        //let entradaPorFecha = await entradaService.entradasPorFecha(date);
+        //return res.json(entradaPorFecha).status(201);
     }
 
 };

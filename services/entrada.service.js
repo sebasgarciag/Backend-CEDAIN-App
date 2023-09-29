@@ -59,11 +59,11 @@ exports.entradasPorFecha = async function(date) { //RETURNS ALL ENTRIES ON GIVEN
                 [Op.gte]: desde, //.gte equals to  >= x
                 [Op.lt]: hasta     //.lt equals to < x
             }
-
         }
     });
 
     return entradas;
+
 }
 
 

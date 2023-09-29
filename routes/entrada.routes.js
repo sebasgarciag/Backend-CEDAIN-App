@@ -31,10 +31,13 @@ router.post("/entradas-detalles", [
 ], entradaController.postEntradasDetalles);
 
 // GET All the entradas OR trae entradas por fecha.
+//Para traer por fecha:
+// http://localhost:8080/entradas?date=2023-09-06
 router.get("", entradaController.getBuscarTodas);
 
 
 //GET entradas por id
+//http://localhost:8080/entradas/1
 router.get("/:id", [ 
     param("id").isNumeric().withMessage("ID debe ser numerico")
 ], entradaController.getBuscarPorId);
