@@ -1,12 +1,12 @@
 module.exports = (sequelize, Sequelize) => {
     const Detalles = sequelize.define('Detalles', {
-        id_entrada_detalle: { //This information is taken from how the table is structured on the DB. (read the query)
+        id_salida_detalle: { //This information is taken from how the table is structured on the DB. (read the query)
             type: Sequelize.INTEGER.UNSIGNED,
             autoIncrement: true,
             primaryKey: true,
             allowNull: false
         },
-        id_entrada: {
+        id_salida: {
             type: Sequelize.INTEGER,
             allowNull: false
         },
@@ -23,7 +23,7 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: true
         }
     }, {
-        tableName: 'entradas_detalle',
+        tableName: 'salidas_detalle',
         timestamps: false // TRUE if there is createdAt and updatedAt on table.
     });
 

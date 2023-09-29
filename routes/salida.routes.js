@@ -2,8 +2,9 @@ const router = require("express").Router();
 const { check, param } = require('express-validator');
 let salidaController = require("../controllers/salida.controller");
 
-router.get("/salidas", salidaController.getBuscarTodas);
-
+router.get("", salidaController.getBuscarTodas);
+router.get("/comunidades", salidaController.getBuscarTodasComunidades);
+router.get("/eventos", salidaController.getBuscarTodosEventos);
 
 router.post("/salidas-detalles", [
 
@@ -17,6 +18,22 @@ router.post("/salidas-detalles", [
 
 ], salidaController.postSalidasDetalles);
 
+//CREATE entrada
+router.post("", [ 
+
+    // check("folio").isNumeric().withMessage("Folio debe ser numérico y es obligatorio"),
+    check("serie").isLength({ max: 5 }).withMessage("Serie no debe exceder 5 caracteres y es obligatorio"),
+    check("observaciones").isLength({ max: 255 }).withMessage("Observaciones no debe exceder 255 caracteres y es obligatorio"),
+    check("id_usuario").isNumeric().withMessage("ID de usuario debe ser numérico y es obligatorio"),
+    check("id_almacen").isNumeric().withMessage("ID de almacén debe ser numérico y es obligatorio"),
+    check("emisor").isLength({ max: 40 }).withMessage("Emisor no debe exceder 40 caracteres y es obligatorio"),
+    check("id_evento").isNumeric().withMessage("ID de evento debe ser numérico y es obligatorio")
+    
+], salidaController.postCrearSalida);
+
+router.get("/salida-detalles/:idSalida", [ 
+    param("idSalida").isNumeric().withMessage("ID debe ser numerico")
+], salidaController.getDetallesPorId);
 
 //GET SALIDAS por ALMACENISTA (id)
 router.get("/salidas-usuario/:id", [ 

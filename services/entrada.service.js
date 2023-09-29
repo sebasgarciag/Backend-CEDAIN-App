@@ -23,6 +23,7 @@ exports.buscarPorId = async function(idEntrada) { //RETURNS ENTRY INFO FROM THE 
     return entrada;
 }
 
+<<<<<<< HEAD
 
 exports.buscarEntradasDeUsuario = async function(idUsuario) { //RETURNS ENTRY INFO FROM THE USER ID GIVEN
     let entrada = undefined;
@@ -42,6 +43,23 @@ exports.buscarEntradasDeUsuario = async function(idUsuario) { //RETURNS ENTRY IN
 
 
 
+=======
+exports.detallesPorId = async function(idEntrada) { //RETURNS INFO FROM THE ID GIVEN ONLY
+    let entradaDetalles;
+
+    entradaDetalles = await db.EntradaDetalles.findAll({ //entre todas, busca la que tenga idEntrada igual
+        where: {
+            id_entrada: idEntrada
+        }
+    });
+
+    if (entradaDetalles.length > 0) {
+        entradaDetalles = entradaDetalles[0];
+    }
+
+    return entradaDetalles;
+};
+>>>>>>> main
 
 exports.entradasPorFecha = async function(date) { //RETURNS ALL ENTRIES ON GIVEN DATE (YYYY-MM-DD)
 
