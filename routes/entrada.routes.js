@@ -62,4 +62,10 @@ router.put("/:id", [
 ], entradaController.updateEntrada);
 
 
+//GET detalles de entrada
+router.get("/entrada-detalles/:idEntrada", [ 
+    param("idEntrada").isNumeric().withMessage("ID debe ser numerico")
+], entradaController.getDetallesPorId);
+
+
 module.exports = router;
