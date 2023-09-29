@@ -50,3 +50,22 @@ exports.postSalidasDetalles = async function (req, res){
     } 
 
 };
+exports.putModificarInventario = async function (req, res){
+    let result=validationResult(req);
+
+    if (result.errors.length > 0) {
+        return res.status(400).json({ success: false, error: result }); //if routes.js sends error, controller catches and sends error #.
+    }
+    else {
+        let inventario = req.body;
+        let idproducto= req.params.id;
+        let inventarioActualizado = await salidaService.actualizarExistencias(idproducto, inventario);
+    
+         if ( inventarioActualizado == true) {
+              res.status(200).json({ success: true });
+        } else {
+              res.status(204).json({ success: false });
+         }          
+    } 
+
+};
