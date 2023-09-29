@@ -33,8 +33,7 @@ exports.getBuscarTodosEventos = async function (req, res) {
     let Eventos = await salidaService.buscarTodosEventos();
     res.json(Eventos).status(200);
 };
-<<<<<<< HEAD
-=======
+
 
 exports.postSalidasDetalles = async function (req, res){
     let result = validationResult(req);
@@ -51,20 +50,3 @@ exports.postSalidasDetalles = async function (req, res){
     } 
 
 };
-
-exports.postSalidasDetalles = async function (req, res){
-    let result = validationResult(req);
-    
-    console.log("======================");
-    console.log("postSalidasDetalles");
-    console.log("======================");
-    if (result.errors.length > 0) {
-        return res.status(400).json({ success: false, error: result }); //if routes.js sends error, controller catches and sends error #.
-    } else {
-        let productosSalida = req.body;
-        let detallesCreados = await salidaService.crearSalidaDetalle(productosSalida);
-        res.status(201).json(detallesCreados);
-    } 
-    
-};
->>>>>>> aeecbbd798057047dfc9c461103aa84ac6ae4709
