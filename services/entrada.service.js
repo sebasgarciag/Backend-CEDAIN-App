@@ -23,7 +23,6 @@ exports.buscarPorId = async function(idEntrada) { //RETURNS ENTRY INFO FROM THE 
     return entrada;
 }
 
-<<<<<<< HEAD
 
 exports.buscarEntradasDeUsuario = async function(idUsuario) { //RETURNS ENTRY INFO FROM THE USER ID GIVEN
     let entrada = undefined;
@@ -43,7 +42,6 @@ exports.buscarEntradasDeUsuario = async function(idUsuario) { //RETURNS ENTRY IN
 
 
 
-=======
 exports.detallesPorId = async function(idEntrada) { //RETURNS INFO FROM THE ID GIVEN ONLY
     let entradaDetalles;
 
@@ -59,7 +57,6 @@ exports.detallesPorId = async function(idEntrada) { //RETURNS INFO FROM THE ID G
 
     return entradaDetalles;
 };
->>>>>>> main
 
 exports.entradasPorFecha = async function(date) { //RETURNS ALL ENTRIES ON GIVEN DATE (YYYY-MM-DD)
 
@@ -134,7 +131,7 @@ exports.crear = async function(entrada) {   //CREATES NEW ENTRADA. RECEIVES ALL 
 
 exports.crearEntradaDetalle = async function(entradaDetalle){
 
-    nuevosDetalles = await db.EntradaDetalle.bulkCreate(entradaDetalle);
+    nuevosDetalles = await db.EntradaDetalles.bulkCreate(entradaDetalle);
     return nuevosDetalles;
 
 
