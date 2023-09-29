@@ -6,3 +6,73 @@ exports.buscarTodas = async function() { // RETURNS ALL
     salidas = await db.Salida.findAll();
     return salidas;
 }
+
+exports.crearSalida = async function(salida) {   //CREATES NEW SALIDA. RECEIVES ALL THE REQUIRED DATA INSIDE THE OBJECT COUGHT BY THE FUNCTION. (salida)
+        
+    // A) check if received values exist on the db
+
+
+        //check if 'id_evento' exists
+    const eveCheck = await db.Evento.findByPk(salida.id_evento);
+    if (!eveCheck) {
+        throw new Error("El id_evento #" + salida.id_evento + " (or 0) NO EXISTE en la BD!");
+    }
+
+        //check if 'id_usuario' exists
+    const usuCheck = await db.Usuario.findByPk(salida.id_usuario);
+    if (!usuCheck) {
+        throw new Error("El id_usuario #" + salida.id_usuario + " (or 0) NO EXISTE en la BD!");
+    }
+    
+        //check if 'id_almacen' exists
+    const almCheck = await db.Almacen.findByPk(salida.id_almacen);
+    if (!almCheck) {
+        throw new Error("El id_almacen #" + salida.id_almacen + " (or 0) NO EXISTE en la BD!");
+    }
+    
+
+    //B) get the last folio value from database, increase it by 1; this is the new folio value for the new exit.
+    salida.folio = await checkFolio(db);
+
+
+        //Checks for errors. if not, create salida.
+    try {
+        nuevaSalida = await db.Salida.create(salida);
+        console.log("Nueva salida agregada " + nuevaSalida.id_salida);
+        return nuevaSalida;
+    }
+    catch (error) {
+        console.error("Error en salida.service.js: ", error);
+        throw new Error("Error en salida.service.js; CHECK YOUR TERMINAL!\nProbablemente necesites informacion de una tabla que esta vacia.");
+    }
+}
+
+
+exports.crearSalidaDetalle = async function(salidaDetalle){
+
+    nuevosDetallesSalida = await db.SalidaDetalle.bulkCreate(salidaDetalle);
+    return nuevosDetallesSalida;
+
+
+}
+
+async function checkFolio(db) {
+
+    //gets last Folio from entradas tabble. To do so, it must be sorted in descending order.
+    //order: [[column 'folio' in 'descending' order]]
+const lastFolio = await db.Salida.findOne({
+    order: [['folio', 'DESC']]
+});
+
+    // If there's a last entry, increment its folio value by 1, otherwise start from 1
+return lastFolio ? lastFolio.folio + 1 : 1;
+
+//above is the same as:
+// let result;
+// if (lastFolio) {
+//     result = lastFolio.folio + 1;
+// } else {
+//     result = 1;
+// }
+
+}
