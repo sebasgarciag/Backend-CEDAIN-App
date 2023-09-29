@@ -23,6 +23,22 @@ exports.buscarPorId = async function(idEntrada) { //RETURNS ENTRY INFO FROM THE 
     return entrada;
 }
 
+exports.detallesPorId = async function(idEntrada) { //RETURNS INFO FROM THE ID GIVEN ONLY
+    let entradaDetalles;
+
+    entradaDetalles = await db.EntradaDetalles.findAll({ //entre todas, busca la que tenga idEntrada igual
+        where: {
+            id_entrada: idEntrada
+        }
+    });
+
+    if (entradaDetalles.length > 0) {
+        entradaDetalles = entradaDetalles[0];
+    }
+
+    return entradaDetalles;
+};
+
 exports.entradasPorFecha = async function(date) { //RETURNS ALL ENTRIES ON GIVEN DATE (YYYY-MM-DD)
 
     let desde = new Date(date);
