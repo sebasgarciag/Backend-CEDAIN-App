@@ -28,3 +28,4 @@ exports.postSalidasDetalles = async function (req, res){
     } 
     
 };
+
