@@ -11,7 +11,7 @@ const db = require('../models');
 exports.crearUsuario = async function (usuario) {
     try {
         nuevoUsuario = await db.newUsuario.create(usuario);
-        console.log("Nuevo usuario agregado" + nuevoUsuario.id_usuarios);
+        console.log("Nuevo usuario agregado" + nuevoUsuario.nombre);
         return nuevoUsuario;
     }
     catch (error) {

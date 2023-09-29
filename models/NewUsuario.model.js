@@ -34,8 +34,9 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING(255),
             allowNull: true
         }
-}, {
-        tableName: 'usuarios'
+    }, {
+        tableName: 'usuarios',
+        timestamps: false
     });
 
     return newUsuario;
