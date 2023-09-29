@@ -55,7 +55,7 @@ exports.entradasPorFecha = async function(date) { //RETURNS ALL ENTRIES ON GIVEN
 
     let entradas = await db.Entrada.findAll({
         where: {
-            createdAt: {
+            fecha: { //note: this makes the endpoint return the date written by user (if the user is capable) and not by sequelize's 'createdAt'
                 [Op.gte]: desde, //.gte equals to  >= x
                 [Op.lt]: hasta     //.lt equals to < x
             }
