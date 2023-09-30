@@ -1,5 +1,6 @@
 const entradaService = require('../services/entrada.service');
 const { validationResult } = require('express-validator');
+const ExcelJS = require('exceljs');
 
 /**
  * Procesa el request POST para guardar una persona
@@ -145,4 +146,80 @@ exports.getDetallesPorId = async function (req, res) {
             res.status(204).json({ success: false });
         }        
     }
+};
+
+exports.exportAllToExcel = async function (req, res) {
+    console.log("Función exportAllToExcel llamada");  
+    let entradas = await entradaService.buscarTodas();  // retorna todas las entradas
+
+    if (!entradas || entradas.length === 0) {
+        return res.status(404).json({ success: false, message: "No se encontraron entradas" });
+    }
+
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Entradas');
+
+    worksheet.columns = [
+        { header: 'ID Entrada', key: 'id_entrada', width: 15 },
+        { header: 'Fecha', key: 'fecha', width: 15 },
+        { header: 'Folio', key: 'folio', width: 10 },
+        { header: 'Serie', key: 'serie', width: 10 },
+        { header: 'Observaciones', key: 'observaciones', width: 30 },
+        { header: 'ID Usuario', key: 'id_usuario', width: 15 },
+        { header: 'ID Almacén', key: 'id_almacen', width: 15 },
+        { header: 'Emisor', key: 'emisor', width: 20 },
+        { header: 'ID Comunidad', key: 'id_comunidad', width: 15 },
+        { header: 'ID Evento', key: 'id_evento', width: 15 },
+        { header: 'Fecha de Creación', key: 'createdAt', width: 20 },
+        { header: 'Fecha de Actualización', key: 'updatedAt', width: 20 },
+        { header: 'Precio Trueque', key: 'Precio_trueque', width: 20 }
+    ];
+    
+    entradas.forEach(entrada => {
+        worksheet.addRow(entrada);
+    });
+
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader("Content-Disposition", "attachment; filename=Entradas.xlsx");
+    workbook.xlsx.write(res).then(() => {
+        res.status(200).end();
+    });
+};
+
+exports.exportToExcel = async function (req, res) {
+    console.log("Función exportToExcel por id llamada");
+    
+    let idEntrada = req.params.id;
+    let entradaDetalles = await entradaService.detallesPorId(idEntrada);
+
+    // Log para ver lo que devuelve entradaService.detallesPorId
+    console.log("Detalles obtenidos:", entradaDetalles);
+
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Entrada');
+
+    // Definiendo las columnas para los detalles de entrada en el archivo Excel
+    worksheet.columns = [
+        { header: 'ID Detalle Entrada', key: 'id_entrada_detalle', width: 20 },
+        { header: 'ID Entrada', key: 'id_entrada', width: 20 },
+        { header: 'ID Producto', key: 'id_producto', width: 20 },
+        { header: 'Cantidad', key: 'cantidad', width: 20 },
+        { header: 'Precio Unitario', key: 'precio_unitario', width: 20 }
+    ];
+
+    // Agregando los datos de los detalles de entrada al archivo Excel
+    if (entradaDetalles && entradaDetalles.length > 0) {
+        entradaDetalles.forEach(detail => {
+            worksheet.addRow(detail);
+        });
+    } else {
+        console.warn("No se encontraron detalles para el ID:", idEntrada);
+    }
+
+    // Guardar el archivo Excel en memoria y enviarlo como respuesta
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader("Content-Disposition", "attachment; filename=Entrada.xlsx");
+    workbook.xlsx.write(res).then(() => {
+        res.status(200).end();
+    });
 };
