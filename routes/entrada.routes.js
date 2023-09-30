@@ -22,13 +22,10 @@ router.post("/entradas", [
     
 ], entradaController.postCrear);
 
-//POST PRODUCTOS INTO entradas_detalles
 
+//POST PRODUCTOS INTO entradas_detalles
 router.post("/entradas-detalles", [
 
-    //Se asume que este endpoint recibe un array. MODIFY THIS TO RECEIVE AN ARRAY
-
-    //check("*.id_entrada_detalle").isNumeric().withMessage("id entrada detalle debe ser numerico"),
     check("*.id_entrada").isNumeric().withMessage("id entrada debe ser numerico"),
     check("*.id_producto").isNumeric().withMessage("id producto debe ser numerico"),
     check("*.cantidad").isNumeric().withMessage("cantidad debe ser numerico"),
@@ -53,8 +50,6 @@ router.get("/:id", [
 router.get("/entradas-usuario/:id", [ 
     param("id").isNumeric().withMessage("ID de usuario debe ser numerico")
 ], entradaController.getEntradasPorUsuario);
-
-
 
 
 

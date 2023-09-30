@@ -29,17 +29,20 @@ exports.postCrear = async function (req, res) {
 exports.postEntradasDetalles = async function (req, res){
     let result = validationResult(req);
     
-    console.log("======================");
-    console.log("postEntradasDetalles");
-    console.log("======================");
     if (result.errors.length > 0) {
         return res.status(400).json({ success: false, error: result }); //if routes.js sends error, controller catches and sends error #.
-    } else {
-        let productosEntrada = req.body;
-        let detallesCreados = await entradaService.crearEntradaDetalle(productosEntrada);
-        res.status(201).json(detallesCreados);
     } 
     
+    try{
+        let productosEntrada = req.body;
+        let detallesCreados = await entradaService.crearEntradaDetalle(productosEntrada);
+        return res.status(201).json(detallesCreados);
+    }
+    catch (error) { //unexpected error are cought here. Keeping the server from crashing.
+        console.error("Error al intentar crear entrada: ", error);
+        res.status(500).json({ success: false, message: "Internal Server Error" });
+    }
+
 };
 
 
