@@ -6,16 +6,17 @@ const saltRounds = 10;
 
 exports.postCrearUsuario = async function (req, res) {
     let result = validationResult(req);
-
-    if (result.errors.length > 0) {
-        return res.status(400).json({ success: false, error: result });
-    }
+    console.log(req.body);
 
     try {
         let newUsuario = req.body;     //todo lo que viene en el json payload
 
-        // Hashea la contraseña antes de guardarla
-        newUsuario.password = bcrypt.hashSync(newUsuario.password, saltRounds);
+        // Verifica si la contraseña existe antes de hashearla
+        if (newUsuario.password) {
+            newUsuario.password = bcrypt.hashSync(newUsuario.password, saltRounds);
+        } else {
+            throw new Error('Contraseña no proporcionada');
+        }
 
         let usuarioCreado = await usuarioService.crearUsuario(newUsuario);
         return res.json(usuarioCreado).status(201);
