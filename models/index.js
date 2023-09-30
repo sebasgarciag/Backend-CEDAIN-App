@@ -20,5 +20,12 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.Entrada = require("./entrada.model.js")(sequelize, Sequelize);
-
+db.Comunidad = require("./comunidad.model.js")(sequelize, Sequelize);
+db.Evento = require("./evento.model.js")(sequelize, Sequelize);
+db.Usuario = require("./evento.model.js")(sequelize, Sequelize);
+db.Almacen = require("./evento.model.js")(sequelize, Sequelize);
+db.Salida = require("./salida.model.js")(sequelize, Sequelize);
+db.EntradaDetalle = require("./entrada_detalles.model.js")(sequelize, Sequelize);
+db.SalidaDetalle = require("./salidaDetalles.model.js")(sequelize, Sequelize);
+db.Productos = require("./productos.model.js")(sequelize, Sequelize);
 module.exports = db;

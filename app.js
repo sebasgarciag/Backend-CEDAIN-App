@@ -5,7 +5,8 @@ const cors = require('cors');
 require('dotenv/config');
 
 // Local Modules
-const apiRoutes = require("./routes/entrada.routes");
+const apiEntradas = require("./routes/entrada.routes");
+const apiSalidas = require("./routes/salida.routes");
 const db = require("./models");
 
 // Server Initialization
@@ -18,7 +19,13 @@ app.use(express.json());
 app.use(cors());
 
 // Routes will be written here
-app.use('/', apiRoutes);
+//Cada equipo pone sus rutas aqui <----------------------------------------
+app.use('/entradas', apiEntradas);
+app.use('/salidas', apiSalidas);
+//app.use('/', apiSalidas);
+
+
+
 
 // Establish Database Connection (if concerned about data persistence)
 db.sequelize.sync()

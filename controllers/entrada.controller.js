@@ -10,22 +10,53 @@ exports.postCrear = async function (req, res) {
     let result = validationResult(req);
 
     if (result.errors.length > 0) {
-        res.status(400).json({ success: false, error: result });
-    } else {
-        let entrada = req.body;     //todo lo que viene en el json cargo
-        let entradaCreada = await entradaService.crear(entrada);
-        res.json(entradaCreada).status(201);
-    }    
+        return res.status(400).json({ success: false, error: result }); //if routes.js sends error, controller catches and sends error #.
+    } 
+    
+    try {
+        let entrada = req.body;     //todo lo que viene en el json payload
+        let entradaCreada = await entradaService.crear(entrada); 
+        return res.json(entradaCreada).status(201);
+    }
+    catch (error) { //En caso de error relacionado a la base de datos, enter here.
+        console.error("Error al intentar crear entrada: ", error);
+        return res.status(500).json({ success: false, message: "Error durante proceso de crear entrada" });
+    }
 };
 
-/**
- * Procesa el request GET para obtener todas las entradas
- * @param {Request} req - Request
- * @param {Response} res - Response que contiene una lista de todas las entradas y status 200
- */
+exports.postEntradasDetalles = async function (req, res){
+    let result = validationResult(req);
+    
+    console.log("======================");
+    console.log("postEntradasDetalles");
+    console.log("======================");
+    if (result.errors.length > 0) {
+        return res.status(400).json({ success: false, error: result }); //if routes.js sends error, controller catches and sends error #.
+    } else {
+        let productosEntrada = req.body;
+        let detallesCreados = await entradaService.crearEntradaDetalle(productosEntrada);
+        res.status(201).json(detallesCreados);
+    } 
+    
+};
+
+
 exports.getBuscarTodas = async function (req, res) {
-    let entrada = await entradaService.buscarTodas();
-    res.json(entrada).status(200);
+    
+    //if undifined, traer todas. else traete las fechas
+    let date = req.query.date;
+
+    if (date == undefined){
+        let entrada = await entradaService.buscarTodas();
+        res.json(entrada).status(200);
+    }
+    else {
+        console.log(date);
+        //mandar traer por fecha
+        let entradaPorFecha = await entradaService.entradasPorFecha(date);
+        return res.json(entradaPorFecha).status(201);
+    }
+
 };
 
 exports.getBuscarPorId = async function (req, res) {
@@ -44,6 +75,8 @@ exports.getBuscarPorId = async function (req, res) {
         }        
     }
 };
+
+
 
 //UPDATE EXISTING
 exports.updateEntrada = async function (req, res) {
