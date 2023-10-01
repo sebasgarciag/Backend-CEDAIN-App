@@ -9,6 +9,7 @@ const apiEntradas = require("./routes/entrada.routes");
 const apiSalidas = require("./routes/salida.routes");
 const apiUsuarios = require("./routes/usuario.routes");
 const db = require("./models");
+//db.Usuario.sync({ alter: true }); ((((TO BE USED BY EVERYONE IN THE FUTURE. NACHO, KIKE, ANGEL. DO NOT DELETE))))
 
 // Server Initialization
 const app = express();
@@ -20,6 +21,8 @@ app.use(express.json());
 app.use(cors());
 
 // Routes will be written here
+app.use('/entradas', entradaRoutes);
+app.use('/usuarios', usuarioRoutes);
 //Cada equipo pone sus rutas aqui <----------------------------------------
 app.use('/entradas', apiEntradas);
 app.use('/salidas', apiSalidas);

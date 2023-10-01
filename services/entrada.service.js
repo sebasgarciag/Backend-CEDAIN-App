@@ -23,6 +23,41 @@ exports.buscarPorId = async function(idEntrada) { //RETURNS ENTRY INFO FROM THE 
     return entrada;
 }
 
+
+exports.buscarEntradasDeUsuario = async function(idUsuario) { //RETURNS ENTRY INFO FROM THE USER ID GIVEN
+    let entrada = undefined;
+
+    entradas = await db.Entrada.findAll({ //entre todas, busca la que tenga idEntrada igual
+        where: {
+            id_usuario: idUsuario
+        }
+    });
+
+    if (entradas.length > 0) {
+        entrada = entradas;
+    }
+
+    return entrada;
+}
+
+
+
+exports.detallesPorId = async function(idEntrada) { //RETURNS INFO FROM THE ID GIVEN ONLY
+    let entradaDetalles;
+
+    entradaDetalles = await db.EntradaDetalles.findAll({ //entre todas, busca la que tenga idEntrada igual
+        where: {
+            id_entrada: idEntrada
+        }
+    });
+
+    if (entradaDetalles.length > 0) {
+        entradaDetalles = entradaDetalles[0];
+    }
+
+    return entradaDetalles;
+};
+
 exports.entradasPorFecha = async function(date) { //RETURNS ALL ENTRIES ON GIVEN DATE (YYYY-MM-DD)
 
     let desde = new Date(date);
@@ -35,15 +70,15 @@ exports.entradasPorFecha = async function(date) { //RETURNS ALL ENTRIES ON GIVEN
 
     let entradas = await db.Entrada.findAll({
         where: {
-            createdAt: {
+            fecha: { //note: this makes the endpoint return the date written by user (if the user is capable) and not by sequelize's 'createdAt'
                 [Op.gte]: desde, //.gte equals to  >= x
                 [Op.lt]: hasta     //.lt equals to < x
             }
-
         }
     });
 
     return entradas;
+
 }
 
 
@@ -96,7 +131,7 @@ exports.crear = async function(entrada) {   //CREATES NEW ENTRADA. RECEIVES ALL 
 
 exports.crearEntradaDetalle = async function(entradaDetalle){
 
-    nuevosDetalles = await db.EntradaDetalle.bulkCreate(entradaDetalle);
+    nuevosDetalles = await db.EntradaDetalles.bulkCreate(entradaDetalle);
     return nuevosDetalles;
 
 
