@@ -2,7 +2,7 @@ const router = require("express").Router();
 const { check, param } = require('express-validator');
 let salidaController = require("../controllers/salida.controller");
 
-router.get("/salidas", salidaController.getBuscarTodas);
+router.get("", salidaController.getBuscarTodas);
 router.get("/comunidades", salidaController.getBuscarTodasComunidades);
 router.get("/eventos", salidaController.getBuscarTodosEventos);
 
@@ -19,7 +19,7 @@ router.post("/salidas-detalles", [
 ], salidaController.postSalidasDetalles);
 
 //CREATE entrada
-router.post("/salida", [ 
+router.post("", [ 
 
     // check("folio").isNumeric().withMessage("Folio debe ser numérico y es obligatorio"),
     check("serie").isLength({ max: 5 }).withMessage("Serie no debe exceder 5 caracteres y es obligatorio"),
@@ -31,5 +31,8 @@ router.post("/salida", [
     
 ], salidaController.postCrearSalida);
 
+router.get("/salida-detalles/:idSalida", [ 
+    param("idSalida").isNumeric().withMessage("ID debe ser numerico")
+], salidaController.getDetallesPorId);
 
 module.exports = router;
