@@ -48,6 +48,7 @@ exports.crearSalida = async function(salida) {   //CREATES NEW SALIDA. RECEIVES 
 }
 
 
+
 exports.crearSalidaDetalle = async function(salidaDetalle){
 
     nuevosDetallesSalida = await db.SalidaDetalle.bulkCreate(salidaDetalle);
@@ -58,7 +59,7 @@ exports.crearSalidaDetalle = async function(salidaDetalle){
 
 async function checkFolio(db) {
 
-    //gets last Folio from entradas tabble. To do so, it must be sorted in descending order.
+    //gets last Folio from salidas tabble. To do so, it must be sorted in descending order.
     //order: [[column 'folio' in 'descending' order]]
 const lastFolio = await db.Salida.findOne({
     order: [['folio', 'DESC']]
