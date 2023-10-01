@@ -7,6 +7,7 @@ const saltRounds = 10;
 //Crea Usuario
 exports.postCrearUsuario = async function (req, res) {
   let result = validationResult(req);
+  console.log(result);
   console.log(req.body);
 
   try {
@@ -24,6 +25,7 @@ exports.postCrearUsuario = async function (req, res) {
   }
   catch (error) { //En caso de error relacionado a la base de datos, enter here.
     console.error("Error al intentar crear usuario: ", error);
+    console.log("Error al intentar crear usuario: ", error);
     return res.status(500).json({ success: false, message: "Error durante proceso de crear usuario" });
   }
 };
