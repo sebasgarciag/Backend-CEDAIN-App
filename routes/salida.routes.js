@@ -35,4 +35,11 @@ router.get("/salida-detalles/:idSalida", [
     param("idSalida").isNumeric().withMessage("ID debe ser numerico")
 ], salidaController.getDetallesPorId);
 
+//GET SALIDAS por ALMACENISTA (id)
+router.get("/salidas-usuario/:id", [ 
+    param("id").isNumeric().withMessage("ID de usuario debe ser numerico")
+], salidaController.getSalidasPorUsuario);
+
+
+
 module.exports = router;

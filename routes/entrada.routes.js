@@ -6,7 +6,6 @@ let entradaController = require("../controllers/entrada.controller");
 //CREATE entrada
 router.post("/entradas", [ 
 
-    check("folio").isNumeric().withMessage("Folio debe ser numérico y es obligatorio"),
     check("serie").isLength({ max: 5 }).withMessage("Serie no debe exceder 5 caracteres y es obligatorio"),
     check("observaciones").isLength({ max: 255 }).withMessage("Observaciones no debe exceder 255 caracteres y es obligatorio"),
     check("id_usuario").isNumeric().withMessage("ID de usuario debe ser numérico y es obligatorio"),
@@ -32,25 +31,26 @@ router.post("/entradas-detalles", [
 ], entradaController.postEntradasDetalles);
 
 // GET All the entradas OR trae entradas por fecha.
-router.get("", entradaController.getBuscarTodas);
-
-router.post("/entradas-productos", [
-    check("id_entrada_detalle").isNumeric().withMessage("id entrada detalle debe ser numerico"),
-    check("id_entrada").isNumeric().withMessage("id entrada debe ser numerico"),
-    check("id_producto").isNumeric().withMessage("id producto debe ser numerico"),
-    check("cantidad").isNumeric().withMessage("cantidad debe ser numerico"),
-    check("precio_unitario").isNumeric().withMessage("precio_unitario debe ser numerico"),
-
-], entradaController.postEntradasDetalles);
-
-// GET All the entradas OR trae entradas por fecha.
+//Para traer por fecha:
+// http://localhost:8080/entradas?date=2023-09-06
 router.get("", entradaController.getBuscarTodas);
 
 
 //GET entradas por id
+//http://localhost:8080/entradas/1
 router.get("/:id", [ 
     param("id").isNumeric().withMessage("ID debe ser numerico")
 ], entradaController.getBuscarPorId);
+
+
+//GET ENTRADAS por ALMACENISTA (id)
+router.get("/entradas-usuario/:id", [ 
+    param("id").isNumeric().withMessage("ID de usuario debe ser numerico")
+], entradaController.getEntradasPorUsuario);
+
+
+
+
 
     //(((((AS OF SEPTEMBER 19 2023, IT HAS BEEN DISCUSSED THAT THIS FUNCTION MIGHT BE DELETED))))))
 //UPDATE EXISTING
