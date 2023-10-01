@@ -1,6 +1,32 @@
 const usuarioService = require("../services/usuario.service");
 const { validationResult } = require("express-validator");
 
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
+//Crea Usuario
+exports.postCrearUsuario = async function (req, res) {
+  let result = validationResult(req);
+  console.log(req.body);
+
+  try {
+    let newUsuario = req.body;     //todo lo que viene en el json payload
+
+    // Verifica si la contraseña existe antes de hashearla
+    if (newUsuario.password) {
+      newUsuario.password = bcrypt.hashSync(newUsuario.password, saltRounds);
+    } else {
+      throw new Error('Contraseña no proporcionada');
+    }
+
+    let usuarioCreado = await usuarioService.crearUsuario(newUsuario);
+    return res.json(usuarioCreado).status(201);
+  }
+  catch (error) { //En caso de error relacionado a la base de datos, enter here.
+    console.error("Error al intentar crear usuario: ", error);
+    return res.status(500).json({ success: false, message: "Error durante proceso de crear usuario" });
+  }
+};
 // GET ALL USERS
 exports.getBuscarTodos = async function (req, res) {
   let usuarios = await usuarioService.buscarTodos();
@@ -49,38 +75,13 @@ exports.updateUsuario = async function (req, res) {
     );
 
     if (usuario_actualizado == null) {
-      return res.status(404).json({'error': "Usuario no encontrado" });
+      return res.status(404).json({ 'error': "Usuario no encontrado" });
     } else if (usuario_actualizado == false) {
       return res.status(503).json({ 'error': "Base de datos no disponible" });
     } else {
       return res.status(200).json({ success: true }); // Devuelve el registro actualizado
     }
   }
-const usuarioService = require('../services/usuario.service');
-const { validationResult } = require('express-validator');
 
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
 
-exports.postCrearUsuario = async function (req, res) {
-    let result = validationResult(req);
-    console.log(req.body);
-
-    try {
-        let newUsuario = req.body;     //todo lo que viene en el json payload
-
-        // Verifica si la contraseña existe antes de hashearla
-        if (newUsuario.password) {
-            newUsuario.password = bcrypt.hashSync(newUsuario.password, saltRounds);
-        } else {
-            throw new Error('Contraseña no proporcionada');
-        }
-
-        let usuarioCreado = await usuarioService.crearUsuario(newUsuario);
-        return res.json(usuarioCreado).status(201);
-    }
-    catch (error) { //En caso de error relacionado a la base de datos, enter here.
-        console.error("Error al intentar crear usuario: ", error);
-        return res.status(500).json({ success: false, message: "Error durante proceso de crear usuario" });
-    }
 };

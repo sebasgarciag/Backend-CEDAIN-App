@@ -23,8 +23,6 @@ router.put("/:id", [
 ], usuarioController.updateUsuario);
 
 
-module.exports = router;
-let usuarioController = require("../controllers/usuario.controller");
 
 router.post("/newUsuario", usuarioController.postCrearUsuario);
 
