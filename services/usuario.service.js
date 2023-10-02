@@ -13,6 +13,16 @@ exports.crearUsuario = async function (usuario) {
 
 }
 
+exports.buscarUsuarioPorCorreo = async function (correo) {
+  try {
+    let usuario = await db.Usuario.findOne({ where: { correo: correo } });
+    return usuario;
+  } catch (error) {
+    console.error("Error al buscar usuario por correo: ", error);
+    throw error;
+  }
+};
+
 exports.buscarTodos = async function () {
   // RETURNS ALL
   let usuarios = null;

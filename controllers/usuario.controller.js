@@ -29,6 +29,51 @@ exports.postCrearUsuario = async function (req, res) {
     return res.status(500).json({ success: false, message: "Error durante proceso de crear usuario" });
   }
 };
+
+
+//Login
+exports.postLogin = async function (req, res) {
+  let result = validationResult(req);
+  console.log(result);
+  console.log(req.body);
+
+  try {
+    let loginData = req.body;     //todo lo que viene en el json payload
+
+    // Verifica si la contraseña existe
+    if (!loginData.password) {
+      throw new Error('Contraseña no proporcionada');
+    }
+
+    // Busca al usuario en la base de datos
+    let usuario = await usuarioService.buscarUsuarioPorCorreo(loginData.correo);
+
+    if (!usuario) {
+      return res.status(404).json({ success: false, message: "Usuario no encontrado" });
+    }
+
+    // Compara la contraseña proporcionada con la contraseña encriptada almacenada
+    let passwordCorrecta = bcrypt.compareSync(loginData.password, usuario.password);
+
+    if (!passwordCorrecta) {
+      return res.status(401).json({ success: false, message: "Contraseña incorrecta" });
+    }
+
+    // Si todo está bien, regresa true
+    return res.json({ success: true }).status(200);
+  }
+  catch (error) { //En caso de error relacionado a la base de datos, enter here.
+    console.error("Error al intentar iniciar sesión: ", error);
+    console.log("Error al intentar iniciar sesión: ", error);
+    return res.status(500).json({ success: false, message: "Error durante proceso de inicio de sesión" });
+  }
+};
+
+
+
+
+
+
 // GET ALL USERS
 exports.getBuscarTodos = async function (req, res) {
   let usuarios = await usuarioService.buscarTodos();

@@ -35,4 +35,11 @@ router.post("/newUsuario", [
 
 ], usuarioController.postCrearUsuario);
 
+router.post("/login", [
+    
+    check("correo").notEmpty().withMessage("correo no debe estar vacio").isEmail().withMessage("correo debe ser un correo valido"),
+    check("password").notEmpty().isLength({ max: 255 }).withMessage("password no debe exceder 255 caracteres"),
+
+], usuarioController.postLogin);
+
 module.exports = router;
