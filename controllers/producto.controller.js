@@ -15,7 +15,7 @@ exports.postCrear = async function (req, res) {
         return res.json(productoCreado).status(201);
     }
     catch (error) { //En caso de error relacionado a la base de datos, enter here.
-        console.error("Error al intentar crear producto: ", error);
+        console.error("Error al intentar crear productooo: ", error);
         return res.status(500).json({ success: false, message: "Error durante proceso de crear producto" });
     }
 };
