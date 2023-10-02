@@ -23,6 +23,41 @@ exports.buscarPorId = async function(idEntrada) { //RETURNS ENTRY INFO FROM THE 
     return entrada;
 }
 
+
+exports.buscarEntradasDeUsuario = async function(idUsuario) { //RETURNS ENTRY INFO FROM THE USER ID GIVEN
+    let entrada = undefined;
+
+    entradas = await db.Entrada.findAll({ //entre todas, busca la que tenga idEntrada igual
+        where: {
+            id_usuario: idUsuario
+        }
+    });
+
+    if (entradas.length > 0) {
+        entrada = entradas;
+    }
+
+    return entrada;
+}
+
+
+
+exports.detallesPorId = async function(idEntrada) { //RETURNS INFO FROM THE ID GIVEN ONLY
+    let entradaDetalles;
+
+    entradaDetalles = await db.EntradaDetalles.findAll({ //entre todas, busca la que tenga idEntrada igual
+        where: {
+            id_entrada: idEntrada
+        }
+    });
+
+    if (entradaDetalles.length > 0) {
+        entradaDetalles = entradaDetalles[0];
+    }
+
+    return entradaDetalles;
+};
+
 exports.entradasPorFecha = async function(date) { //RETURNS ALL ENTRIES ON GIVEN DATE (YYYY-MM-DD)
 
     let desde = new Date(date);
@@ -35,21 +70,16 @@ exports.entradasPorFecha = async function(date) { //RETURNS ALL ENTRIES ON GIVEN
 
     let entradas = await db.Entrada.findAll({
         where: {
-            createdAt: {
+            fecha: { //note: this makes the endpoint return the date written by user (if the user is capable) and not by sequelize's 'createdAt'
                 [Op.gte]: desde, //.gte equals to  >= x
                 [Op.lt]: hasta     //.lt equals to < x
             }
-
         }
     });
 
     return entradas;
+
 }
-
-
-
-
-
 
 
 exports.crear = async function(entrada) {   //CREATES NEW ENTRADA. RECEIVES ALL THE REQUIRED DATA INSIDE THE OBJECT COUGHT BY THE FUNCTION. (entrada)
@@ -93,16 +123,25 @@ exports.crear = async function(entrada) {   //CREATES NEW ENTRADA. RECEIVES ALL 
         return nuevaEntrada;
     }
     catch (error) {
-        console.error("Error en entrada.service.js: ", error); // <------------ ??? no sale
+        console.error("Error en entrada.service.js: ", error);
         throw new Error("Error en entrada.service.js; CHECK YOUR TERMINAL!\nProbablemente necesites informacion de una tabla que esta vacia.");
     }
 }
+
+
+exports.crearEntradaDetalle = async function(entradaDetalle){
+
+    nuevosDetalles = await db.EntradaDetalles.bulkCreate(entradaDetalle);
+    return nuevosDetalles;
+
+
+}
+
 
 exports.updateEntrada = async function(idEntrada, entrada) {
     let entradaActualizada = false;
 
     entradaActualizada = await db.Entrada.findByPk(idEntrada)
-    console.log("IM HERE UPDATE ENTRADA.SERVICE")
     if (entradaActualizada !== null) {
         const result = await db.Entrada.update(
             {
@@ -145,5 +184,13 @@ async function checkFolio(db) {
 
         // If there's a last entry, increment its folio value by 1, otherwise start from 1
     return lastFolio ? lastFolio.folio + 1 : 1;
+
+    //above is the same as:
+    // let result;
+    // if (lastFolio) {
+    //     result = lastFolio.folio + 1;
+    // } else {
+    //     result = 1;
+    // }
     
 }
