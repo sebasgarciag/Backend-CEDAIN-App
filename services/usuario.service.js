@@ -1,5 +1,28 @@
 const db = require("../models");
 
+exports.crearUsuario = async function (usuario) {
+  try {
+    nuevoUsuario = await db.Usuario.create(usuario);
+    console.log("Nuevo usuario agregado" + nuevoUsuario.nombre);
+    return nuevoUsuario;
+  }
+  catch (error) {
+    console.error("Error en usuario.service.js: ", error);
+    throw new Error("Error en usuario.service.js");
+  }
+
+}
+
+exports.buscarUsuarioPorCorreo = async function (correo) {
+  try {
+    let usuario = await db.Usuario.findOne({ where: { correo: correo } });
+    return usuario;
+  } catch (error) {
+    console.error("Error al buscar usuario por correo: ", error);
+    throw error;
+  }
+};
+
 exports.buscarTodos = async function () {
   // RETURNS ALL
   let usuarios = null;
@@ -51,3 +74,7 @@ exports.updateUsuario = async function (id_usuario, usuario) {
     return usuario_actualizado;
   }
 };
+
+
+
+
