@@ -63,6 +63,7 @@ exports.detallesPorId = async function(idSalida) { //RETURNS INFO FROM THE ID GI
     return salidaDetalles;
 };
 
+
 exports.crearSalidaDetalle = async function(salidaDetalle){
 
     nuevosDetallesSalida = await db.SalidaDetalle.bulkCreate(salidaDetalle);
@@ -102,7 +103,7 @@ exports.buscarSalidasDeUsuario = async function(idUsuario) {
 
 async function checkFolio(db) {
 
-    //gets last Folio from entradas tabble. To do so, it must be sorted in descending order.
+    //gets last Folio from salidas tabble. To do so, it must be sorted in descending order.
     //order: [[column 'folio' in 'descending' order]]
 const lastFolio = await db.Salida.findOne({
     order: [['folio', 'DESC']]

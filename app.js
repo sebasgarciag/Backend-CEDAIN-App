@@ -10,6 +10,7 @@ const productoRoutes = require("./routes/producto.routes");
 const apiEntradas = require("./routes/entrada.routes");
 const apiSalidas = require("./routes/salida.routes");
 const apiUsuarios = require("./routes/usuario.routes");
+const apiInventario = require("./routes/inventario.routes");
 const db = require("./models");
 //db.Usuario.sync({ alter: true }); ((((TO BE USED BY EVERYONE IN THE FUTURE. NACHO, KIKE, ANGEL. DO NOT DELETE))))
 
@@ -30,7 +31,7 @@ app.use('/entradas', apiEntradas);
 app.use('/salidas', apiSalidas);
 app.use('/usuarios', apiUsuarios);
 app.use('/productos', productoRoutes);
-
+app.use('/inventario', apiInventario);
 //app.use('/', apiSalidas);
 
 
