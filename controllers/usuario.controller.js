@@ -6,9 +6,7 @@ const saltRounds = 10;
 
 //Crea Usuario
 exports.postCrearUsuario = async function (req, res) {
-  let result = validationResult(req);
-  console.log(result);
-  console.log(req.body);
+
 
   try {
     let newUsuario = req.body;     //todo lo que viene en el json payload
@@ -33,9 +31,6 @@ exports.postCrearUsuario = async function (req, res) {
 
 //Login
 exports.postLogin = async function (req, res) {
-  let result = validationResult(req);
-  console.log(result);
-  console.log(req.body);
 
   try {
     let loginData = req.body;     //todo lo que viene en el json payload
