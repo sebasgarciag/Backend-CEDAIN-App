@@ -24,5 +24,5 @@ db.Comunidad = require("./comunidad.model.js")(sequelize, Sequelize);
 db.Evento = require("./evento.model.js")(sequelize, Sequelize);
 db.Usuario = require("./usuario.model.js")(sequelize, Sequelize);
 db.Almacen = require("./almacen.model.js")(sequelize, Sequelize);
-
+db.Almacen = require("./producto.model.js")(sequelize, Sequelize);
 module.exports = db;

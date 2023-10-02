@@ -7,6 +7,7 @@ require('dotenv/config');
 // Local Modules
 const entradaRoutes = require("./routes/entrada.routes");
 const usuarioRoutes = require("./routes/usuario.routes");
+const usuarioRoutes = require("./routes/producto.routes");
 const db = require("./models");
 
 // Server Initialization
@@ -21,6 +22,7 @@ app.use(cors());
 // Routes will be written here
 app.use('/entradas', entradaRoutes);
 app.use('/usuarios', usuarioRoutes);
+app.use('/productos', productoRoutes);
 
 // Establish Database Connection (if concerned about data persistence)
 db.sequelize.sync()
