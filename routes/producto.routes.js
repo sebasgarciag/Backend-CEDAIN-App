@@ -2,7 +2,7 @@ const router = require("express").Router();
 const { check, param } = require('express-validator');
 
 let entradaController = require("../controllers/entrada.controller");
-
+let productoController = require("../controllers/producto.controller")
 
 router.post("/productos", [ //CREATE
 
