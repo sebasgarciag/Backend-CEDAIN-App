@@ -71,8 +71,9 @@ exports.detallesPorId = async function(idEntrada) { //RETURNS INFO FROM THE ID G
             id_entrada: idEntrada
         },
         include: {
-            model: db.Producto,
-            attributes: ['nombre']
+            model: db.Producto, 
+            attributes: ['nombre'],
+            include: db.Tamanio
         }
     });
 

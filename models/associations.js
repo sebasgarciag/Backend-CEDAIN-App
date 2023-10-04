@@ -23,6 +23,9 @@ db.Entrada.belongsTo(db.Evento , {foreignKey: 'id_evento'});
 db.Evento.hasMany(db.Salida , {foreignKey: 'id_evento'});
 db.Salida.belongsTo(db.Evento , {foreignKey: 'id_evento'});
 
+db.Tamanio.hasMany(db.Producto , {foreignKey: 'id_tamanio'});
+db.Producto.belongsTo(db.Tamanio , {foreignKey: 'id_tamanio'});
+
 db.Producto.hasMany(db.EntradaDetalles , {foreignKey: 'id_producto'});
 db.EntradaDetalles.belongsTo(db.Producto , {foreignKey: 'id_producto'});
 

@@ -4,7 +4,6 @@ const dbConfig = require('../config/db.config');
 
 exports.buscarTodas = async function() { // RETURNS ALL
     salidas = await db.Salida.findAll({ include: [
-        db.Comunidad, 
         {   
             model: db.Usuario,
             attributes: ['nombre', 'apellido_paterno']
@@ -63,8 +62,9 @@ exports.detallesPorId = async function(idSalida) { //RETURNS INFO FROM THE ID GI
             id_salida: idSalida
         },
         include: {
-            model: db.Producto,
-            attributes: ['nombre']
+            model: db.Producto, 
+            attributes: ['nombre'],
+            include: db.Tamanio
         }
     });
 
@@ -95,7 +95,6 @@ exports.buscarSalidasDeUsuario = async function(idUsuario) {
                 id_usuario: idUsuario
             }, 
             include: [
-                db.Comunidad, 
                 db.Almacen, 
                 db.Evento
             ]
