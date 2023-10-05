@@ -30,4 +30,10 @@ db.Producto.hasMany(db.EntradaDetalles , {foreignKey: 'id_producto'});
 db.EntradaDetalles.belongsTo(db.Producto , {foreignKey: 'id_producto'});
 
 db.Producto.hasMany(db.SalidaDetalle , {foreignKey: 'id_producto'});
-db.SalidaDetalle.belongsTo(db.Producto , {foreignKey: 'id_producto'});
+db.SalidaDetalle.belongsTo(db.Producto, { foreignKey: 'id_producto' });
+
+db.TipoEmpleado.hasMany(db.Usuario, { foreignKey: 'id_Tipo' });
+db.Usuario.belongsTo(db.TipoEmpleado, { foreignKey: 'id_Tipo' });
+
+db.Almacen.hasMany(db.Usuario, { foreignKey: 'id_almacen' });
+db.Usuario.belongsTo(db.Almacen, { foreignKey: 'id_almacen' });
