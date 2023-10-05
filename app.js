@@ -3,6 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 require('dotenv/config');
+require('./models/associations')
 
 // Local Modules
 
@@ -13,6 +14,7 @@ const apiUsuarios = require("./routes/usuario.routes");
 const apiInventario = require("./routes/inventario.routes");
 const db = require("./models");
 //db.Usuario.sync({ alter: true }); ((((TO BE USED BY EVERYONE IN THE FUTURE. NACHO, KIKE, ANGEL. DO NOT DELETE))))
+//db.Producto.sync({ force: true });
 
 // Server Initialization
 const app = express();

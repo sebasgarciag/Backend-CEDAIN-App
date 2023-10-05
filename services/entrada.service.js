@@ -3,7 +3,15 @@ const dbConfig = require('../config/db.config');
 const db = require('../models');
 
 exports.buscarTodas = async function() { // RETURNS ALL
-    entradas = await db.Entrada.findAll();
+    entradas = await db.Entrada.findAll({ include: [
+        db.Comunidad, 
+        {   
+            model: db.Usuario,
+            attributes: ['nombre', 'apellido_paterno']
+        }, 
+        db.Almacen, 
+        db.Evento
+    ]});
     return entradas;
 }
 
@@ -13,7 +21,15 @@ exports.buscarPorId = async function(idEntrada) { //RETURNS ENTRY INFO FROM THE 
     entradas = await db.Entrada.findAll({ //entre todas, busca la que tenga idEntrada igual
         where: {
             id_entrada: idEntrada
-        }
+        }, 
+        include: [
+            db.Comunidad, 
+            {   model: db.Usuario,
+                attributes: ['nombre', 'apellido_paterno']
+            }, 
+            db.Almacen, 
+            db.Evento
+        ]
     });
 
     if (entradas.length > 0) {
@@ -30,7 +46,12 @@ exports.buscarEntradasDeUsuario = async function(idUsuario) { //RETURNS ENTRY IN
     entradas = await db.Entrada.findAll({ //entre todas, busca la que tenga idEntrada igual
         where: {
             id_usuario: idUsuario
-        }
+        }, 
+        include: [
+            db.Comunidad,
+            db.Almacen, 
+            db.Evento
+        ]
     });
 
     if (entradas.length > 0) {
@@ -41,13 +62,17 @@ exports.buscarEntradasDeUsuario = async function(idUsuario) { //RETURNS ENTRY IN
 }
 
 
-
 exports.detallesPorId = async function(idEntrada) { //RETURNS INFO FROM THE ID GIVEN ONLY
     let entradaDetalles;
 
     entradaDetalles = await db.EntradaDetalles.findAll({ //entre todas, busca la que tenga idEntrada igual
         where: {
             id_entrada: idEntrada
+        },
+        include: {
+            model: db.Producto, 
+            attributes: ['nombre'],
+            include: db.Tamanio
         }
     });
 
@@ -57,6 +82,7 @@ exports.detallesPorId = async function(idEntrada) { //RETURNS INFO FROM THE ID G
 
     return entradaDetalles;
 };
+
 
 exports.entradasPorFecha = async function(date) { //RETURNS ALL ENTRIES ON GIVEN DATE (YYYY-MM-DD)
 
@@ -124,16 +150,23 @@ exports.crear = async function(entrada) {   //CREATES NEW ENTRADA. RECEIVES ALL 
     }
     catch (error) {
         console.error("Error en entrada.service.js: ", error);
-        throw new Error("Error en entrada.service.js; CHECK YOUR TERMINAL!\nProbablemente necesites informacion de una tabla que esta vacia.");
+        throw new Error("Error al crear entrada: Possible Foreign Key Constraint.");
     }
 }
 
 
 exports.crearEntradaDetalle = async function(entradaDetalle){
 
-    nuevosDetalles = await db.EntradaDetalles.bulkCreate(entradaDetalle);
-    return nuevosDetalles;
-
+    //Keeps the server from crashing if, for example, a foreign key constraint is found.
+    try{
+        let nuevosDetalles = await db.EntradaDetalles.bulkCreate(entradaDetalle);
+        return nuevosDetalles;
+    }
+    catch (error) {
+        console.error("Error en crearEntradaDetalle (service): ", error);
+        throw new Error("crearEntradaDetalle: Possible Foreign Key Constraint"); //'throw' sends this error to the controller
+        
+    }
 
 }
 

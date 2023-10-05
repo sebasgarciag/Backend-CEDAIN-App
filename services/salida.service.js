@@ -3,7 +3,14 @@ const { Op } = require('sequelize');
 const dbConfig = require('../config/db.config');
 
 exports.buscarTodas = async function() { // RETURNS ALL
-    salidas = await db.Salida.findAll();
+    salidas = await db.Salida.findAll({ include: [
+        {   
+            model: db.Usuario,
+            attributes: ['nombre', 'apellido_paterno']
+        }, 
+        db.Almacen, 
+        db.Evento
+    ]});
     return salidas;
 }
 
@@ -53,6 +60,11 @@ exports.detallesPorId = async function(idSalida) { //RETURNS INFO FROM THE ID GI
     salidaDetalles = await db.SalidaDetalle.findAll({ //entre todas, busca la que tenga idEntrada igual
         where: {
             id_salida: idSalida
+        },
+        include: {
+            model: db.Producto, 
+            attributes: ['nombre'],
+            include: db.Tamanio
         }
     });
 
@@ -81,7 +93,11 @@ exports.buscarSalidasDeUsuario = async function(idUsuario) {
         salidas = await db.Salida.findAll({ //entre todas las salidas, busca la que tenga id_usuario == idUsuario
             where: {
                 id_usuario: idUsuario
-            }
+            }, 
+            include: [
+                db.Almacen, 
+                db.Evento
+            ]
         });
     
         if (salidas.length > 0) {

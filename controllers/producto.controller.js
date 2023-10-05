@@ -1,4 +1,4 @@
-const entradaService = require('../services/entrada.service');
+const productoService = require('../services/producto.service');
 const { validationResult } = require('express-validator');
 
 
@@ -40,7 +40,7 @@ exports.getBuscarPorId = async function (req, res) {
         let producto = await productoService.buscarPorId(idProducto);
 
         if (producto !== undefined) {
-            res.json(pro).status(200);
+            res.json(producto).status(200);
         } else {
             res.status(204).json({ success: false });
         }        
