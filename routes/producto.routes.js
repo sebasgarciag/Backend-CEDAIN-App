@@ -1,0 +1,38 @@
+const router = require("express").Router();
+const { check, param } = require('express-validator');
+
+let productoController = require("../controllers/producto.controller");
+
+
+router.post("/productos", [ //CREATE
+
+    
+    check("nombre").isLength({ max: 80 }).withMessage("nombre no debe exceder 80 caracteres y es obligatorio"),
+    check("id_tamaño").isNumeric().withMessage("Id de tamaño debe de ser numerico y es obligatorio"),
+    check("medida").isLength({ max: 30 }).withMessage("la medida no debe exceder 30 caracteres y es obligatorio"),
+    check("precio").isDecimal().withMessage("El campo debe ser decimal y es obligatorio"),
+    check("categoria").isLength({ max: 30 }).withMessage("Categoria no debe exceder 30 caracteres y es obligatorio"),
+    check("nombre_corto").isLength({ max: 40 }).withMessage("Nombre corto no debe exceder 40 caracteres y es obligatorio"),
+    
+    
+], productoController.postCrear);
+
+// GET EM ALL
+router.get("/productos", productoController.getBuscarTodas);
+
+//GET SOM
+router.get("/productos/:id", [ 
+    param("id").isNumeric().withMessage("ID debe ser numerico")
+], productoController.getBuscarPorId);
+
+
+
+ router.put("/productos/:id", [
+     //Validate the ID in the URL
+     //THIS METHOD ASSUMES THE REQUIRED INFO TO UPDATE AN ENTRY IS THE ID ONLY.
+     //YOU CAN ALSO UPDATE JUST ONE OF THE THINGS IN SAID ENTRY, INSTEAD OF REQUIERING EVERY SINGLE COLUMN ON THE DB TABLE.
+     param("id").isNumeric().withMessage("Id debe ser numerico")
+ ], productoController.updateProducto);
+
+
+module.exports = router;
