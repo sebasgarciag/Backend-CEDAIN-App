@@ -5,14 +5,14 @@ const db = require('../models');
 
 
 exports.buscarTodas = async function() { // RETURNS ALL
-    inventario = await db.Inventarios.findAll();
+    inventario = await db.Inventario.findAll();
     return inventario;
 }
 
 // Crear inventario con producto
 exports.crear = async function(inventario) { // RETURNS ALL
 
-    nuevoInventario = await db.Inventarios.create(inventario)
+    nuevoInventario = await db.Inventario.create(inventario)
 
     console.log("Inventario - producto creado")
     return nuevoInventario;
@@ -22,7 +22,7 @@ exports.crear = async function(inventario) { // RETURNS ALL
 exports.updateInventario = async function(idInventario,inventario) { //This one will only update parameters given.
     let inventarioActualizado = false;
 
-    const existingInventario = await db.Inventarios.findByPk(idInventario)
+    const existingInventario = await db.Inventario.findByPk(idInventario)
 
     if (existingInventario !== null) {
         await db.Inventario.update(
@@ -41,7 +41,7 @@ exports.updateInventario = async function(idInventario,inventario) { //This one 
 };
 
 exports.buscarTodosProductos = async function() { // RETURNS ALL
-    entradas = await db.Productos.findAll();
+    entradas = await db.Producto.findAll();
     return entradas;
 }
 
@@ -50,14 +50,14 @@ exports.buscarInventarioPorAlmacen = async function(idAlmacen) {
     let inventarios = undefined;
 
     // Busca todos los registros en la tabla 'inventarios' que tengan el 'id_almacen' especificado
-    inventarios = await db.Inventarios.findAll({
+    inventarios = await db.Inventario.findAll({
         where: {
             id_almacen: idAlmacen
         },
         include: [{
-            model: db.Productos,
-            as: 'Producto',
-            required: true
+            model: db.Producto,
+            required: true,
+            include: db.Tamanio
         }]
     });
 

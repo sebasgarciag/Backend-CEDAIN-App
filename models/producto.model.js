@@ -20,12 +20,16 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING(30),
             allowNull: true
         },
-        precio: {
+        precio_venta: {
             type: Sequelize.DECIMAL(10, 2), // 10 dígitos en total, 2 decimales
             allowNull: true
         },
-        categoria: {
-            type: Sequelize.STRING(30),
+        precio_trueque: {
+            type: Sequelize.DECIMAL(10, 2), // 10 dígitos en total, 2 decimales
+            allowNull: true
+        },
+        id_categoria: {
+            type: Sequelize.INTEGER,
             allowNull: true
         },
         nombre_corto: {
@@ -33,6 +37,9 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: true
         }
   
+    }, {
+        tableName: 'productos',
+        timestamps: false // TRUE if there is createdAt and updatedAt on table.
     });
   
     return Producto;
