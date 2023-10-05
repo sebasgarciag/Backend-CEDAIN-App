@@ -27,6 +27,11 @@ router.get("/:id", [
     param("id").isNumeric().withMessage("ID debe ser numerico")
 ], inventarioController.getBuscarPorAlmacen);
 
+router.get("/:idAlmacen/:idProducto", [ 
+    param("idAlmacen").isNumeric().withMessage("ID de almacén debe ser numérico"),
+    param("idProducto").isNumeric().withMessage("ID de producto debe ser numérico")
+], inventarioController.detallesProducto);
+
 
 module.exports = router;
 

@@ -26,6 +26,25 @@ exports.getBuscarPorAlmacen = async function (req, res) {
     }
 };
 
+exports.detallesProducto = async function (req, res) {
+    let result = validationResult(req);
+
+    if (result.errors.length > 0) {
+        res.status(400).json({ success: false, error: result });
+    } else {
+        let idAlmacen = req.params.idAlmacen;
+        let idProducto = req.params.idProducto;
+        let productoEncontrado = await inventarioService.detallesProducto(idAlmacen, idProducto);
+
+        if (productoEncontrado !== undefined) {
+            res.json(productoEncontrado).status(200);
+        } else {
+            res.status(204).json({ success: false });
+        }        
+    }
+};
+
+
 
 exports.postCrear = async function (req, res) {
     let result = validationResult(req);

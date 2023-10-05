@@ -55,13 +55,33 @@ exports.buscarInventarioPorAlmacen = async function(idAlmacen) {
             id_almacen: idAlmacen
         },
         include: [{
-            model: db.Productos,
+            model: db.Productos, 
             as: 'Producto',
             required: true
         }]
     });
 
     return inventarios;
+}
+exports.detallesProducto = async function(idAlmacen, idProducto) { 
+    let producto = undefined;
+
+    // Busca todos los registros en la tabla 'inventarios' que tengan el 'id_almacen' especificado
+    producto = await db.Inventarios.findAll({
+        where: {
+            id_almacen: idAlmacen
+        },
+        include: [{
+            model: db.Productos, 
+            as: 'Producto',
+            required: true,
+            where: {
+                id_producto: idProducto
+            }
+        }]
+    });
+
+    return producto;
 }
 
 
