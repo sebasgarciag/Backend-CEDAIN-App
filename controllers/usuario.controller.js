@@ -1,8 +1,7 @@
 const usuarioService = require("../services/usuario.service");
 const { validationResult } = require("express-validator");
 
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
+
 
 //Crea Usuario
 exports.postCrearUsuario = async function (req, res) {
@@ -10,13 +9,6 @@ exports.postCrearUsuario = async function (req, res) {
 
   try {
     let newUsuario = req.body;     //todo lo que viene en el json payload
-
-    // Verifica si la contraseña existe antes de hashearla
-    if (newUsuario.password) {
-      newUsuario.password = bcrypt.hashSync(newUsuario.password, saltRounds);
-    } else {
-      throw new Error('Contraseña no proporcionada');
-    }
 
     let usuarioCreado = await usuarioService.crearUsuario(newUsuario);
     return res.json(usuarioCreado).status(201);
