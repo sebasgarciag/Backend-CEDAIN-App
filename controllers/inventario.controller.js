@@ -45,7 +45,7 @@ exports.postCrear = async function (req, res) {
     }    
 };
 
-exports.putProductos = async function (req,res){
+exports.putModificarInventario = async function (req,res){
     let result = validationResult(req);
 
     if (result.errors.length > 0) {
