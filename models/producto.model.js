@@ -35,7 +35,15 @@ module.exports = (sequelize, Sequelize) => {
         nombre_corto: {
             type: Sequelize.STRING(40),
             allowNull: true
-        }
+        },
+        precio_trueque: {
+            type: Sequelize.DECIMAL(10, 2), // 10 dígitos en total, 2 decimales
+            allowNull: true
+        },
+        precio_venta: {
+            type: Sequelize.DECIMAL(10, 2), // 10 dígitos en total, 2 decimales
+            allowNull: true
+        },
   
     }, {
         tableName: 'productos',
