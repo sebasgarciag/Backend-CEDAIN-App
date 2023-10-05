@@ -27,12 +27,12 @@ router.get("/productos/:id", [
 
 
 
-router.put("/productos/:id", [
-    //Validate the ID in the URL
-    //THIS METHOD ASSUMES THE REQUIRED INFO TO UPDATE AN ENTRY IS THE ID ONLY.
-    //YOU CAN ALSO UPDATE JUST ONE OF THE THINGS IN SAID ENTRY, INSTEAD OF REQUIERING EVERY SINGLE COLUMN ON THE DB TABLE.
-    param("id").isNumeric().withMessage("Id debe ser numerico")
-], productoController.updateEntrada);
+ router.put("/productos/:id", [
+     //Validate the ID in the URL
+     //THIS METHOD ASSUMES THE REQUIRED INFO TO UPDATE AN ENTRY IS THE ID ONLY.
+     //YOU CAN ALSO UPDATE JUST ONE OF THE THINGS IN SAID ENTRY, INSTEAD OF REQUIERING EVERY SINGLE COLUMN ON THE DB TABLE.
+     param("id").isNumeric().withMessage("Id debe ser numerico")
+ ], productoController.updateProducto);
 
 
 module.exports = router;
