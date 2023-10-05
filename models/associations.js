@@ -41,5 +41,6 @@ db.Inventario.belongsTo(db.Producto , {foreignKey: 'id_producto'});
 db.TipoEmpleado.hasMany(db.Usuario, { foreignKey: 'id_Tipo' });
 db.Usuario.belongsTo(db.TipoEmpleado, { foreignKey: 'id_Tipo' });
 
-db.Almacen.hasMany(db.Usuario, { foreignKey: 'id_almacen' });
-db.Usuario.belongsTo(db.Almacen, { foreignKey: 'id_almacen' });
+db.Usuario.belongsTo(db.Almacen, { foreignKey: 'id_almacen', targetKey: 'id_almacen' });
+db.Almacen.hasMany(db.Usuario, { foreignKey: 'id_almacen', sourceKey: 'id_almacen' });
+

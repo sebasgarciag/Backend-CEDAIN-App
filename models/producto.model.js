@@ -29,7 +29,7 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: true
         },
         id_categoria: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.INTEGER.UNSIGNED,
             allowNull: true
         },
         nombre_corto: {

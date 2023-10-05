@@ -16,6 +16,9 @@ const db = require("./models");
 //db.Usuario.sync({ alter: true }); ((((TO BE USED BY EVERYONE IN THE FUTURE. NACHO, KIKE, ANGEL. DO NOT DELETE))))
 //db.Producto.sync({ force: true });
 
+
+
+
 // Server Initialization
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -40,7 +43,7 @@ app.use('/inventario', apiInventario);
 
 
 // Establish Database Connection (if concerned about data persistence)
-db.sequelize.sync()
+db.sequelize.sync({ alter: true })
   .then(() => {
     console.log("Synced db.");
   })

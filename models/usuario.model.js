@@ -18,11 +18,11 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: true
         },
         id_Tipo: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.INTEGER.UNSIGNED,
             allowNull: true
         },
         id_almacen: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.INTEGER.UNSIGNED,
             allowNull: true
         },
         correo: {
