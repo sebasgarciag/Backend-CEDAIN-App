@@ -9,7 +9,7 @@ exports.Inventario = function (id, nombre, apellido) {
     this.nombre = nombre;
     this.apellido = apellido;
 };*/
-
+/*
 module.exports = (sequelize, Sequelize) => {
     const Inventario = sequelize.define("inventarios", {
         id_inventario: {
@@ -34,3 +34,4 @@ module.exports = (sequelize, Sequelize) => {
   
     return Inventario;
 };
+*/
