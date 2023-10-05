@@ -23,7 +23,7 @@ router.get("", productoController.getBuscarTodas);
 
 //GET SOM
 router.get("/:id", [ 
-    param("id").isNumeric().withMessage("ID debe ser numerico")
+    param("id").isNumeric().withMessage("ID debe ser numerico ")
 ], productoController.getBuscarPorId);
 
 
@@ -41,7 +41,7 @@ router.put("/:id", [
     check("nombre_corto").optional().isLength({ max: 40 }).withMessage("Nombre corto no debe exceder 40 caracteres y es obligatorio"),
 ], productoController.updateProducto);
 
- router.get("/categorias", [
+ router.get("/categorias/todas", [
     
  ], productoController.getCategorias );
 

@@ -92,6 +92,7 @@ exports.updateProducto = async function (req, res) {
 };
 
 exports.getCategorias = async function (req, res) {
+   
     let categoria = await productoService.buscarCategorias();
     res.json(categoria).status(200);
 };
