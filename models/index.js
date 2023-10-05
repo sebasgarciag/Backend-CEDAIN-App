@@ -16,7 +16,6 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
 
 const db = {};
 
-db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.Entrada = require("./entrada.model.js")(sequelize, Sequelize);
@@ -28,7 +27,10 @@ db.Producto = require("./producto.model.js")(sequelize, Sequelize);
 db.EntradaDetalles = require("./entradaDetalles.model.js")(sequelize, Sequelize);
 db.Salida = require("./salida.model.js")(sequelize, Sequelize);
 db.SalidaDetalle = require("./salidaDetalles.model.js")(sequelize, Sequelize);
-db.Productos = require("./productos.model.js")(sequelize, Sequelize);
 db.Inventario = require("./inventario.model.js")(sequelize, Sequelize);
+db.Producto = require("./producto.model.js")(sequelize, Sequelize);
+db.Tamanio = require("./tamanio.model.js")(sequelize, Sequelize);
+db.Categoria = require("./categoria.model.js")(sequelize, Sequelize);
+db.TipoEmpleado = require("./tipoEmpleado.model.js")(sequelize, Sequelize);
 
 module.exports = db;

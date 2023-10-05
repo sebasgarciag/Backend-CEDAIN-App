@@ -3,7 +3,15 @@ const dbConfig = require('../config/db.config');
 const db = require('../models');
 
 exports.buscarTodas = async function() { // RETURNS ALL
-    entradas = await db.Entrada.findAll();
+    entradas = await db.Entrada.findAll({ include: [
+        db.Comunidad, 
+        {   
+            model: db.Usuario,
+            attributes: ['nombre', 'apellido_paterno']
+        }, 
+        db.Almacen, 
+        db.Evento
+    ]});
     return entradas;
 }
 
@@ -13,7 +21,15 @@ exports.buscarPorId = async function(idEntrada) { //RETURNS ENTRY INFO FROM THE 
     entradas = await db.Entrada.findAll({ //entre todas, busca la que tenga idEntrada igual
         where: {
             id_entrada: idEntrada
-        }
+        }, 
+        include: [
+            db.Comunidad, 
+            {   model: db.Usuario,
+                attributes: ['nombre', 'apellido_paterno']
+            }, 
+            db.Almacen, 
+            db.Evento
+        ]
     });
 
     if (entradas.length > 0) {
@@ -30,7 +46,12 @@ exports.buscarEntradasDeUsuario = async function(idUsuario) { //RETURNS ENTRY IN
     entradas = await db.Entrada.findAll({ //entre todas, busca la que tenga idEntrada igual
         where: {
             id_usuario: idUsuario
-        }
+        }, 
+        include: [
+            db.Comunidad,
+            db.Almacen, 
+            db.Evento
+        ]
     });
 
     if (entradas.length > 0) {
@@ -47,6 +68,11 @@ exports.detallesPorId = async function(idEntrada) { //RETURNS INFO FROM THE ID G
     entradaDetalles = await db.EntradaDetalles.findAll({ //entre todas, busca la que tenga idEntrada igual
         where: {
             id_entrada: idEntrada
+        },
+        include: {
+            model: db.Producto, 
+            attributes: ['nombre'],
+            include: db.Tamanio
         }
     });
 

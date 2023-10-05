@@ -40,7 +40,7 @@ exports.getBuscarPorId = async function (req, res) {
         let producto = await productoService.buscarPorId(idProducto);
 
         if (producto !== undefined) {
-            res.json(pro).status(200);
+            res.json(producto).status(200);
         } else {
             res.status(204).json({ success: false });
         }        
@@ -89,4 +89,10 @@ exports.updateProducto = async function (req, res) {
         }        
 
     }    
+};
+
+exports.getCategorias = async function (req, res) {
+   
+    let categoria = await productoService.buscarCategorias();
+    res.json(categoria).status(200);
 };
