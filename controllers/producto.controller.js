@@ -1,4 +1,4 @@
-const entradaService = require('../services/entrada.service');
+const productoService = require('../services/producto.service');
 const { validationResult } = require('express-validator');
 
 
@@ -89,4 +89,9 @@ exports.updateProducto = async function (req, res) {
         }        
 
     }    
+};
+
+exports.getCategorias = async function (req, res) {
+    let categoria = await productoService.buscarCategorias();
+    res.json(categoria).status(200);
 };

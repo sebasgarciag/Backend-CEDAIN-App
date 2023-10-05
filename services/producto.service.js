@@ -7,6 +7,14 @@ exports.buscarTodas = async function() { // RETURNS ALL
     return productos;
 }
 
+
+
+exports.buscarCategorias = async function() { // RETURNS ALL CATEGORIAS 
+    categorias = await db.Categoria.findAll();
+    return categorias;
+}
+
+
 exports.buscarPorId = async function(idProducto) { //RETURNS ENTRY INFO FROM THE ID GIVEN ONLY
     let producto = undefined;
 
