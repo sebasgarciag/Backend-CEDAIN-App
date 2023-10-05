@@ -1,7 +1,6 @@
 const router = require("express").Router();
 const { check, param } = require('express-validator');
 
-let entradaController = require("../controllers/entrada.controller");
 let productoController = require("../controllers/producto.controller");
 
 
@@ -24,7 +23,7 @@ router.get("/productos", productoController.getBuscarTodas);
 //GET SOM
 router.get("/productos/:id", [ 
     param("id").isNumeric().withMessage("ID debe ser numerico")
-], entradaController.getBuscarPorId);
+], productoController.getBuscarPorId);
 
 
 
@@ -33,7 +32,7 @@ router.put("/productos/:id", [
     //THIS METHOD ASSUMES THE REQUIRED INFO TO UPDATE AN ENTRY IS THE ID ONLY.
     //YOU CAN ALSO UPDATE JUST ONE OF THE THINGS IN SAID ENTRY, INSTEAD OF REQUIERING EVERY SINGLE COLUMN ON THE DB TABLE.
     param("id").isNumeric().withMessage("Id debe ser numerico")
-], entradaController.updateEntrada);
+], productoController.updateEntrada);
 
 
 module.exports = router;
