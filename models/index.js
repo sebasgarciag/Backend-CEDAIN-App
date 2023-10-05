@@ -23,14 +23,16 @@ db.Comunidad = require("./comunidad.model.js")(sequelize, Sequelize);
 db.Evento = require("./evento.model.js")(sequelize, Sequelize);
 db.Usuario = require("./usuario.model.js")(sequelize, Sequelize);
 db.Almacen = require("./almacen.model.js")(sequelize, Sequelize);
+db.Producto = require("./producto.model.js")(sequelize, Sequelize);
+db.EntradaDetalles = require("./entradaDetalles.model.js")(sequelize, Sequelize);
 db.Salida = require("./salida.model.js")(sequelize, Sequelize);
-db.EntradaDetalle = require("./entrada_detalles.model.js")(sequelize, Sequelize);
 db.SalidaDetalle = require("./salidaDetalles.model.js")(sequelize, Sequelize);
-db.Productos = require("./productos.model.js")(sequelize, Sequelize);
+db.Productos = require("./producto.model.js")(sequelize, Sequelize);
 db.Inventarios = require("./inventario.model.js")(sequelize, Sequelize);
 
 db.Productos.hasMany(db.Inventarios, { foreignKey: 'id_producto' });
 db.Inventarios.belongsTo(db.Productos, { foreignKey: 'id_producto' });
+db.Tamanio = require("./tamanio.model.js")(sequelize, Sequelize);
 
 
 module.exports = db;
