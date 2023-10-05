@@ -11,7 +11,7 @@ exports.buscarPorId = async function(idProducto) { //RETURNS ENTRY INFO FROM THE
     let producto = undefined;
 
     producto = await db.Producto.findByPk(idProducto);
-    console.log(idProducto)
+    // console.log(idProducto)
 
     return producto;
 }
