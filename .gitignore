@@ -15,3 +15,5 @@ benchmarks/graphs
 *.env.example
 *.env.local
 *.env.staging
+*.code-workspace
+
