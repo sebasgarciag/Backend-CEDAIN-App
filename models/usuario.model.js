@@ -17,8 +17,8 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING(40),
             allowNull: true
         },
-        tipo: {
-            type: Sequelize.STRING(15),
+        id_Tipo: {
+            type: Sequelize.INTEGER,
             allowNull: true
         },
         id_almacen: {

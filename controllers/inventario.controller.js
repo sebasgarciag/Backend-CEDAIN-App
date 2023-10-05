@@ -89,4 +89,28 @@ exports.getBuscarPorAlm= async function (req, res) {
         }        
     }
 };
+
+/*
+
+/**
+ * Procesa el request GET para obtener una persona por medio de su id
+ * @param {Request} req - Request 
+ * @param {Response} res - Response Persona que pertenece al id proporcionado
+ 
+exports.getBuscarPorAlm= async function (req, res) {
+    let result = validationResult(req);
+
+    if (result.errors.length > 0) {
+        res.status(400).json({ success: false, error: result });
+    } else {
+        let idAlmacen = req.params.id;
+        let inventario = await personaService.buscarPorId(idPersona);
+
+        if (persona !== undefined) {
+            res.json(persona).status(200);
+        } else {
+            res.status(204).json({ success: false });
+        }        
+    }
+};
 */
