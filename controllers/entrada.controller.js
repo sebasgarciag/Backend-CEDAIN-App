@@ -151,43 +151,139 @@ exports.getDetallesPorId = async function (req, res) {
     }
 };
 
-exports.exportAllToExcel = async function (req, res) {
-    console.log("Función exportAllToExcel llamada");  
-    let entradas = await entradaService.buscarTodas();  // retorna todas las entradas
 
-    if (!entradas || entradas.length === 0) {
-        return res.status(404).json({ success: false, message: "No se encontraron entradas" });
+exports.exportarPorId = async function (req, res) {
+    let result = validationResult(req);
+
+    if (result.errors.length > 0) {
+        return res.status(400).json({ success: false, error: result });
     }
 
-    const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet('Entradas');
+    try {
+        let idEntrada = req.params.id;
+        let entrada = await entradaService.buscarPorId(idEntrada);
 
-    worksheet.columns = [
-        { header: 'ID Entrada', key: 'id_entrada', width: 15 },
-        { header: 'Fecha', key: 'fecha', width: 15 },
-        { header: 'Folio', key: 'folio', width: 10 },
-        { header: 'Serie', key: 'serie', width: 10 },
-        { header: 'Observaciones', key: 'observaciones', width: 30 },
-        { header: 'ID Usuario', key: 'id_usuario', width: 15 },
-        { header: 'ID Almacén', key: 'id_almacen', width: 15 },
-        { header: 'Emisor', key: 'emisor', width: 20 },
-        { header: 'ID Comunidad', key: 'id_comunidad', width: 15 },
-        { header: 'ID Evento', key: 'id_evento', width: 15 },
-        { header: 'Fecha de Creación', key: 'createdAt', width: 20 },
-        { header: 'Fecha de Actualización', key: 'updatedAt', width: 20 },
-        { header: 'Precio Trueque', key: 'Precio_trueque', width: 20 }
-    ];
-    
-    entradas.forEach(entrada => {
-        worksheet.addRow(entrada);
-    });
+        if (entrada) {
+            // Create Excel file using exceljs
+            let workbook = new ExcelJS.Workbook();
+            let worksheet = workbook.addWorksheet('Entrada');
+            
+            // Add headers and data based on your columns
+            worksheet.columns = [
+                { header: 'ID Entrada', key: 'id_entrada' },
+                { header: 'Fecha', key: 'fecha' },
+                { header: 'Folio', key: 'folio' },
+                { header: 'Serie', key: 'serie' },
+                { header: 'Observaciones', key: 'observaciones' },
+                { header: 'ID Usuario', key: 'id_usuario' },
+                { header: 'ID Almacén', key: 'id_almacen' },
+                { header: 'Emisor', key: 'emisor' },
+                { header: 'ID Comunidad', key: 'id_comunidad' },
+                { header: 'ID Evento', key: 'id_evento' },
+                { header: 'Creado', key: 'createdAt' },
+                { header: 'Actualizado', key: 'updatedAt' },
+                { header: 'Precio Trueque', key: 'Precio_trueque' }
+            ];
+            worksheet.addRow(entrada);
 
-    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    res.setHeader("Content-Disposition", "attachment; filename=Entradas.xlsx");
-    workbook.xlsx.write(res).then(() => {
-        res.status(200).end();
-    });
+            // Send the Excel file as response
+            res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            res.setHeader('Content-Disposition', 'attachment; filename=entrada.xlsx');
+            return workbook.xlsx.write(res).then(() => {
+                res.status(200).end();
+            });
+        } else {
+            res.status(404).json({ success: false, message: "Entrada no encontrada" });
+        }
+    } catch (error) {
+        console.error("Error al intentar exportar entrada: ", error);
+        res.status(500).json({ success: false, message: "Error interno del servidor" });
+    }
 };
+
+
+exports.exportarPorId = async function (req, res) {
+    let result = validationResult(req);
+
+    if (result.errors.length > 0) {
+        return res.status(400).json({ success: false, error: result });
+    }
+
+    try {
+        let idEntrada = req.params.id;
+        let entrada = await entradaService.buscarPorId(idEntrada);
+
+        if (entrada) {
+            // Create Excel file using exceljs
+            let workbook = new ExcelJS.Workbook();
+            let worksheet = workbook.addWorksheet('Entrada');
+
+            // Define columns with headers and key fields
+            worksheet.columns = [
+                { header: 'ID Entrada', key: 'id_entrada', width: 15 },
+                { header: 'Fecha', key: 'fecha', width: 15 },
+                { header: 'Folio', key: 'folio', width: 15 },
+                { header: 'Serie', key: 'serie', width: 15 },
+                { header: 'Observaciones', key: 'observaciones', width: 25 },
+                { header: 'ID Usuario', key: 'id_usuario', width: 15 },
+                { header: 'ID Almacén', key: 'id_almacen', width: 15 },
+                { header: 'Emisor', key: 'emisor', width: 20 },
+                { header: 'ID Comunidad', key: 'id_comunidad', width: 15 },
+                { header: 'ID Evento', key: 'id_evento', width: 15 },
+                { header: 'Creado', key: 'createdAt', width: 20 },
+                { header: 'Actualizado', key: 'updatedAt', width: 20 },
+                { header: 'Precio Trueque', key: 'Precio_trueque', width: 20 }
+            ];
+
+            // Add the data row
+            worksheet.addRow(entrada);
+
+            // Format the header
+            let headerRow = worksheet.getRow(1);
+            headerRow.eachCell((cell) => {
+                cell.fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: 'FFD3D3D3' } // Light gray fill
+                };
+                cell.border = {
+                    top: { style: 'thin' },
+                    left: { style: 'thin' },
+                    bottom: { style: 'thin' },
+                    right: { style: 'thin' }
+                };
+                cell.font = { bold: true };
+            });
+
+            // Format data rows
+            worksheet.eachRow({ includeEmpty: false }, function(row, rowNumber) {
+                if (rowNumber > 1) { // Skip header row
+                    row.eachCell((cell) => {
+                        cell.border = {
+                            top: { style: 'thin' },
+                            left: { style: 'thin' },
+                            bottom: { style: 'thin' },
+                            right: { style: 'thin' }
+                        };
+                    });
+                }
+            });
+
+            // Send the Excel file as response
+            res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            res.setHeader('Content-Disposition', 'attachment; filename=entrada.xlsx');
+            return workbook.xlsx.write(res).then(() => {
+                res.status(200).end();
+            });
+        } else {
+            res.status(404).json({ success: false, message: "Entrada no encontrada" });
+        }
+    } catch (error) {
+        console.error("Error al intentar exportar entrada: ", error);
+        res.status(500).json({ success: false, message: "Error interno del servidor" });
+    }
+};
+
 
 exports.exportToExcel = async function (req, res) {
     console.log("Función exportToExcel por id llamada");

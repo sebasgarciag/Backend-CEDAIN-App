@@ -1,4 +1,4 @@
-const entradaService = require('../services/entrada.service');
+const productoService = require('../services/producto.service');
 const { validationResult } = require('express-validator');
 
 

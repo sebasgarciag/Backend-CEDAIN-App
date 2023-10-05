@@ -3,11 +3,14 @@ const { check, param, body } = require('express-validator');
 
 let entradaController = require("../controllers/entrada.controller");
 
-// Exportar todas las entradas a excel
-router.get("/exportAll", entradaController.exportAllToExcel);
+// Exportar entrada detalles por encima (tabla entradas)
+router.get("/exportar/:id", [ 
+    param("id").isNumeric().withMessage("ID debe ser numerico")
+], entradaController.exportarPorId);
 
-// Exportar entrada por id a excel
+// Exportar los detalles de la entrada (entradas_detalle)
 router.get("/export/:id", entradaController.exportToExcel);
+
 
 //CREATE entrada
 router.post("/entradas", [ 
