@@ -1,5 +1,5 @@
 const db = require('../models');
-
+/*
 exports.buscarTodas = async function() { // RETURNS ALL
     inventario = await db.Inventario.findAll();
     return inventario;
@@ -36,5 +36,5 @@ exports.updateInventario = async function(idInventario,inventario) { //This one 
     return inventarioActualizado;
 };
 
-
+*/
 
