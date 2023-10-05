@@ -24,7 +24,13 @@ module.exports = (sequelize, Sequelize) => {
         }
     }, {
         tableName: 'salidas_detalle',
-        timestamps: false // TRUE if there is createdAt and updatedAt on table.
+        timestamps: false, // TRUE if there is createdAt and updatedAt on table.
+
+        uniqueKeys: {
+            detalles_unique: {
+                fields: ['id_salida', 'id_producto']
+            }
+        }
     });
 
     return Detalles;

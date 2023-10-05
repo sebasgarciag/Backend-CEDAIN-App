@@ -1,28 +1,28 @@
 module.exports = (sequelize, Sequelize) => {
-    const Inventarios = sequelize.define('Inventarios', {
-        Id_inventario: {
+    const Inventario = sequelize.define('Inventario', {
+        id_inventario: { //This information is taken from how the table is structured on the DB. (read the query)
             type: Sequelize.INTEGER.UNSIGNED,
             autoIncrement: true,
             primaryKey: true,
             allowNull: false
         },
-        id_producto: {
+        id_producto: { //This information is taken from how the table is structured on the DB. (read the query)
             type: Sequelize.INTEGER,
-            allowNull: true
+            allowNull: false
         },
-        id_almacen: {
+        id_almacen: { //This information is taken from how the table is structured on the DB. (read the query)
             type: Sequelize.INTEGER,
-            allowNull: true
+            allowNull: false
         },
-        cantidad: {
+        cantidad: { //This information is taken from how the table is structured on the DB. (read the query)
             type: Sequelize.INTEGER,
-            allowNull: true
+            allowNull: false
         }
+        
     }, {
         tableName: 'inventarios',
         timestamps: false // TRUE if there is createdAt and updatedAt on table.
     });
-    
-    return Inventarios;
 
+    return Inventario;
 };
