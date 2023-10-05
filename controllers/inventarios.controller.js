@@ -5,7 +5,7 @@ const { validationResult } = require('express-validator');
  * Procesa el request GET para obtener todas las entradas
  * @param {Request} req - Request
  * @param {Response} res - Response que contiene una lista de todas las entradas y status 200
- */
+ *//*
 exports.getBuscarTodas = async function (req, res) {
     let inventario = await inventarioService.buscarTodas();
     res.json(inventario).status(200);
@@ -30,7 +30,6 @@ exports.postCrear = async function (req, res) {
     }    
 };
 
-
 exports.putProductos = async function (req,res){
     let result = validationResult(req);
 
@@ -51,4 +50,24 @@ exports.putProductos = async function (req,res){
     
 };
 
+
+exports.getBuscarPorAlmacen = async function (req, res) {
+    let result = validationResult(req);
+
+    if (result.errors.length > 0) {
+        res.status(400).json({ success: false, error: result });
+    } else {
+        let idAlmacen = req.params.id;
+        let inventarios = await inventarioService.buscarInventarioPorAlmacen(idAlmacen);
+
+        if (inventarios !== undefined && inventarios.length > 0) {
+            res.json(inventarios).status(200);
+        } else {
+            res.status(204).json({ success: false });
+        }        
+    }
+};
+
+
 //UPDATE EXISTING
+*/
