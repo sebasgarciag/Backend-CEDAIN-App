@@ -1,21 +1,10 @@
-/**
- * Representa una Inventario.
- * @constructor
- * @param {number} id - Id de Inventario
- */
-/*
-exports.Inventario = function (id, nombre, apellido) {
-    this.id = id;
-    this.nombre = nombre;
-    this.apellido = apellido;
-};*/
-/*
 module.exports = (sequelize, Sequelize) => {
-    const Inventario = sequelize.define("inventarios", {
-        id_inventario: {
+    const Inventarios = sequelize.define('Inventarios', {
+        Id_inventario: {
             type: Sequelize.INTEGER.UNSIGNED,
             autoIncrement: true,
-            primaryKey: true
+            primaryKey: true,
+            allowNull: false
         },
         id_producto: {
             type: Sequelize.INTEGER,
@@ -29,9 +18,11 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: true
         }
-    },{tableName:'inventarios',}
-    );
-  
-    return Inventario;
+    }, {
+        tableName: 'inventarios',
+        timestamps: false // TRUE if there is createdAt and updatedAt on table.
+    });
+    
+    return Inventarios;
+
 };
-*/
