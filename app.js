@@ -7,6 +7,9 @@ require('dotenv/config');
 // Local Modules
 const apiEntradas = require("./routes/entrada.routes");
 const apiSalidas = require("./routes/salida.routes");
+const apiInventario = require("./routes/inventario.routes")
+
+
 const db = require("./models");
 
 // Server Initialization
@@ -22,6 +25,7 @@ app.use(cors());
 //Cada equipo pone sus rutas aqui <----------------------------------------
 app.use('/entradas', apiEntradas);
 app.use('/salidas', apiSalidas);
+app.use('/inventario', apiInventario);
 //app.use('/', apiSalidas);
 
 
@@ -44,3 +48,4 @@ app.listen(PORT, (error) => {
         console.log("Error occurred, server can't start", error);
     }
 });
+

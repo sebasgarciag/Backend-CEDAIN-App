@@ -1,13 +1,10 @@
 const router = require("express").Router();
 const { check, param } = require('express-validator');
 
-let inventarioController = require("../controllers/inventarios.controller");
-
-
-
+let inventarioController = require("../controllers/inventario.controller");
 
 // GET EM ALL	
-router.get("/inventarios", inventarioController.getBuscarTodas);
+/*router.get("/inventarios", inventarioController.getBuscarTodas);
 
 router.post("/inventarios", [
 	//param("id_inventario").isNumeric().withMessage("ID debe ser numerico"),
@@ -21,6 +18,15 @@ router.post("/inventarios", [
 router.put("/inventarios/:id",[
 	param("id").isNumeric().withMessage("Id debe ser numerico")
 
-], inventarioController.putProductos)
+], inventarioController.putProductos)*/
+
+
+router.get("/", inventarioController.getBuscarTodosProductos);
+
+router.get("/:id", [ 
+    param("id").isNumeric().withMessage("ID debe ser numerico")
+], inventarioController.getBuscarPorAlmacen);
+
 
 module.exports = router;
+
