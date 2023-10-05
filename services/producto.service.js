@@ -10,15 +10,8 @@ exports.buscarTodas = async function() { // RETURNS ALL
 exports.buscarPorId = async function(idProducto) { //RETURNS ENTRY INFO FROM THE ID GIVEN ONLY
     let producto = undefined;
 
-    entradas = await db.Entrada.findAll({ //entre todas, busca la que tenga idEntrada igual
-        where: {
-            id_producto: id_producto
-        }
-    });
-
-    if (productos.length > 0) {
-        producto = pro[0];
-    }
+    producto = await db.Producto.findByPk(idProducto);
+    console.log(idProducto)
 
     return producto;
 }
@@ -48,11 +41,11 @@ exports.crear = async function(producto) {   //CREATES NEW ENTRADA. RECEIVES ALL
     // A) check if received values exist on the db
 
         //check if 'id_comunidad' existe
-    const comCheck = await db.Tamaño.findByPk(producto.id_tamaño);
+/*     const comCheck = await db.Tamaño.findByPk(producto.id_tamaño);
     
     if (!comCheck) {
         throw new Error("El id_tamaño #" + producto.id_tamaño + "(or 0) NO EXISTE en la BD!");
-    }
+    } */
 
        
     
@@ -61,7 +54,7 @@ exports.crear = async function(producto) {   //CREATES NEW ENTRADA. RECEIVES ALL
 
         //Checks for errors. if not, create entrada.
     try {
-        nuevaEntrada = await db.Producto.create(producto);
+        nuevaProducto = await db.Producto.create(producto);
         console.log("Nuevo producto agregado " + nuevaProducto.id_producto);
         return nuevaProducto;
     }
@@ -77,22 +70,11 @@ exports.updateProducto = async function(idProducto, producto) {
     productoActualizado = await db.Producto.findByPk(idProducto)
     console.log("IM HERE UPDATE PRODUCTO.SERVICE")
     if (productoActualizado !== null) {
-        const result = await db.Producto.update(
-            {
-                nombre: producto.nombre,
-                id_tamaño: id_tamaño.folio,
-                medida: medida.serie,
-                precio: producto.precio,
-                categoria: producto.categoria,
-                nombre_corto: entrada.nombre_corto,
-               
+        const result = await db.Producto.update(producto, {
+            where: {
+              id_producto: idProducto,
             },
-            {
-                where: {
-                    id_producto: idProducto
-                }
-            }
-        );
+          });
 
         productoActualizado = true; //success
     }
