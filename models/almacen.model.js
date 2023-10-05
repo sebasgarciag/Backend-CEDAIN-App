@@ -5,6 +5,14 @@ module.exports = (sequelize, Sequelize) => {
             autoIncrement: true,
             primaryKey: true
         },
+        nombre: {
+            type: Sequelize.STRING(50),
+            allowNull: true
+        },
+        ciudad: {
+            type: Sequelize.STRING(15),
+            allowNull: true
+        }
     }, {
         tableName: 'almacen',
         timestamps: false // TRUE if there is createdAt and updatedAt on table.
