@@ -12,7 +12,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING(80),
             allowNull: true
         },
-        id_tamaño: {
+        id_tamanio: {
             type: Sequelize.INTEGER,
             allowNull: true
         },
@@ -32,7 +32,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING(40),
             allowNull: true
         }
-        
+  
     });
   
     return Producto;
