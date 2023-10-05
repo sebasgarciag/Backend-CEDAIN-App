@@ -26,7 +26,6 @@ router.get("/:id", [
 ], productoController.getBuscarPorId);
 
 
-
 router.put("/:id", [
     //Validate the ID in the URL
     //THIS METHOD ASSUMES THE REQUIRED INFO TO UPDATE AN ENTRY IS THE ID ONLY.
@@ -39,6 +38,5 @@ router.put("/:id", [
     check("categoria").optional().isLength({ max: 30 }).withMessage("Categoria no debe exceder 30 caracteres y es obligatorio"),
     check("nombre_corto").optional().isLength({ max: 40 }).withMessage("Nombre corto no debe exceder 40 caracteres y es obligatorio"),
 ], productoController.updateProducto);
-
 
 module.exports = router;

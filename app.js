@@ -3,6 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const cors = require('cors');
 require('dotenv/config');
+require('./models/associations')
 
 // Local Modules
 
