@@ -30,7 +30,7 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: true
         }
     }, {
-        tableName: 'usuarios',
+        tableName: 'usuario',
         timestamps: false
     });
 
