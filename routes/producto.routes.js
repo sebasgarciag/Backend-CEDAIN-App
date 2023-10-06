@@ -23,7 +23,7 @@ router.get("", productoController.getBuscarTodas);
 
 //GET SOM
 router.get("/:id", [ 
-    param("id").isNumeric().withMessage("ID debe ser numerico ")
+    param("id").isNumeric().withMessage("ID debe ser numerico")
 ], productoController.getBuscarPorId);
 
 
