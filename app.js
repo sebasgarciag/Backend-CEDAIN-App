@@ -43,13 +43,13 @@ app.use('/inventario', apiInventario);
 
 
 // Establish Database Connection (if concerned about data persistence)
-// db.sequelize.sync({ alter: true })
-//   .then(() => {
-//     console.log("Synced db.");
-//   })
-//   .catch((err) => {
-//     console.log("Failed to sync db: " + err.message);
-//   });
+db.sequelize.sync()
+  .then(() => {
+    console.log("Synced db.");
+  })
+  .catch((err) => {
+    console.log("Failed to sync db: " + err.message);
+  });
 
 // Server Listen
 app.listen(PORT, (error) => {
