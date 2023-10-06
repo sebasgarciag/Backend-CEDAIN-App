@@ -34,5 +34,4 @@ db.Categoria = require("./categoria.model.js")(sequelize, Sequelize);
 db.TipoEmpleado = require("./tipoEmpleado.model.js")(sequelize, Sequelize);
 
 
-
 module.exports = db;

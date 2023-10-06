@@ -21,10 +21,6 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER.UNSIGNED,
             allowNull: true
         },
-        id_almacen: {
-            type: Sequelize.INTEGER.UNSIGNED,
-            allowNull: true
-        },
         correo: {
             type: Sequelize.STRING(255),
             allowNull: true
@@ -34,7 +30,7 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: true
         }
     }, {
-        tableName: 'usuarios',
+        tableName: 'usuario',
         timestamps: false
     });
 
