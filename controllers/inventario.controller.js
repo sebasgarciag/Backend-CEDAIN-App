@@ -1,5 +1,6 @@
 const inventarioService = require('../services/inventario.service');
 const { validationResult } = require('express-validator');
+const ExcelJS = require('exceljs');
 
 exports.getBuscarTodosProductos = async function (req, res) {
     
@@ -10,6 +11,7 @@ exports.getBuscarTodosProductos = async function (req, res) {
 };
 
 exports.getBuscarPorAlmacen = async function (req, res) {
+    console.log("Funcion de getBuscarPorAlmacen llamada")
     let result = validationResult(req);
 
     if (result.errors.length > 0) {
@@ -17,6 +19,7 @@ exports.getBuscarPorAlmacen = async function (req, res) {
     } else {
         let idAlmacen = req.params.id;
         let inventarios = await inventarioService.buscarInventarioPorAlmacen(idAlmacen);
+        console.log("Detalles del inventario obtenidos: ", inventarios)
 
         if (inventarios !== undefined && inventarios.length > 0) {
             res.json(inventarios).status(200);
@@ -103,6 +106,39 @@ exports.putModificarInventario = async function (req, res){
         }
     }
 };
+
+exports.exportarInventarioPorIdExcel = async function(req, res) {
+    try {
+        const idAlmacen = req.params.id;
+
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet('Inventario');
+
+        worksheet.columns = [
+            { header: 'ID Inventario', key: 'id_inventario', width: 15 },
+            { header: 'ID Producto', key: 'id_producto', width: 15 },
+            { header: 'ID Almacén', key: 'id_almacen', width: 15 },
+            { header: 'Cantidad', key: 'cantidad', width: 10 }
+        ];
+
+        // Obtener todos los datos del inventario para un almacén específico
+        const inventarios = await inventarioService.buscarInventarioPorAlmacen(idAlmacen);
+
+        // Añadir los datos del inventario a la hoja
+        inventarios.forEach(inventario => {
+            worksheet.addRow(inventario.dataValues);
+        });
+
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        res.setHeader('Content-Disposition', 'attachment; filename=inventario-' + idAlmacen + '.xlsx');
+        await workbook.xlsx.write(res);
+        res.end();
+
+    } catch (error) {
+        res.status(500).send('Error al exportar el inventario a Excel: ' + error.message);
+    }
+};
+
 
 /*
 
