@@ -26,7 +26,7 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: true
         },
         id_categoria: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.INTEGER.UNSIGNED,
             allowNull: true
         },
         nombre_corto: {
@@ -41,6 +41,11 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.DECIMAL(10, 2), // 10 dígitos en total, 2 decimales
             allowNull: true
         },
+        // suspendido: {
+        //     type: Sequelize.BOOLEAN,
+        //     allowNull: true
+        // },
+        
   
     }, {
         tableName: 'productos',

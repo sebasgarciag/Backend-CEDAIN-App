@@ -62,7 +62,7 @@ exports.crear = async function(producto) {   //CREATES NEW ENTRADA. RECEIVES ALL
 
         //Checks for errors. if not, create entrada.
     try {
-        nuevaProducto = await db.Producto.create(producto);
+        let nuevaProducto = await db.Producto.create(producto);
         console.log("Nuevo producto agregado " + nuevaProducto.id_producto);
         return nuevaProducto;
     }
@@ -90,6 +90,18 @@ exports.updateProducto = async function(idProducto, producto) {
     return productoActualizado;
 }
 
+exports.suspenderProducto = async function (idProducto, estado) {
+    let productoActualizado = await db.Producto.findByPk(idProducto);
+    if (productoActualizado) {
+        productoActualizado.suspendido = estado;
+        await productoActualizado.save();
+        return productoActualizado;
+    } else {
+        console.log('Producto no encontrado');
+        return null;
+    }
+}
 
-    //Helper functions.
+
+
 

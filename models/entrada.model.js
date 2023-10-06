@@ -36,11 +36,11 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: true
         },
         id_usuario: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.INTEGER.UNSIGNED,
             allowNull: true
         },
         id_almacen: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.INTEGER.UNSIGNED,
             allowNull: true
         },
         emisor: {
@@ -48,11 +48,11 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: true
         },
         id_comunidad: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.INTEGER.UNSIGNED,
             allowNull: true
         },
         id_evento: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.INTEGER.UNSIGNED,
             allowNull: true
         }
     });
