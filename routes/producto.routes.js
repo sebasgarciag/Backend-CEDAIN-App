@@ -43,7 +43,13 @@ router.put("/:id", [
 
  router.get("/categorias/todas", [
     
- ], productoController.getCategorias );
+ ], productoController.getCategorias);
+ 
+router.put("/:id/:state", [
+    param("id").isNumeric().withMessage("Id debe ser numerico"),
+    check("state").isBoolean().withMessage("El estado debe ser booleano")
+], productoController.suspenderProductos);
+
 
 
 module.exports = router;

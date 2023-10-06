@@ -90,6 +90,18 @@ exports.updateProducto = async function(idProducto, producto) {
     return productoActualizado;
 }
 
+exports.suspenderProducto = async function (idProducto, estado) {
+    let productoActualizado = await db.Producto.findByPk(idProducto);
+    if (productoActualizado) {
+        productoActualizado.suspendido = estado;
+        await productoActualizado.save();
+        return productoActualizado;
+    } else {
+        console.log('Producto no encontrado');
+        return null;
+    }
+}
 
-    //Helper functions.
+
+
 
