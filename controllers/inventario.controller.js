@@ -4,12 +4,23 @@ const { validationResult } = require('express-validator');
 exports.getBuscarTodosProductos = async function (req, res) {
     
     //if undifined, traer todas. else traete las fechas
-    let producto = await inventarioService.buscarTodosProductos();
-    res.json(producto).status(200);
+    let idAlmacen = req.query.idAlmacen;
+    if(idAlmacen == undefined){
+        let producto = await inventarioService.buscarTodosProductos();
+        res.json(producto).status(200);
+    }else{
+        let inventarios = await inventarioService.buscarInventarioPorAlmacen(idAlmacen);
 
+        if (inventarios !== undefined && inventarios.length > 0) {
+            res.json(inventarios).status(200);
+        } else {
+            res.status(204).json({ success: false });
+        } 
+    }
 };
 
 exports.getBuscarPorAlmacen = async function (req, res) {
+
     let result = validationResult(req);
 
     if (result.errors.length > 0) {
@@ -64,53 +75,3 @@ exports.putModificarInventario = async function (req,res){
     }    
     
 };
-
-
-/*
-
-/**
- * Procesa el request GET para obtener una persona por medio de su id
- * @param {Request} req - Request 
- * @param {Response} res - Response Persona que pertenece al id proporcionado
- 
-exports.getBuscarPorAlm= async function (req, res) {
-    let result = validationResult(req);
-
-    if (result.errors.length > 0) {
-        res.status(400).json({ success: false, error: result });
-    } else {
-        let idAlmacen = req.params.id;
-        let inventario = await personaService.buscarPorId(idPersona);
-
-        if (persona !== undefined) {
-            res.json(persona).status(200);
-        } else {
-            res.status(204).json({ success: false });
-        }        
-    }
-};
-
-/*
-
-/**
- * Procesa el request GET para obtener una persona por medio de su id
- * @param {Request} req - Request 
- * @param {Response} res - Response Persona que pertenece al id proporcionado
- 
-exports.getBuscarPorAlm= async function (req, res) {
-    let result = validationResult(req);
-
-    if (result.errors.length > 0) {
-        res.status(400).json({ success: false, error: result });
-    } else {
-        let idAlmacen = req.params.id;
-        let inventario = await personaService.buscarPorId(idPersona);
-
-        if (persona !== undefined) {
-            res.json(persona).status(200);
-        } else {
-            res.status(204).json({ success: false });
-        }        
-    }
-};
-*/
