@@ -62,7 +62,7 @@ exports.crear = async function(producto) {   //CREATES NEW ENTRADA. RECEIVES ALL
 
         //Checks for errors. if not, create entrada.
     try {
-        nuevaProducto = await db.Producto.create(producto);
+        let nuevaProducto = await db.Producto.create(producto);
         console.log("Nuevo producto agregado " + nuevaProducto.id_producto);
         return nuevaProducto;
     }
