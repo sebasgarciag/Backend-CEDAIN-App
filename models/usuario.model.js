@@ -21,10 +21,6 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: true
         },
-        id_almacen: {
-            type: Sequelize.INTEGER,
-            allowNull: true
-        },
         correo: {
             type: Sequelize.STRING(255),
             allowNull: true
