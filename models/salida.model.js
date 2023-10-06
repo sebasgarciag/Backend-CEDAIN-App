@@ -45,10 +45,6 @@ module.exports = (sequelize, Sequelize) => {
         id_tipo_pago: {
             type: Sequelize.INTEGER,
             allowNull: true
-        },
-        precio_venta: {
-            type: Sequelize.INTEGER,
-            allowNull: true
         }
     });
   
