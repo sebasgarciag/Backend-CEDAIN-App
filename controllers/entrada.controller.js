@@ -220,13 +220,19 @@ exports.exportToExcel = async function (req, res) {
         { header: 'ID Entrada', key: 'id_entrada', width: 20 },
         { header: 'ID Producto', key: 'id_producto', width: 20 },
         { header: 'Cantidad', key: 'cantidad', width: 20 },
-        { header: 'Precio Unitario', key: 'precio_unitario', width: 20 }
+        { header: 'Precio Unitario', key: 'precio_unitario', width: 20 },
+        { header: 'Nombre Producto', key: 'nombre_producto', width: 20 }
     ];
 
     // Agregando los datos de los detalles de entrada al archivo Excel
-    if (entradaDetalles && entradaDetalles.length > 0) {
-        entradaDetalles.forEach(detail => {
-            worksheet.addRow(detail);
+    if (entradaDetalles) {
+        worksheet.addRow({
+            id_entrada_detalle: entradaDetalles.dataValues.id_entrada_detalle,
+            id_entrada: entradaDetalles.dataValues.id_entrada,
+            id_producto: entradaDetalles.dataValues.id_producto,
+            cantidad: entradaDetalles.dataValues.cantidad,
+            precio_unitario: entradaDetalles.dataValues.precio_unitario,
+            nombre_producto: entradaDetalles.dataValues.producto.dataValues.nombre
         });
     } else {
         console.warn("No se encontraron detalles para el ID:", idEntrada);
@@ -239,3 +245,4 @@ exports.exportToExcel = async function (req, res) {
         res.status(200).end();
     });
 };
+
