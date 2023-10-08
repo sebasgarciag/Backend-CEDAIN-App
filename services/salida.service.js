@@ -68,9 +68,9 @@ exports.detallesPorId = async function(idSalida) { //RETURNS INFO FROM THE ID GI
         }
     });
 
-    if (salidaDetalles.length > 0) {
-        salidaDetalles = salidaDetalles[0];
-    }
+    // if (salidaDetalles.length > 0) {
+    //     salidaDetalles = salidaDetalles[0];
+    // }
 
     return salidaDetalles;
 };

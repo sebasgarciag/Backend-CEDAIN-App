@@ -27,15 +27,15 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: true
         },
         id_usuario: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.INTEGER.UNSIGNED,
             allowNull: true
         },
         id_almacen: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.INTEGER.UNSIGNED,
             allowNull: true
         },
         id_evento: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.INTEGER.UNSIGNED,
             allowNull: true
         },
         receptor: {
@@ -43,11 +43,7 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: true
         },
         id_tipo_pago: {
-            type: Sequelize.INTEGER,
-            allowNull: true
-        },
-        precio_venta: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.INTEGER.UNSIGNED,
             allowNull: true
         }
     });
