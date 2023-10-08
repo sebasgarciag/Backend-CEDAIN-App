@@ -6,10 +6,7 @@ let entradaController = require("../controllers/entrada.controller");
 // Exportar entrada detalles por encima (tabla entradas)
 router.get("/exportar/:id", [ 
     param("id").isNumeric().withMessage("ID debe ser numerico")
-], entradaController.exportarPorId);
-
-// Exportar los detalles de la entrada (entradas_detalle)
-router.get("/export/:id", entradaController.exportToExcel);
+], entradaController.exportCombinedToExcel);
 
 
 //CREATE entrada

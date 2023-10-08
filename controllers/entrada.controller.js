@@ -152,70 +152,65 @@ exports.getDetallesPorId = async function (req, res) {
 };
 
 
-exports.exportarPorId = async function (req, res) {
-    let result = validationResult(req);
-
-    if (result.errors.length > 0) {
-        return res.status(400).json({ success: false, error: result });
-    }
-
-    try {
-        let idEntrada = req.params.id;
-        let entrada = await entradaService.buscarPorId(idEntrada);
-
-        if (entrada) {
-            // Create Excel file using exceljs
-            let workbook = new ExcelJS.Workbook();
-            let worksheet = workbook.addWorksheet('Entrada');
-            
-            // Add headers and data based on your columns
-            worksheet.columns = [
-                { header: 'ID Entrada', key: 'id_entrada' },
-                { header: 'Fecha', key: 'fecha' },
-                { header: 'Folio', key: 'folio' },
-                { header: 'Serie', key: 'serie' },
-                { header: 'Observaciones', key: 'observaciones' },
-                { header: 'ID Usuario', key: 'id_usuario' },
-                { header: 'ID Almacén', key: 'id_almacen' },
-                { header: 'Emisor', key: 'emisor' },
-                { header: 'ID Comunidad', key: 'id_comunidad' },
-                { header: 'ID Evento', key: 'id_evento' },
-                { header: 'Creado', key: 'createdAt' },
-                { header: 'Actualizado', key: 'updatedAt' },
-                { header: 'Precio Trueque', key: 'Precio_trueque' }
-            ];
-            worksheet.addRow(entrada);
-
-            // Send the Excel file as response
-            res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-            res.setHeader('Content-Disposition', 'attachment; filename=entrada.xlsx');
-            return workbook.xlsx.write(res).then(() => {
-                res.status(200).end();
-            });
-        } else {
-            res.status(404).json({ success: false, message: "Entrada no encontrada" });
-        }
-    } catch (error) {
-        console.error("Error al intentar exportar entrada: ", error);
-        res.status(500).json({ success: false, message: "Error interno del servidor" });
-    }
-};
-
-
-exports.exportToExcel = async function (req, res) {
-    console.log("Función exportToExcel por id llamada");
-    
+exports.exportCombinedToExcel = async function (req, res) {
     let idEntrada = req.params.id;
-    let entradaDetalles = await entradaService.detallesPorId(idEntrada);
-
-    // Log para ver lo que devuelve entradaService.detallesPorId
-    console.log("Detalles obtenidos:", entradaDetalles);
-
     const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet('Entrada');
 
-    // Definiendo las columnas para los detalles de entrada en el archivo Excel
-    worksheet.columns = [
+    // Crear hoja 'Entrada'
+    const worksheetEntrada = workbook.addWorksheet('Entrada');
+
+    // Obtener los detalles de la entrada para exportarPorId
+    let entrada = await entradaService.buscarPorId(idEntrada);
+    if (!entrada) {
+        return res.status(404).json({ success: false, message: "Entrada no encontrada" });
+    }
+
+    // Estilo para los encabezados
+    const headerStyle = {
+        fill: {
+            type: 'pattern',
+            pattern: 'solid',
+            fgColor: { argb: 'FFD5A6' }  // Color café clarito
+        },
+        font: {
+            bold: true
+        },
+        border: {
+            top: { style: 'thin' },
+            left: { style: 'thin' },
+            bottom: { style: 'thin' },
+            right: { style: 'thin' }
+        }
+    };
+
+    // Añadir encabezados y datos para exportarPorId en hoja 'Entrada'
+    worksheetEntrada.columns = [
+        { header: 'ID Entrada', key: 'id_entrada' },
+        { header: 'Fecha', key: 'fecha' },
+        { header: 'Folio', key: 'folio' },
+        { header: 'Serie', key: 'serie' },
+        { header: 'Observaciones', key: 'observaciones' },
+        { header: 'ID Usuario', key: 'id_usuario' },
+        { header: 'ID Almacén', key: 'id_almacen' },
+        { header: 'Emisor', key: 'emisor' },
+        { header: 'ID Comunidad', key: 'id_comunidad' },
+        { header: 'ID Evento', key: 'id_evento' },
+        { header: 'Creado', key: 'createdAt' },
+        { header: 'Actualizado', key: 'updatedAt' },
+        { header: 'Precio Trueque', key: 'Precio_trueque' }
+    ];
+    worksheetEntrada.addRow(entrada);
+    
+    // Aplicar estilo a los encabezados de la hoja 'Entrada'
+    worksheetEntrada.getRow(1).eachCell(cell => {
+        Object.assign(cell, headerStyle);
+    });
+
+    // Crear hoja 'Detalles de la Entrada'
+    const worksheetDetalles = workbook.addWorksheet('Detalles de la Entrada');
+
+    // Añadir encabezados para exportToExcel en hoja 'Detalles de la Entrada'
+    worksheetDetalles.columns = [
         { header: 'ID Detalle Entrada', key: 'id_entrada_detalle', width: 20 },
         { header: 'ID Entrada', key: 'id_entrada', width: 20 },
         { header: 'ID Producto', key: 'id_producto', width: 20 },
@@ -224,25 +219,39 @@ exports.exportToExcel = async function (req, res) {
         { header: 'Nombre Producto', key: 'nombre_producto', width: 20 }
     ];
 
-    // Agregando los datos de los detalles de entrada al archivo Excel
-    if (entradaDetalles) {
-        worksheet.addRow({
-            id_entrada_detalle: entradaDetalles.dataValues.id_entrada_detalle,
-            id_entrada: entradaDetalles.dataValues.id_entrada,
-            id_producto: entradaDetalles.dataValues.id_producto,
-            cantidad: entradaDetalles.dataValues.cantidad,
-            precio_unitario: entradaDetalles.dataValues.precio_unitario,
-            nombre_producto: entradaDetalles.dataValues.producto.dataValues.nombre
+    // Aplicar estilo a los encabezados de la hoja 'Detalles de la Entrada'
+    worksheetDetalles.getRow(1).eachCell(cell => {
+        Object.assign(cell, headerStyle);
+    });
+
+    // Obtener los detalles de entrada para exportToExcel
+    let entradaDetalles = await entradaService.detallesPorId(idEntrada);
+    console.log("Detalles obtenidos:", entradaDetalles);
+
+    if (entradaDetalles && entradaDetalles.length > 0) {
+        entradaDetalles.forEach(detalle => {
+            worksheetDetalles.addRow({
+                id_entrada_detalle: detalle.dataValues.id_entrada_detalle,
+                id_entrada: detalle.dataValues.id_entrada,
+                id_producto: detalle.dataValues.id_producto,
+                cantidad: detalle.dataValues.cantidad,
+                precio_unitario: detalle.dataValues.precio_unitario,
+                nombre_producto: detalle.dataValues.producto.dataValues.nombre
+            });
         });
     } else {
         console.warn("No se encontraron detalles para el ID:", idEntrada);
     }
 
-    // Guardar el archivo Excel en memoria y enviarlo como respuesta
+    // Enviar el archivo Excel como respuesta
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     res.setHeader("Content-Disposition", "attachment; filename=Entrada.xlsx");
     workbook.xlsx.write(res).then(() => {
         res.status(200).end();
     });
 };
+
+
+
+
 
