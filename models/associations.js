@@ -5,11 +5,11 @@ const db = require('../models');
 db.Comunidad.hasMany(db.Entrada , {foreignKey: 'id_comunidad'});
 db.Entrada.belongsTo(db.Comunidad , {foreignKey: 'id_comunidad'});
 
-db.Usuario.hasMany(db.Entrada , {foreignKey: 'id_usuario'});
-db.Entrada.belongsTo(db.Usuario , {foreignKey: 'id_usuario'});
+db.Usuario.hasMany(db.Entrada, { foreignKey: 'id_usuario'});
+db.Entrada.belongsTo(db.Usuario, { foreignKey: 'id_usuario'});
 
-db.Usuario.hasMany(db.Salida , {foreignKey: 'id_usuario'});
-db.Salida.belongsTo(db.Usuario , {foreignKey: 'id_usuario'});
+db.Usuario.hasMany(db.Salida , {foreignKey: 'id_usuarios'});
+db.Salida.belongsTo(db.Usuario , {foreignKey: 'id_usuarios'});
 
 db.Almacen.hasMany(db.Entrada , {foreignKey: 'id_almacen'});
 db.Entrada.belongsTo(db.Almacen , {foreignKey: 'id_almacen'});
@@ -38,8 +38,6 @@ db.Inventario.belongsTo(db.Almacen , {foreignKey: 'id_almacen'});
 db.Producto.hasMany(db.Inventario , {foreignKey: 'id_producto'});
 db.Inventario.belongsTo(db.Producto , {foreignKey: 'id_producto'});
 
-db.TipoEmpleado.hasMany(db.Usuario, { foreignKey: 'id_Tipo' });
-db.Usuario.belongsTo(db.TipoEmpleado, { foreignKey: 'id_Tipo' });
 
-// db.Almacen.hasMany(db.Usuario, { foreignKey: 'id_almacen' });
-// db.Usuario.belongsTo(db.Almacen, { foreignKey: 'id_almacen' });
+db.Almacen.hasMany(db.Usuario, { foreignKey: 'id_almacen' });
+db.Usuario.belongsTo(db.Almacen, { foreignKey: 'id_almacen' });
