@@ -2,6 +2,16 @@ const { Op } = require('sequelize');
 const dbConfig = require('../config/db.config');
 const db = require('../models');
 
+
+/**
+ * Regresa todas las entradas en la base de datos, incluso informacion de otras tablas fuera de 'entradas'
+ * como 'comunidad', 'almacen' y 'evento' pues estan asociadas.
+ * 
+ * @async
+ * @function
+ * @returns {Promise<Array>} en forma de array, te regresa todas las entrdas.
+ * @throws {Error} Throws an error if retrieval from the database fails.
+ */
 exports.buscarTodas = async function() { // RETURNS ALL
     entradas = await db.Entrada.findAll({ include: [
         db.Comunidad, 
@@ -15,6 +25,17 @@ exports.buscarTodas = async function() { // RETURNS ALL
     return entradas;
 }
 
+
+/**
+ * Regresa una entrada segun el ID dado, incluyendo informacion de las tablas las cuales
+ * estan asociadas a esta: 'Comunidad', 'Almacen' y 'Evento'.
+ *
+ * @async
+ * @function
+ * @param {number} idEntrada - El ID de la entrada que queremos buscar en base de datos.
+ * @returns {Object} La entrada la cual se esta buscando.
+ * @throws {Error} Error si es que falla el proceso.
+ */
 exports.buscarPorId = async function(idEntrada) { //RETURNS ENTRY INFO FROM THE ID GIVEN ONLY
     let entrada = undefined;
 
@@ -40,6 +61,16 @@ exports.buscarPorId = async function(idEntrada) { //RETURNS ENTRY INFO FROM THE 
 }
 
 
+/**
+ * Regresa entradas hechas por el usuario (ID de usuario enviado) incluyendo informacion de las tablas las cuales
+ * estan asociadas a esta: 'Comunidad', 'Almacen' y 'Evento'
+ *
+ * @async
+ * @function
+ * @param {number} idUsuario - ID del usuario el cual se quieren ver las entradas que hiso.
+ * @returns {<Array>} Array con las entradas hechas por el usuario.
+ * @throws {Error} Error si es que falla el proceso.
+ */
 exports.buscarEntradasDeUsuario = async function(idUsuario) { //RETURNS ENTRY INFO FROM THE USER ID GIVEN
     let entrada = undefined;
 
@@ -62,6 +93,16 @@ exports.buscarEntradasDeUsuario = async function(idUsuario) { //RETURNS ENTRY IN
 }
 
 
+/**
+ * Regresa detalles de la entrada (ID) enviada, incluyendo informacion de las tablas las cuales
+ * estan asociadas a esta: 'producto' y 'tamanios'.
+ *
+ * @async
+ * @function
+ * @param {number} idEntrada - ID de entrada la cual se buscan los detalles (productos).
+ * @returns {<Array>} Array con los detalles de entrada.
+ * @throws {Error} Error si es que falla el proceso.
+ */
 exports.detallesPorId = async function(idEntrada) { //RETURNS INFO FROM THE ID GIVEN ONLY
     let entradaDetalles;
 
@@ -76,15 +117,19 @@ exports.detallesPorId = async function(idEntrada) { //RETURNS INFO FROM THE ID G
         }
     });
 
-    // if (entradaDetalles.length > 0) {
-    //     console.log("Entrada detalles: ", entradaDetalles)
-    //     entradaDetalles = entradaDetalles[0];
-    // }
-
     return entradaDetalles;
 };
 
 
+/**
+ * Regresa entradas creadas dentro de la fecha enviada en (date).
+ *
+ * @async
+ * @function
+ * @param {number} date - Fecha en la cual se buscan las entradas.
+ * @returns {<Array>} Array con todas las entradas de dicha fecha.
+ * @throws {Error} Error si es que falla el proceso.
+ */
 exports.entradasPorFecha = async function(date) { //RETURNS ALL ENTRIES ON GIVEN DATE (YYYY-MM-DD)
 
     let desde = new Date(date);
@@ -108,6 +153,18 @@ exports.entradasPorFecha = async function(date) { //RETURNS ALL ENTRIES ON GIVEN
 
 }
 
+
+/**
+ * Create a new entry (Entrada) in the database after performing several validation checks.
+ * Crear una entrada, pero antes hace una serie de validaciones como: el id de comunidad
+ * enviado en el JSON existe? etc.
+ * 
+ * @async
+ * @function
+ * @param {Object} entrada - Contiene toda la info necesitada para hacer una entrada nueva.
+ * @returns {Object} Regresa un objeto con todos los datos de la entrada creada.
+ * @throws {Error} Error si es que alguna validacion falla u otro error.
+ */
 
 exports.crear = async function(entrada) {   //CREATES NEW ENTRADA. RECEIVES ALL THE REQUIRED DATA INSIDE THE OBJECT COUGHT BY THE FUNCTION. (entrada)
         
@@ -155,6 +212,19 @@ exports.crear = async function(entrada) {   //CREATES NEW ENTRADA. RECEIVES ALL 
     }
 }
 
+
+/**
+ * Bulkcreate quiere decir que el proceso de insertar informacion en las tablas con los detalles (productos)
+ * de una entrada, se hace varias veces.. una vez por cada producto en la entrada, hasta haber insertado
+ * en entradas-detalles toda la informacion de cada uno de los productos.
+ *
+ * @async
+ * @function
+ * @param {Array} entradaDetalle - recibe un array de todos los objetos en entrada, cada objeto tiene
+ * la informacion de entrada-detalle (producto en entrada: id_entrada_detalle, id_entrada, id_producto, cantidad, precio_unitario).
+ * @returns {Arra>} Array con objetos (detalles de arriba).
+ * @throws {Error} Error si es que alguna validacion falla u otro error.
+ */
 
 exports.crearEntradaDetalle = async function(entradaDetalle){
 
