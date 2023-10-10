@@ -2,10 +2,13 @@ const entradaService = require('../services/entrada.service');
 const { validationResult } = require('express-validator');
 const ExcelJS = require('exceljs');
 
-/**
- * Procesa el request POST para guardar una persona
- * @param {Request} req - Request que contiene la informacion de una nueva persona
- * @param {Response} res - Response que en caso exitoso retornara la persona creada con status 201, o regresara error 400 en caso de que una de los datos sea invalida
+/** 
+ * Procesa el request POST para guardar una entrada
+ * 
+ * @param {Request} req.body - Contiene la informacion de una nueva entrada (JSON)
+ * @param {Response} res - Response que en caso exitoso retornara la persona creada con status 201, 
+ * o regresara error 400 en caso de que una de los datos sea invalida
+ * @throws {Error} en caso de error en base de datos
  */
 exports.postCrear = async function (req, res) {
     let result = validationResult(req);
@@ -26,6 +29,16 @@ exports.postCrear = async function (req, res) {
 };
 
 
+/**
+ * Controla la creacion de "entradas-detalles".
+ *
+ * @async
+ * @function
+ * @param {Object} req - Contiene los datos enviados en JASON desde routes.
+ * @param {Object} res - En caso de una creacion lograda, regresa el objeto con los datos.
+ * @returns {Object} JSON con detalles de productos, o mensaje de error.
+ * @throws 500 si hay un error en la creacion o en la base de datos.
+ */
 exports.postEntradasDetalles = async function (req, res){
     let result = validationResult(req);
     
@@ -46,6 +59,16 @@ exports.postEntradasDetalles = async function (req, res){
 };
 
 
+/**
+ * Controla el GET de "" o "entradas?date=YYYY-MM-DD"
+ *
+ * @async
+ * @function
+ * @param {Object} req - Contiene nada o la fecha la cual se buscan las entrdas.
+ * @param {Object} res - Regresa entradas. Todas, o por fecha especificada.
+ * @returns {Object} JSON con detalles de productos, o mensaje de error.
+ * @throws 500 si hay un error en la creacion o en la base de datos.
+ */
 exports.getBuscarTodas = async function (req, res) {
 
     //if undifined, traer todas. else traer entradas en fecha dada.
@@ -67,13 +90,20 @@ exports.getBuscarTodas = async function (req, res) {
             return res.status(500).json({ success: false, message: "Error durante getPorFecha." }); //This message can be seen by the user. We don't specify errors to the user.
             
         }
-        //let entradaPorFecha = await entradaService.entradasPorFecha(date);
-        //return res.json(entradaPorFecha).status(201);
     }
-
 };
 
 
+/**
+ * Controla el GET por id dado.
+ *
+ * @async
+ * @function
+ * @param {Object} req - Contiene el ID por el cual se buscan las entradas.
+ * @param {Object} res - Regresa entrada.
+ * @returns {Object} JSON con detalles de esa entrada, o mensaje de error.
+ * @throws 500 si hay un error en la busqueda.
+ */
 exports.getBuscarPorId = async function (req, res) {
     let result = validationResult(req);
 
@@ -92,6 +122,16 @@ exports.getBuscarPorId = async function (req, res) {
 };
 
 
+/**
+ * Controla el GET de /entradas-usuario/:id"
+ *
+ * @async
+ * @function
+ * @param {Object} req - id del usuario del cual se quieren ver las entradas.
+ * @param {Object} res - Regresa entradas.
+ * @returns {Object} JSONs de cada entrada hecha por el usuario (id).
+ * @throws 500 si hay un error en busqueda.
+ */
 exports.getEntradasPorUsuario = async function (req, res) {
     let result = validationResult(req);
 
@@ -110,10 +150,8 @@ exports.getEntradasPorUsuario = async function (req, res) {
 };
 
 
-
-
-
 //UPDATE EXISTING
+//se iba a quitar.
 exports.updateEntrada = async function (req, res) {
     let result = validationResult(req);
 
@@ -134,6 +172,16 @@ exports.updateEntrada = async function (req, res) {
 };
 
 
+/**
+ * Controla el GET de /entrada-detalles/:idEntrada
+ *
+ * @async
+ * @function
+ * @param {Object} req - Contiene ID de la entrada la cual se busca ver los detalles (productos).
+ * @param {Object} res - Regresa detalles.
+ * @returns {Object} JSON con detalles de productos, o mensaje de error.
+ * @throws 500 si hay un error.
+ */
 exports.getDetallesPorId = async function (req, res) {
     let result = validationResult(req);
 
