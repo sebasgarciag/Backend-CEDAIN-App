@@ -8,11 +8,11 @@ router.post("", [ //CREATE
 
     
     check("nombre").isLength({ max: 80 }).withMessage("nombre no debe exceder 80 caracteres y es obligatorio"),
-    check("id_tamaño").isNumeric().withMessage("Id de tamaño debe de ser numerico y es obligatorio"),
+    check("id_tamanio").optional().isNumeric().withMessage("Id de tamaño debe de ser numerico y es obligatorio"),
     check("medida").isLength({ max: 30 }).withMessage("la medida no debe exceder 30 caracteres y es obligatorio"),
     check("precio_venta").isDecimal().withMessage("El campo debe ser decimal y es obligatorio"),
     check("precio_trueque").isDecimal().withMessage("El campo debe ser decimal y es obligatorio"),
-    check("id_categoria").isLength({ max: 30 }).withMessage("Categoria no debe exceder 30 caracteres y es obligatorio"),
+    check("id_categoria").optional().isLength({ max: 30 }).withMessage("Categoria no debe exceder 30 caracteres y es obligatorio"),
     check("nombre_corto").isLength({ max: 40 }).withMessage("Nombre corto no debe exceder 40 caracteres y es obligatorio"),
     
     
@@ -43,7 +43,13 @@ router.put("/:id", [
 
  router.get("/categorias/todas", [
     
- ], productoController.getCategorias );
+ ], productoController.getCategorias);
+ 
+router.put("/:id/:state", [
+    param("id").isNumeric().withMessage("Id debe ser numerico"),
+    check("state").isBoolean().withMessage("El estado debe ser booleano")
+], productoController.suspenderProductos);
+
 
 
 module.exports = router;

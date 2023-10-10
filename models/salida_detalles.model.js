@@ -7,11 +7,11 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false
         },
         id_salida: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.INTEGER.UNSIGNED,
             allowNull: false
         },
         id_producto: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.INTEGER.UNSIGNED,
             allowNull: false,
         },
         cantidad: {

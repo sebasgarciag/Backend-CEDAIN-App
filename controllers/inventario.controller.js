@@ -5,9 +5,19 @@ const ExcelJS = require('exceljs');
 exports.getBuscarTodosProductos = async function (req, res) {
     
     //if undifined, traer todas. else traete las fechas
-    let producto = await inventarioService.buscarTodosProductos();
-    res.json(producto).status(200);
+    let idAlmacen = req.query.idAlmacen;
+    if(idAlmacen == undefined){
+        let producto = await inventarioService.buscarTodosProductos();
+        res.json(producto).status(200);
+    }else{
+        let inventarios = await inventarioService.buscarInventarioPorAlmacen(idAlmacen);
 
+        if (inventarios !== undefined && inventarios.length > 0) {
+            res.json(inventarios).status(200);
+        } else {
+            res.status(204).json({ success: false });
+        } 
+    }
 };
 
 exports.getBuscarPorAlmacen = async function (req, res) {

@@ -76,9 +76,10 @@ exports.detallesPorId = async function(idEntrada) { //RETURNS INFO FROM THE ID G
         }
     });
 
-    if (entradaDetalles.length > 0) {
-        entradaDetalles = entradaDetalles[0];
-    }
+    // if (entradaDetalles.length > 0) {
+    //     console.log("Entrada detalles: ", entradaDetalles)
+    //     entradaDetalles = entradaDetalles[0];
+    // }
 
     return entradaDetalles;
 };

@@ -96,3 +96,22 @@ exports.getCategorias = async function (req, res) {
     let categoria = await productoService.buscarCategorias();
     res.json(categoria).status(200);
 };
+
+exports.suspenderProductos = async function (req, res) {
+    let result = validationResult(req);
+
+    if (result.errors.length > 0) {
+        res.status(400).json({ success: false, error: result.array() }); //aqui manda los errores
+    } else {
+        let idProducto = req.params.id;
+        let estado = (req.params.state === 'true') ? 1 : 0; // convierte el estado a 1 o 0
+        let productoActualizado = await productoService.suspenderProducto(idProducto, estado);
+
+        if (productoActualizado && productoActualizado.suspendido == estado) {
+            res.status(200).json({ success: true, producto: productoActualizado });
+        } else {
+            res.status(204).json({ success: false });
+        }
+    }
+}
+
