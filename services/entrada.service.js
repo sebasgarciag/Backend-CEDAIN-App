@@ -165,7 +165,6 @@ exports.entradasPorFecha = async function(date) { //RETURNS ALL ENTRIES ON GIVEN
  * @returns {Object} Regresa un objeto con todos los datos de la entrada creada.
  * @throws {Error} Error si es que alguna validacion falla u otro error.
  */
-
 exports.crear = async function(entrada) {   //CREATES NEW ENTRADA. RECEIVES ALL THE REQUIRED DATA INSIDE THE OBJECT COUGHT BY THE FUNCTION. (entrada)
         
     // A) check if received values exist on the db
@@ -225,7 +224,6 @@ exports.crear = async function(entrada) {   //CREATES NEW ENTRADA. RECEIVES ALL 
  * @returns {Arra>} Array con objetos (detalles de arriba).
  * @throws {Error} Error si es que alguna validacion falla u otro error.
  */
-
 exports.crearEntradaDetalle = async function(entradaDetalle){
 
     //Keeps the server from crashing if, for example, a foreign key constraint is found.
