@@ -1,5 +1,9 @@
+
+
 const usuarioService = require("../services/usuario.service");
 const { validationResult } = require("express-validator");
+const CryptoES = require("crypto-js");
+
 
 
 
@@ -23,7 +27,8 @@ exports.postCrearUsuario = async function (req, res) {
 
 //Login
 exports.postLogin = async function (req, res) {
-
+  
+  const secretKey = "CEDAIN"
   try {
     let loginData = req.body;     //todo lo que viene en el json payload
 
@@ -40,7 +45,18 @@ exports.postLogin = async function (req, res) {
     }
 
     // Compara la contraseña proporcionada con la contraseña encriptada almacenada
-    let passwordCorrecta = bcrypt.compareSync(loginData.password, usuario.password);
+
+
+    let passwordIngresada = loginData.password;  // La contraseña ingresada por el usuario
+    let passwordCifrada = usuario.password;  // La contraseña cifrada almacenada en la base de datos
+  
+
+    // Desencriptar la contraseña cifrada
+    let bytes = CryptoES.AES.decrypt(passwordCifrada, secretKey);
+    let passwordDesencriptada = bytes.toString(CryptoES.enc.Utf8);
+
+    // Comparar la contraseña ingresada con la contraseña desencriptada
+    passwordCorrecta = (passwordIngresada === passwordDesencriptada);
 
     if (!passwordCorrecta) {
       return res.status(401).json({ success: false, message: "Contraseña incorrecta" });

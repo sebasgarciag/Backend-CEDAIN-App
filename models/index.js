@@ -18,11 +18,11 @@ const db = {};
 
 db.sequelize = sequelize;
 
+db.Almacen = require("./almacen.model.js")(sequelize, Sequelize);
+db.Usuario = require("./usuario.model.js")(sequelize, Sequelize);
 db.Entrada = require("./entrada.model.js")(sequelize, Sequelize);
 db.Comunidad = require("./comunidad.model.js")(sequelize, Sequelize);
 db.Evento = require("./evento.model.js")(sequelize, Sequelize);
-db.Usuario = require("./usuario.model.js")(sequelize, Sequelize);
-db.Almacen = require("./almacen.model.js")(sequelize, Sequelize);
 db.Producto = require("./producto.model.js")(sequelize, Sequelize);
 db.EntradaDetalles = require("./entradaDetalles.model.js")(sequelize, Sequelize);
 db.Salida = require("./salida.model.js")(sequelize, Sequelize);
