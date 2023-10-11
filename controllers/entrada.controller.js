@@ -199,7 +199,18 @@ exports.getDetallesPorId = async function (req, res) {
     }
 };
 
-
+/**
+ * Controla la exportación de la entrada y sus detalles a un archivo Excel.
+ *
+ * @async
+ * @function
+ * @param {Object} req - Contiene el ID de la entrada que se desea exportar.
+ * @param {Object} res - Regresa un archivo Excel con la entrada y sus detalles.
+ * @returns {Object} Archivo Excel con la entrada y sus detalles, o mensaje de error.
+ * @throws 500 si hay un error durante el proceso de exportación o si no se encuentra la entrada.
+ * 
+ * Controla el GET de la ruta: http://localhost:8080/entradas/exportar/:id
+ */
 exports.exportCombinedToExcel = async function (req, res) {
     let idEntrada = req.params.id;
     const workbook = new ExcelJS.Workbook();

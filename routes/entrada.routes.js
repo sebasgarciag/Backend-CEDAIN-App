@@ -3,7 +3,20 @@ const { check, param, body } = require('express-validator');
 
 let entradaController = require("../controllers/entrada.controller");
 
-// Exportar entrada detalles por encima (tabla entradas)
+/**
+ * Controla el GET de la ruta: http://localhost:8080/entradas/exportar/:id
+ * 
+ * La función se encarga de exportar la entrada y sus detalles a un archivo Excel.
+ *
+ * @route {GET} /entradas/exportar/:id
+ * @bodyparam {number} id - ID de la entrada que se desea exportar.
+ * @validates {Object} validation - Valida que el ID proporcionado sea numérico.
+ * @response {Object} 200 - Archivo Excel con la entrada y sus detalles.
+ * @response {Object} 404 - Entrada no encontrada.
+ * @response {Object} 500 - Error durante el proceso de exportación.
+ * @throws {ValidationError} Cuando la validación falla.
+ */
+
 router.get("/exportar/:id", [ 
     param("id").isNumeric().withMessage("ID debe ser numerico")
 ], entradaController.exportCombinedToExcel);
