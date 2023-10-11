@@ -20,7 +20,7 @@ module.exports = (sequelize, Sequelize) => {
         },
         precio_unitario: {
             type: Sequelize.DECIMAL(10, 2),
-            allowNull: true
+            allowNull: false
         }
     }, {
         tableName: 'salidas_detalle',

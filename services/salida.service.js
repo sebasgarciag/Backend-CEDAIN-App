@@ -15,7 +15,8 @@ exports.buscarTodas = async function() { // RETURNS ALL
 }
 
 exports.crearSalida = async function(salida) {   //CREATES NEW SALIDA. RECEIVES ALL THE REQUIRED DATA INSIDE THE OBJECT COUGHT BY THE FUNCTION. (salida)
-        
+    console.log("salida:",salida);
+    
     // A) check if received values exist on the db
 
 

@@ -20,7 +20,8 @@ module.exports = (sequelize, Sequelize) => {
         id_entrada: {
             type: Sequelize.INTEGER.UNSIGNED,
             autoIncrement: true,
-            primaryKey: true
+            primaryKey: true,
+            allowNull: false
         },
         fecha: {
             type: Sequelize.DATE,
