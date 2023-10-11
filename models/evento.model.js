@@ -3,11 +3,12 @@ module.exports = (sequelize, Sequelize) => {
         id_evento: { //This information is taken from how the table is structured on the DB. (read the query)
             type: Sequelize.INTEGER.UNSIGNED,
             autoIncrement: true,
-            primaryKey: true
+            primaryKey: true,
+            allowNull: false
         },
         nombre: {
             type: Sequelize.STRING(40),
-            allowNull: true
+            allowNull: false
         }
     }, {
         tableName: 'eventos',

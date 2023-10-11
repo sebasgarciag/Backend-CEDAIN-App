@@ -20,7 +20,7 @@ module.exports = (sequelize, Sequelize) => {
         }
         
     }, {
-        tableName: 'inventarios',
+        tableName: 'inventario',
         timestamps: false // TRUE if there is createdAt and updatedAt on table.
     });
 
