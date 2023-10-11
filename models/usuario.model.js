@@ -7,33 +7,31 @@ module.exports = (sequelize, Sequelize) => {
         },
         nombre: {
             type: Sequelize.STRING(40),
-
+            allowNull: false
         },
         apellido_paterno: {
             type: Sequelize.STRING(40),
+            allowNull: false
 
         },
         apellido_materno: {
             type: Sequelize.STRING(40),
+            allowNull: true
 
         },
         tipo: {
             type: Sequelize.STRING(50),
+            allowNull: false
 
-        },
-        id_almacen: {
-            type: Sequelize.INTEGER,
-            references: {
-                model: 'Almacen',
-                key: 'id_almacen'
-            }
         },
         correo: {
             type: Sequelize.STRING(255),
+            allowNull: false
 
         },
         password: {
             type: Sequelize.STRING(255),
+            allowNull: false
 
         }
     }, {

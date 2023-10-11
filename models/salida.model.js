@@ -4,15 +4,16 @@ module.exports = (sequelize, Sequelize) => {
         id_salida: {
             type: Sequelize.INTEGER.UNSIGNED,
             autoIncrement: true,
-            primaryKey: true
+            primaryKey: true,
+            allowNull: false
         },
         fecha: {
             type: Sequelize.DATE,
-            allowNull: true
+            allowNull: false
         },
         folio: {
             type: Sequelize.INTEGER,
-            allowNull: true
+            allowNull: false
         },
         facturar: {
             type: Sequelize.BOOLEAN,
@@ -20,7 +21,7 @@ module.exports = (sequelize, Sequelize) => {
         },
         serie: {
             type: Sequelize.STRING(5),
-            allowNull: true
+            allowNull: false
         },
         observaciones: {
             type: Sequelize.STRING(255),
@@ -28,19 +29,19 @@ module.exports = (sequelize, Sequelize) => {
         },
         id_usuario: {
             type: Sequelize.INTEGER.UNSIGNED,
-            allowNull: true
+            allowNull: false
         },
         id_almacen: {
             type: Sequelize.INTEGER.UNSIGNED,
-            allowNull: true
+            allowNull: false
         },
         id_evento: {
             type: Sequelize.INTEGER.UNSIGNED,
-            allowNull: true
+            allowNull: false
         },
         receptor: {
             type: Sequelize.STRING(40),
-            allowNull: true
+            allowNull: false
         },
         id_tipo_pago: {
             type: Sequelize.INTEGER.UNSIGNED,

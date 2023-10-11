@@ -3,11 +3,12 @@ module.exports = (sequelize, Sequelize) => {
         id_producto: {
             type: Sequelize.INTEGER.UNSIGNED,
             autoIncrement: true,
-            primaryKey: true
+            primaryKey: true,
+            allowNull: false
         },
         nombre: {
             type: Sequelize.STRING(80),
-            allowNull: true
+            allowNull: false
         },
         id_tamanio: {
             type: Sequelize.INTEGER,
@@ -19,19 +20,19 @@ module.exports = (sequelize, Sequelize) => {
         },
         precio_venta: {
             type: Sequelize.DECIMAL(10, 2), // 10 dígitos en total, 2 decimales
-            allowNull: true
+            allowNull: false
         },
         precio_trueque: {
             type: Sequelize.DECIMAL(10, 2), // 10 dígitos en total, 2 decimales
-            allowNull: true
+            allowNull: false
         },
         id_categoria: {
             type: Sequelize.INTEGER.UNSIGNED,
-            allowNull: true
+            allowNull: false
         },
         nombre_corto: {
             type: Sequelize.STRING(40),
-            allowNull: true
+            allowNull: false
         },
         suspendido: {
             type: Sequelize.BOOLEAN,
