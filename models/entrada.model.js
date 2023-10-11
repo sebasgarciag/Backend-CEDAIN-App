@@ -17,19 +17,20 @@ module.exports = (sequelize, Sequelize) => {
         id_entrada: {
             type: Sequelize.INTEGER.UNSIGNED,
             autoIncrement: true,
-            primaryKey: true
+            primaryKey: true,
+            allowNull: false
         },
         fecha: {
             type: Sequelize.DATE,
-            allowNull: true
+            allowNull: false
         },
         folio: {
             type: Sequelize.INTEGER,
-            allowNull: true
+            allowNull: false
         },
         serie: {
             type: Sequelize.STRING(5),
-            allowNull: true
+            allowNull: false
         },
         observaciones: {
             type: Sequelize.STRING(255),
@@ -37,23 +38,23 @@ module.exports = (sequelize, Sequelize) => {
         },
         id_usuario: {
             type: Sequelize.INTEGER.UNSIGNED,
-            allowNull: true
+            allowNull: false
         },
         id_almacen: {
             type: Sequelize.INTEGER.UNSIGNED,
-            allowNull: true
+            allowNull: false
         },
         emisor: {
             type: Sequelize.STRING(40),
-            allowNull: true
+            allowNull: false
         },
         id_comunidad: {
             type: Sequelize.INTEGER.UNSIGNED,
-            allowNull: true
+            allowNull: false
         },
         id_evento: {
             type: Sequelize.INTEGER.UNSIGNED,
-            allowNull: true
+            allowNull: false
         }
     });
   

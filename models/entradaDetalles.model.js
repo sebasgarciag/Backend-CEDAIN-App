@@ -4,7 +4,8 @@ module.exports = (sequelize, Sequelize) => {
         id_entrada_detalle: {
             type: Sequelize.INTEGER.UNSIGNED,
             autoIncrement: true,
-            primaryKey: true
+            primaryKey: true,
+            allowNull: false
         },
         id_entrada: {
             type: Sequelize.INTEGER.UNSIGNED,
