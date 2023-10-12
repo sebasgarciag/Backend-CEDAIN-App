@@ -37,7 +37,3 @@ db.Inventario.belongsTo(db.Almacen , {foreignKey: 'id_almacen'});
 
 db.Producto.hasMany(db.Inventario , {foreignKey: 'id_producto'});
 db.Inventario.belongsTo(db.Producto , {foreignKey: 'id_producto'});
-
-
-db.Almacen.hasMany(db.Usuario, { foreignKey: 'id_almacen' });
-db.Usuario.belongsTo(db.Almacen, { foreignKey: 'id_almacen' });
