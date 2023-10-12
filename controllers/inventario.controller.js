@@ -124,12 +124,35 @@ exports.exportarInventarioPorIdExcel = async function(req, res) {
         const workbook = new ExcelJS.Workbook();
         const worksheet = workbook.addWorksheet('Inventario');
 
+        // Estilo para los encabezados
+        const headerStyle = {
+            fill: {
+                type: 'pattern',
+                pattern: 'solid',
+                fgColor: { argb: 'FFD5A6' }  // Color café clarito
+            },
+            font: {
+                bold: true
+            },
+            border: {
+                top: { style: 'thin' },
+                left: { style: 'thin' },
+                bottom: { style: 'thin' },
+                right: { style: 'thin' }
+            }
+        };
+
         worksheet.columns = [
             { header: 'ID Inventario', key: 'id_inventario', width: 15 },
             { header: 'ID Producto', key: 'id_producto', width: 15 },
             { header: 'ID Almacén', key: 'id_almacen', width: 15 },
             { header: 'Cantidad', key: 'cantidad', width: 10 }
         ];
+
+        // Aplicar estilo a los encabezados de la hoja
+        worksheet.getRow(1).eachCell((cell) => {
+            Object.assign(cell.style, headerStyle);
+        });
 
         // Obtener todos los datos del inventario para un almacén específico
         const inventarios = await inventarioService.buscarInventarioPorAlmacen(idAlmacen);
@@ -148,7 +171,6 @@ exports.exportarInventarioPorIdExcel = async function(req, res) {
         res.status(500).send('Error al exportar el inventario a Excel: ' + error.message);
     }
 };
-
 
 /*
 
