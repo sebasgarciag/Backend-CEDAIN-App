@@ -3,7 +3,8 @@ module.exports = (sequelize, Sequelize) => {
         id_tamanio: { //This information is taken from how the table is structured on the DB. (read the query)
             type: Sequelize.INTEGER,
             autoIncrement: true,
-            primaryKey: true
+            primaryKey: true,
+            allowNull: false
         },
         descripcion: {
             type: Sequelize.STRING(30),
