@@ -1,16 +1,19 @@
 /**
- * Representa una Entrada.
+ * Representa una Entrada. Aqui estan todas las columnas y su tipo dentro de la tabla 'entradas'
+ * 
  * @constructor
- * @param {number} id - Id de entrada
- * @param {string} nombre - Nombre de pila?
- * @param {string} apellido - Primer apellido
+ * @property {number} id_entrada - PK, autoincrements.
+ * @property {Date} [fecha] - la fecha.
+ * @property {number} [folio] - Folio de la entrada.
+ * @property {string} [serie] - Serie es anio + E de -Entrada- 2023E.
+ * @property {string} [observaciones] - Observaciones agregadas por usuario al momento de hacer la entrada.
+ * @property {number} [id_usuario] - usuario que creo dicha entrada.
+ * @property {number} [id_almacen] - id del almacen donde entro la entrda.
+ * @property {string} [emisor] - Es quien envio el paquete de entrada.
+ * @property {number} [id_comunidad] - Representa la Comunidad de la que viene.
+ * @property {number} [id_evento] - Representa el evento del que viene.
  */
-/*
-exports.Entrada = function (id, nombre, apellido) {
-    this.id = id;
-    this.nombre = nombre;
-    this.apellido = apellido;
-};*/
+
 
 module.exports = (sequelize, Sequelize) => {
     const Entrada = sequelize.define("entradas", {
