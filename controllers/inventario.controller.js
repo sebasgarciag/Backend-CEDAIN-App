@@ -117,15 +117,7 @@ exports.putModificarInventario = async function (req, res){
     }
 };
 
-/**
- * Solicita la exportación de todos los datos del inventario para un ID específico.
- *
- * @async
- * @function
- * @param {string|number} invId - El ID del inventario para el cual se desea exportar los datos.
- * @returns {ArrayBuffer} - Retorna un ArrayBuffer con los datos del inventario exportados.
- * @throws {Error} - Lanza un error si no se reciben datos del inventario desde el servidor o si ocurre cualquier otro error.
- */
+
 
 exports.exportarInventarioPorIdExcel = async function(req, res) {
     try {
