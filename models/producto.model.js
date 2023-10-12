@@ -38,7 +38,6 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.BOOLEAN,
             allowNull: true
         },
-        
   
     }, {
         tableName: 'productos',
