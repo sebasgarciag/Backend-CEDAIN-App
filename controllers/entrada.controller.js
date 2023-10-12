@@ -28,7 +28,6 @@ exports.postCrear = async function (req, res) {
     }
 };
 
-
 /**
  * Controla la creacion de "entradas-detalles".
  *
@@ -192,7 +191,11 @@ exports.getDetallesPorId = async function (req, res) {
         let entradaDetalles = await entradaService.detallesPorId(idEntrada);
 
         if (entradaDetalles !== undefined) {
-            res.json(entradaDetalles).status(200);
+            if (entradaDetalles.length > 0) {
+                res.json(entradaDetalles).status(200);
+            } else {
+                res.status(204).send(); // Send a "no content" response
+            }
         } else {
             res.status(204).json({ success: false });
         }        
