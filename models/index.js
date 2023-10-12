@@ -31,7 +31,5 @@ db.Inventario = require("./inventario.model.js")(sequelize, Sequelize);
 db.Producto = require("./producto.model.js")(sequelize, Sequelize);
 db.Tamanio = require("./tamanio.model.js")(sequelize, Sequelize);
 db.Categoria = require("./categoria.model.js")(sequelize, Sequelize);
-db.TipoEmpleado = require("./tipoEmpleado.model.js")(sequelize, Sequelize);
-
 
 module.exports = db;
