@@ -81,7 +81,11 @@ exports.getDetallesPorId = async function (req, res) {
         let salidaDetalles = await salidaService.detallesPorId(idSalida);
 
         if (salidaDetalles !== undefined) {
-            res.json(salidaDetalles).status(200);
+            if (salidaDetalles.length > 0) {
+                res.json(salidaDetalles).status(200);
+            } else {
+                res.status(204).send(); // Send a "no content" response
+            }
         } else {
             res.status(204).json({ success: false });
         }        

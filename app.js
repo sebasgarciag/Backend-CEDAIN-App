@@ -16,12 +16,8 @@ const db = require("./models");
 //db.Usuario.sync({ alter: true }); ((((TO BE USED BY EVERYONE IN THE FUTURE. NACHO, KIKE, ANGEL. DO NOT DELETE))))
 //db.Producto.sync({ force: true });
 
-
-
-
 // Server Initialization
 const app = express();
-const PORT = process.env.PORT || 8080;
 
 // Middlewares
 app.use(morgan('tiny'));
@@ -52,11 +48,7 @@ db.sequelize.sync()
   });
 
 // Server Listen
-app.listen(PORT, (error) => {
-    if(!error) {
-        console.log("Server is Successfully Running, and App is listening on port " + PORT);
-    } else {
-        console.log("Error occurred, server can't start", error);
-    }
-});
+const PORT = process.env.PORT || 8080
+module.exports = app.listen(PORT);
+
 
