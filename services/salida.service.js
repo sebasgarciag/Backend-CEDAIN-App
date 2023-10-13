@@ -147,3 +147,30 @@ exports.buscarTodosEventos = async function() { // RETURNS ALL
     eventos = await db.Evento.findAll();
     return eventos;
 }
+
+exports.buscarPorId = async function(idSalida) { 
+    let salida = undefined;
+
+    // Buscar salidas que coincidan con el idSalida proporcionado
+    let salidas = await db.Salida.findAll({
+        where: {
+            id_salida: idSalida
+        },
+        include: [
+            {
+                model: db.Usuario,
+                attributes: ['nombre', 'apellido_paterno']
+            },
+            db.Almacen,
+            db.Evento
+        ]
+    });
+
+    // Si se encontraron salidas que coinciden, tomar la primera
+    if (salidas.length > 0) {
+        salida = salidas[0];
+    }
+
+    return salida;
+}
+
