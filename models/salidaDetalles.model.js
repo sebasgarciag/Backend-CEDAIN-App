@@ -1,3 +1,12 @@
+/**
+ * 
+ * @constructor
+ * @property {number} id_salida_detalle - PK, autoincrements.
+ * @property {numbre} [id_salida] - el id de la salida hecha
+ * @property {number} [id_producto] - el id de cada producto
+ *  @property {number} [cantidad] - cantidad de los productos
+ * @property {number} [precio] - precio venta del producto
+ */
 module.exports = (sequelize, Sequelize) => {
     const Detalles = sequelize.define('Detalles', {
         id_salida_detalle: { //This information is taken from how the table is structured on the DB. (read the query)

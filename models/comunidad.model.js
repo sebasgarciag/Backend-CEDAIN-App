@@ -1,3 +1,10 @@
+/**
+ * 
+ * @constructor
+ * @property {number} id_comunidad - PK, autoincrements.
+ * @property {string} [nombre] -nombre de la comunidad
+
+ */
 module.exports = (sequelize, Sequelize) => {
     const Comunidad = sequelize.define('Comunidad', {
         id_comunidad: { //This information is taken from how the table is structured on the DB. (read the query)

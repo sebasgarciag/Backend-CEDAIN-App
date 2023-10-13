@@ -1,7 +1,15 @@
 const db = require('../models');
 const { Op } = require('sequelize');
 const dbConfig = require('../config/db.config');
-
+/**
+ * Regresa todas las salidas en la base de datos, incluso informacion de otras tablas fuera de 'entradas'
+ * como 'comunidad', 'almacen' y 'evento' pues estan asociadas.
+ * 
+ * @async
+ * @function
+ * @returns {Promise<Array>} en forma de array, te regresa todas las salidas.
+ * @throws {Error} Throws an error if retrieval from the database fails.
+ */
 exports.buscarTodas = async function() { // RETURNS ALL
     salidas = await db.Salida.findAll({ include: [
         {   
@@ -13,7 +21,14 @@ exports.buscarTodas = async function() { // RETURNS ALL
     ]});
     return salidas;
 }
-
+/**
+ * 
+ * @async
+ * @function
+ * @param {Object} salida - Contiene toda la info necesitada para hacer una salida nueva.
+ * @returns {Object} Regresa un objeto con todos los datos de la entrada creada.
+ * @throws {Error} Error si es que alguna validacion falla u otro error.
+ */
 exports.crearSalida = async function(salida) {   //CREATES NEW SALIDA. RECEIVES ALL THE REQUIRED DATA INSIDE THE OBJECT COUGHT BY THE FUNCTION. (salida)
     console.log("salida:",salida);
     
@@ -54,7 +69,13 @@ exports.crearSalida = async function(salida) {   //CREATES NEW SALIDA. RECEIVES 
         throw new Error("Error en salida.service.js; CHECK YOUR TERMINAL!\nProbablemente necesites informacion de una tabla que esta vacia.");
     }
 }
-
+/**
+ * @async
+ * @function
+ * @param {number} idSalida - ID de salida la cual se buscan los detalles.
+ * @returns {<Array>} Array con los detalles de entrada.
+ * @throws {Error} Error si es que falla el proceso.
+ */
 exports.detallesPorId = async function(idSalida) { //RETURNS INFO FROM THE ID GIVEN ONLY
     let salidaDetalles;
 
@@ -76,7 +97,14 @@ exports.detallesPorId = async function(idSalida) { //RETURNS INFO FROM THE ID GI
     return salidaDetalles;
 };
 
-
+/**
+ * @async
+ * @function
+ * @param {Array} salidaDetalle - recibe un array de todos los objetos en salida, cada objeto tiene
+ * la informacion de entrada-detalle (producto en entrada: id_entrada_detalle, id_entrada, id_producto, cantidad, precio_unitario).
+ * @returns {Arra>} Array con objetos (detalles de arriba).
+ * @throws {Error} Error si es que alguna validacion falla u otro error.
+ */
 exports.crearSalidaDetalle = async function(salidaDetalle){
 
     nuevosDetallesSalida = await db.SalidaDetalle.bulkCreate(salidaDetalle);
@@ -84,7 +112,13 @@ exports.crearSalidaDetalle = async function(salidaDetalle){
 
 }
 
-
+/**
+ * @async
+ * @function
+ * @param {number} idUsuario - ID del usuario el cual se quieren ver las salidas que hiso.
+ * @returns {<Array>} Array con las entradas hechas por el usuario.
+ * @throws {Error} Error si es que falla el proceso.
+ */
 //RETURNS all salidas from given user_id
 exports.buscarSalidasDeUsuario = async function(idUsuario) {
     let salida = undefined;
@@ -128,11 +162,32 @@ return lastFolio ? lastFolio.folio + 1 : 1;
 
 }
 
-exports.buscarTodasComunidades = async function() { // RETURNS ALL
+/**
+ * Busca y retorna todas las comunidades de la base de datos.
+ * 
+ * @function
+ * @async
+ * @returns {Promise<Array>} Una promesa que resuelve a un arreglo de comunidades.
+ * @throws {Error} Lanza un error si hay problemas al consultar la base de datos.
+ * @example
+ * const comunidades = await buscarTodasComunidades();
+ */
+exports.buscarTodasComunidades = async function() { 
     comunidades = await db.Comunidad.findAll();
     return comunidades;
 }
-exports.buscarTodosEventos = async function() { // RETURNS ALL
+
+/**
+ * Busca y retorna todos los eventos de la base de datos.
+ * 
+ * @function
+ * @async
+ * @returns {Promise<Array>} Una promesa que resuelve a un arreglo de eventos.
+ * @throws {Error} Lanza un error si hay problemas al consultar la base de datos.
+ * @example
+ * const eventos = await buscarTodosEventos();
+ */
+exports.buscarTodosEventos = async function() { 
     eventos = await db.Evento.findAll();
     return eventos;
 }
