@@ -1,3 +1,9 @@
+/**
+ * 
+ * @constructor
+ * @property {number} id_categoria - PK, autoincrements.
+ * @property {string} [nombre] - nombre de la categoria
+ */
 module.exports = (sequelize, Sequelize) => {
     const Categoria = sequelize.define('Categoria', {
         id_categoria: { //This information is taken from how the table is structured on the DB. (read the query)
