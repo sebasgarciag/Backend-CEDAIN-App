@@ -12,21 +12,40 @@ const ExcelJS = require('exceljs');
  */
 exports.postCrear = async function (req, res) {
     let result = validationResult(req);
+    req.body.fecha = getCurrentDate();
 
     if (result.errors.length > 0) {
         return res.status(400).json({ success: false, error: result }); //if routes.js sends error, controller catches and sends error #.
-    } 
-    
+    }
+
     try {
         let entrada = req.body;     //todo lo que viene en el json payload
         let entradaCreada = await entradaService.crear(entrada); 
-        return res.json(entradaCreada).status(201);
+        return res.status(201).json(entradaCreada);
     }
     catch (error) { //En caso de error relacionado a la base de datos, enter here.
         console.error("Error al intentar crear entrada: ", error);
         return res.status(500).json({ success: false, message: "Error durante proceso de crear entrada" });
     }
 };
+
+
+/**
+ * This is a helper function needed by the above POST function 'postCrear'.
+ * What it does is provide current date to it.
+ * 
+ * @function
+ * @returns {Object} Current date.
+ */
+function getCurrentDate() {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = ("0" + (date.getMonth() + 1)).slice(-2); // months are zero-indexed in JS
+    const day = ("0" + date.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
+}
+
+
 
 /**
  * Controla la creacion de "entradas-detalles".
@@ -82,7 +101,7 @@ exports.getBuscarTodas = async function (req, res) {
         //This keeps the server from crashing if date is given in wrong format.
         try{
             let entradaPorFecha = await entradaService.entradasPorFecha(date);
-            return res.json(entradaPorFecha).status(201);
+            return res.json(entradaPorFecha).status(200);
         }
         catch (error) {
             console.error("Error en entradasPorFecha.service.js: ", error);
@@ -192,7 +211,7 @@ exports.getDetallesPorId = async function (req, res) {
 
         if (entradaDetalles !== undefined) {
             if (entradaDetalles.length > 0) {
-                res.json(entradaDetalles).status(200);
+                res.status(200).json(entradaDetalles);
             } else {
                 res.status(204).send(); // Send a "no content" response
             }
