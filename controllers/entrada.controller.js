@@ -21,7 +21,7 @@ exports.postCrear = async function (req, res) {
     try {
         let entrada = req.body;     //todo lo que viene en el json payload
         let entradaCreada = await entradaService.crear(entrada); 
-        return res.json(entradaCreada).status(201);
+        return res.status(201).json(entradaCreada);
     }
     catch (error) { //En caso de error relacionado a la base de datos, enter here.
         console.error("Error al intentar crear entrada: ", error);
@@ -211,7 +211,7 @@ exports.getDetallesPorId = async function (req, res) {
 
         if (entradaDetalles !== undefined) {
             if (entradaDetalles.length > 0) {
-                res.json(entradaDetalles).status(200);
+                res.status(200).json(entradaDetalles);
             } else {
                 res.status(204).send(); // Send a "no content" response
             }

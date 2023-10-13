@@ -122,7 +122,8 @@ router.put("/:id", [
 
 /**
  * Trae todos los detalles de una entrada; regresa todos los productos de una entrada.
- * requiere del id de la entrada la cual se quiere ver los detalles de.
+ * requiere del id de la entrada la cual se quiere ver los detalles de. 
+ * RECIBE EL ID DE LA ENTRADA. ATENCION.
  * 
  * @route {GET} /entradas-detalles/:id
  * @bodyparam {number} el id debe ser un numero.
