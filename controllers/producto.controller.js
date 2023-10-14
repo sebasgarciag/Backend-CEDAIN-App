@@ -92,9 +92,23 @@ exports.updateProducto = async function (req, res) {
 };
 
 exports.getCategorias = async function (req, res) {
-   
-    let categoria = await productoService.buscarCategorias();
-    res.json(categoria).status(200);
+    let categorias = await productoService.buscarCategorias();
+    if (!categorias){
+        res.status(204).json({ success: false });
+    }
+    else{
+        res.status(200).json(categorias);
+    }
+};
+
+exports.getTamanios = async function (req, res) {
+    let tamanios = await productoService.buscarTamanios();
+    if (!tamanios){
+        res.status(204).json({ success: false });
+    }
+    else{
+        res.status(200).json(tamanios);
+    }
 };
 
 exports.suspenderProductos = async function (req, res) {

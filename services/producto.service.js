@@ -1,24 +1,42 @@
 const { Op } = require('sequelize');
 const dbConfig = require('../config/db.config');
 const db = require('../models');
+const { exec } = require('child_process');
 
 exports.buscarTodas = async function() { // RETURNS ALL
-    productos = await db.Producto.findAll();
+    let productos = await db.Producto.findAll({ include: [
+        db.Tamanio, 
+        db.Categoria,  
+    ]});
     return productos;
 }
 
 
 
 exports.buscarCategorias = async function() { // RETURNS ALL CATEGORIAS 
-    categorias = await db.Categoria.findAll();
+    let categorias = null
+    try{
+        categorias = await db.Categoria.findAll();
+    }
+    catch{
+        // 
+    }
     return categorias;
 }
 
+exports.buscarTamanios = async function() { // RETURNS ALL CATEGORIAS 
+    let tamanios = null
+    try{
+        tamanios = await db.Tamanio.findAll();
+    }
+    catch{
+        //
+    }
+    return tamanios;
+}
 
 exports.buscarPorId = async function(idProducto) { //RETURNS ENTRY INFO FROM THE ID GIVEN ONLY
-    let producto = undefined;
-
-    producto = await db.Producto.findByPk(idProducto);
+    let producto = await db.Producto.findByPk(idProducto);
     // console.log(idProducto)
 
     return producto;
