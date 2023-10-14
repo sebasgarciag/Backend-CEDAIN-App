@@ -1,3 +1,9 @@
+/**
+ * 
+ * @constructor
+ * @property {number} id_evento - PK, autoincrements.
+ * @property {string} [nombre] - nombre del evento
+ */
 module.exports = (sequelize, Sequelize) => {
     const Evento = sequelize.define('Evento', {
         id_evento: { //This information is taken from how the table is structured on the DB. (read the query)
