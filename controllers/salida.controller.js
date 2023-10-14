@@ -4,7 +4,7 @@ const ExcelJS = require('exceljs');
 
 exports.getBuscarTodas = async function (req, res) {
     let salida = await salidaService.buscarTodas();
-    res.json(salida).status(200);
+    res.status(200).json(salida);
 };
 
 
@@ -18,7 +18,7 @@ exports.postCrearSalida = async function (req, res) {
     try {
         let salida = req.body;     //todo lo que viene en el json payload
         let salidaCreada = await salidaService.crearSalida(salida); 
-        return res.json(salidaCreada).status(201);
+        return res.status(201).json(salidaCreada);
     }
     catch (error) { //En caso de error relacionado a la base de datos, enter here.
         console.error("Error al intentar crear salida: ", error);
@@ -28,8 +28,10 @@ exports.postCrearSalida = async function (req, res) {
 
 exports.getBuscarTodasComunidades = async function (req, res) {
     let Comunidades = await salidaService.buscarTodasComunidades();
-    res.json(Comunidades).status(200);
+    res.status(200).json(Comunidades);
 };
+
+
 exports.getBuscarTodosEventos = async function (req, res) {
     let Eventos = await salidaService.buscarTodosEventos();
     res.json(Eventos).status(200);
@@ -52,6 +54,7 @@ exports.postSalidasDetalles = async function (req, res){
 
 };
 
+
 exports.getSalidasPorUsuario = async function (req, res) {
     let result = validationResult(req);
     
@@ -62,13 +65,12 @@ exports.getSalidasPorUsuario = async function (req, res) {
         let salida = await salidaService.buscarSalidasDeUsuario(idUsuario);
 
         if (salida !== undefined) {
-            res.json(salida).status(200);
+            res.status(200).json(salida);
         } else {
             res.status(204).json({ success: false });
         }        
     }
 };
-
 
 
 exports.getDetallesPorId = async function (req, res) {
@@ -82,7 +84,7 @@ exports.getDetallesPorId = async function (req, res) {
 
         if (salidaDetalles !== undefined) {
             if (salidaDetalles.length > 0) {
-                res.json(salidaDetalles).status(200);
+                res.status(200).json(salidaDetalles);
             } else {
                 res.status(204).send(); // Send a "no content" response
             }
