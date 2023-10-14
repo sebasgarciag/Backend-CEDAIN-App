@@ -9,14 +9,6 @@ const router = require("express").Router();
 const { check, param } = require('express-validator');
 let salidaController = require("../controllers/salida.controller");
 
-/**
- * Obtiene todas las salidas.
- * @name get/todas-salidas
- * @function
- * @memberof module:salidaRoutes
- * @inner
- * @route {GET} /
- */
 router.get("", salidaController.getBuscarTodas);
 
 /**

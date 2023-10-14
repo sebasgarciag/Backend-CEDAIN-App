@@ -1,5 +1,6 @@
 const salidaService = require('../services/salida.service');
 const { validationResult } = require('express-validator');
+const ExcelJS = require('exceljs');
 /**
  * Controla el GET de "" o "salidas?date=YYYY-MM-DD"
  *
@@ -11,7 +12,7 @@ const { validationResult } = require('express-validator');
  */
 exports.getBuscarTodas = async function (req, res) {
     let salida = await salidaService.buscarTodas();
-    res.json(salida).status(200);
+    res.status(200).json(salida);
 };
 
 /** 
@@ -52,6 +53,8 @@ exports.getBuscarTodasComunidades = async function (req, res) {
     let Comunidades = await salidaService.buscarTodasComunidades();
     res.json(Comunidades).status(200);
 };
+
+
 /**
  *endpoint para buscar todas las  evento.
  * 
@@ -91,6 +94,7 @@ exports.postSalidasDetalles = async function (req, res){
     } 
 
 };
+
 /**
  * Controla el GET de /salida-usuario/:id"
  *
