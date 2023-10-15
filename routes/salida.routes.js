@@ -9,6 +9,10 @@ const router = require("express").Router();
 const { check, param } = require('express-validator');
 let salidaController = require("../controllers/salida.controller");
 
+
+// Ruta para exportar una salida específica a Excel
+router.get('/exportar-excel/:id', salidaController.exportCombinedToExcel);
+
 router.get("", salidaController.getBuscarTodas);
 
 /**
