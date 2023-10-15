@@ -38,6 +38,10 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.BOOLEAN,
             allowNull: true
         },
+        imagen: {
+            type: Sequelize.BLOB('long'),
+            allowNull: true
+        }
   
     }, {
         tableName: 'productos',
