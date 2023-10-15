@@ -1,4 +1,4 @@
-require('dotenv').config({path:'/home/hidden/Desktop/Vs Code/Backend-CEDAIN-App/process.env'})
+require('dotenv').config()
 
 module.exports = {
     HOST: process.env.DB_HOST,
