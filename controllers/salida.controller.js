@@ -33,7 +33,7 @@ exports.postCrearSalida = async function (req, res) {
     try {
         let salida = req.body;     //todo lo que viene en el json payload
         let salidaCreada = await salidaService.crearSalida(salida); 
-        return res.json(salidaCreada).status(201);
+        return res.status(201).json(salidaCreada);
     }
     catch (error) { //En caso de error relacionado a la base de datos, enter here.
         console.error("Error al intentar crear salida: ", error);
