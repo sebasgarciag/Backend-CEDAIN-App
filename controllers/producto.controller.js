@@ -7,11 +7,18 @@ exports.postCrear = async function (req, res) {
 
     if (result.errors.length > 0) {
         return res.status(400).json({ success: false, error: result }); //if routes.js sends error, controller catches and sends error #.
-    } 
+    }
     
     try {
-        let producto = req.body;     //todo lo que viene en el json payload
-        let productoCreado = await productoService.crear(producto);
+        const productoData = req.body;
+        console.log('productoData')
+        // Add the image buffer if it's provided
+        if (req.file) {
+            productoData.imagen = req.file.buffer;
+        }
+        console.log('req.file')
+        let productoCreado = await productoService.crear(productoData);
+        console.log('await')
         return res.json(productoCreado).status(201);
     }
     catch (error) { //En caso de error relacionado a la base de datos, enter here.
@@ -20,11 +27,61 @@ exports.postCrear = async function (req, res) {
     }
 };
 
-/**
+//UPDATE EXISTING
+exports.updateProducto = async function (req, res) {
+    let result = validationResult(req);
+    
+    if (result.errors.length > 0) {
+        res.status(400).json({ success: false, error: result }); //aqui manda los errores
+    } else {
+        try {
+            const productoData = req.body;
+            const idProducto = req.params.id;
+            
+            if (req.file) {
+                productoData.imagen = req.file.buffer;
+                console.log('sí viene imagen')
+            }
+            
+            let productoActualizado = await productoService.updateProducto(idProducto, productoData);
+            
+            if (productoActualizado == true) {
+                res.status(200).json({ success: true });
+            } else {
+                res.status(204).json({ success: false });
+            }        
+        }
+        catch (error) { //En caso de error relacionado a la base de datos, enter here.
+            console.error("Error al intentar editar productooo: ", error);
+            res.status(500).json({ success: false, message: "Error durante proceso de editar producto" });
+        }
+        
+    }    
+};
+
+//UPDATE EXISTING
+exports.getProductImage = async function (req, res) {
+    try {
+        const idProducto = req.params.id;
+        const producto = await productoService.buscarPorId(idProducto);
+  
+        if (!producto || !producto.imagen) {
+            res.status(404).send({ success: false, message: 'Image not found!' });
+            return;
+        }
+  
+        // Assuming the image is stored as JPEG
+        res.set('Content-Type', 'image/jpeg');
+        res.send(producto.imagen);
+    } catch (err) {
+        res.status(500).send({ success: false, message: err.message });
+    }
+};
+    /**
  * Procesa el request GET para obtener todas las entradas
  * @param {Request} req - Request
  * @param {Response} res - Response que contiene una lista de todas las entradas y status 200
- */
+*/
 exports.getBuscarTodas = async function (req, res) {
     let producto = await productoService.buscarTodas();
     res.json(producto).status(200);
@@ -71,25 +128,7 @@ exports.getProductosPorNombre = async function (req, res) {
 
 
 
-//UPDATE EXISTING
-exports.updateProducto = async function (req, res) {
-    let result = validationResult(req);
 
-    if (result.errors.length > 0) {
-        res.status(400).json({ success: false, error: result }); //aqui manda los errores
-    } else {
-        let producto = req.body;
-        let idProducto = req.params.id;
-        let productoActualizado = await productoService.updateProducto(idProducto, producto);
-
-        if (productoActualizado == true) {
-            res.status(200).json({ success: true });
-        } else {
-            res.status(204).json({ success: false });
-        }        
-
-    }    
-};
 
 exports.getCategorias = async function (req, res) {
     let categorias = await productoService.buscarCategorias();
