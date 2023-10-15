@@ -1,5 +1,6 @@
 const { Op } = require('sequelize');
 const db = require('../models');
+const { exec } = require('child_process');
 
 /**
  * Busca y devuelve todos los productos en la base de datos, incluyendo información
