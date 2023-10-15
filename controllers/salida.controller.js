@@ -1,5 +1,6 @@
 const salidaService = require('../services/salida.service');
 const { validationResult } = require('express-validator');
+const ExcelJS = require('exceljs');
 /**
  * Controla el GET de "" o "salidas?date=YYYY-MM-DD"
  *
@@ -11,7 +12,7 @@ const { validationResult } = require('express-validator');
  */
 exports.getBuscarTodas = async function (req, res) {
     let salida = await salidaService.buscarTodas();
-    res.json(salida).status(200);
+    res.status(200).json(salida);
 };
 
 /** 
@@ -32,7 +33,7 @@ exports.postCrearSalida = async function (req, res) {
     try {
         let salida = req.body;     //todo lo que viene en el json payload
         let salidaCreada = await salidaService.crearSalida(salida); 
-        return res.json(salidaCreada).status(201);
+        return res.status(201).json(salidaCreada);
     }
     catch (error) { //En caso de error relacionado a la base de datos, enter here.
         console.error("Error al intentar crear salida: ", error);
@@ -52,6 +53,8 @@ exports.getBuscarTodasComunidades = async function (req, res) {
     let Comunidades = await salidaService.buscarTodasComunidades();
     res.json(Comunidades).status(200);
 };
+
+
 /**
  *endpoint para buscar todas las  evento.
  * 
@@ -91,6 +94,7 @@ exports.postSalidasDetalles = async function (req, res){
     } 
 
 };
+
 /**
  * Controla el GET de /salida-usuario/:id"
  *
