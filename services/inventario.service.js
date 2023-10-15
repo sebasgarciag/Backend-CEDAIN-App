@@ -19,14 +19,16 @@ exports.crear = async function(inventario) { // RETURNS ALL
 }
 
 
-exports.updateInventario = async function(idInventario,inventario) { //This one will only update parameters given.
+exports.updateInventario = async function(idInventario,nuevaCantidad) { //This one will only update parameters given.
     let inventarioActualizado = false;
 
     const existingInventario = await db.Inventario.findByPk(idInventario)
 
     if (existingInventario !== null) {
         await db.Inventario.update(
-            inventario,  // Pass the entrada object directly
+            {
+                cantidad:nuevaCantidad
+            },  // Pass the entrada object directly
             {
                 where: {
                     id_inventario: idInventario
