@@ -1,5 +1,6 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
+// import { getProductosPorNombre } from '../controllers/producto.controller';
 
 /**
  * Performance Tests (with K6)
@@ -17,87 +18,117 @@ const runTime = '10s';
 export const options = {
 
     scenarios: {
-        // Entradas POSTS
-        postEntrada: {  //Test Case 1a
-            executor: 'constant-vus',
-            exec: 'crearEntrada',
-            vus: 10,
-            duration: runTime,
-          },
-        postEntradasDetalles: {
-          executor: 'constant-vus',
-          exec: 'crearEntradaDetalles',
-          vus: 10,
-          duration: runTime,
-        },
-        // Entradas GETS
-        getEntradas: {  //Test Case 1b
-            executor: 'constant-vus',
-            exec: 'getEntradas',
-            vus: 10,
-            duration: runTime,
-        },
-        getEntradasID: {  //Test Case 1b
-          executor: 'constant-vus',
-          exec: 'getEntradasID',
-          vus: 10,
-          duration: runTime,
-        },
-        getEntradasUsuario: {  //Test Case 1b
-          executor: 'constant-vus',
-          exec: 'getEntradasUsuario',
-          vus: 10,
-          duration: runTime,
-        },
-        getEntradaDetalles: {  //Test Case 1b
-          executor: 'constant-vus',
-          exec: 'getEntradaDetalles',
-          vus: 10,
-          duration: runTime,
-        },
+        // // Entradas POSTS
+        // postEntrada: {  //Test Case 1a
+        //     executor: 'constant-vus',
+        //     exec: 'crearEntrada',
+        //     vus: 10,
+        //     duration: runTime,
+        //   },
+        // postEntradasDetalles: {
+        //   executor: 'constant-vus',
+        //   exec: 'crearEntradaDetalles',
+        //   vus: 10,
+        //   duration: runTime,
+        // },
+        // // Entradas GETS
+        // getEntradas: {  //Test Case 1b
+        //     executor: 'constant-vus',
+        //     exec: 'getEntradas',
+        //     vus: 10,
+        //     duration: runTime,
+        // },
+        // getEntradasID: {  //Test Case 1b
+        //   executor: 'constant-vus',
+        //   exec: 'getEntradasID',
+        //   vus: 10,
+        //   duration: runTime,
+        // },
+        // getEntradasUsuario: {  //Test Case 1b
+        //   executor: 'constant-vus',
+        //   exec: 'getEntradasUsuario',
+        //   vus: 10,
+        //   duration: runTime,
+        // },
+        // getEntradaDetalles: {  //Test Case 1b
+        //   executor: 'constant-vus',
+        //   exec: 'getEntradaDetalles',
+        //   vus: 10,
+        //   duration: runTime,
+        // },
 
-        //Salidas POSTS
-        //Salids GETS
-        getEntradas: {
+        // //Salidas POSTS
+        // //Salids GETS
+        // getEntradas: {
+        //     executor: 'constant-vus',
+        //     exec: 'getSalidas',
+        //     vus: 10,
+        //     duration: runTime,
+        // },
+        // getComunidades: {
+        //     executor: 'constant-vus',
+        //     exec: 'getComunidades',
+        //     vus: 10,
+        //     duration: runTime,
+        // },
+        // getEventos: {
+        //     executor: 'constant-vus',
+        //     exec: 'getEventos',
+        //     vus: 10,
+        //     duration: runTime,
+        // },
+        // getSalidaDetalles: {
+        //     executor: 'constant-vus',
+        //     exec: 'getSalidaDetalles',
+        //     vus: 10,
+        //     duration: runTime,
+        // },
+        // getSalidasUsuario: {
+        //     executor: 'constant-vus',
+        //     exec: 'getSalidasUsuario',
+        //     vus: 10,
+        //     duration: runTime,
+        // },
+        // //POST SALIDAS
+        // postCrearSalida: {
+        //     executor: 'constant-vus',
+        //     exec: 'postCrearSalida',
+        //     vus: 10,
+        //     duration: runTime,
+        // },
+        // postSalidasDetalles: {
+        //     executor: 'constant-vus',
+        //     exec: 'postSalidasDetalles',
+        //     vus: 10,
+        //     duration: runTime,
+        // },
+        postProducto: {  
             executor: 'constant-vus',
-            exec: 'getSalidas',
+            exec: 'crearProducto',
             vus: 10,
             duration: runTime,
         },
-        getComunidades: {
+        getProductos: {
             executor: 'constant-vus',
-            exec: 'getComunidades',
+            exec: 'getProductos',
             vus: 10,
             duration: runTime,
         },
-        getEventos: {
+        getProductoId: {
             executor: 'constant-vus',
-            exec: 'getEventos',
+            exec: 'getProductoId',
             vus: 10,
             duration: runTime,
         },
-        getSalidaDetalles: {
+        editarProducto: {
             executor: 'constant-vus',
-            exec: 'getSalidaDetalles',
+            exec: 'editarProducto',
             vus: 10,
             duration: runTime,
         },
-        getSalidasUsuario: {
+        getProductImage: {
             executor: 'constant-vus',
-            exec: 'getSalidasUsuario',
-            vus: 10,
-            duration: runTime,
-        },
-        //POST SALIDAS
-        postCrearSalida: {
-            executor: 'constant-vus',
-            exec: 'postCrearSalida',
-            vus: 10,
-            duration: runTime,
-        },
-        postSalidasDetalles: {
-            executor: 'constant-vus',
-            exec: 'postSalidasDetalles',
+            exec: 'getProductoImage',
             vus: 10,
             duration: runTime,
         }
@@ -268,5 +299,96 @@ export function postSalidasDetalles() {
         response, { "POST crearEntradaDetalle status code is 201": (r) => r.status == 201 }
     );
 
+    sleep(0.5);
+}
+
+export function crearProducto() {
+    const nombre = new Date().getTime().toString();
+    const medida = "David";
+    const precioVenta = 1;
+    const precioTrueque = 1;
+    const nombreCorto = "Corto";
+    const tamanio = 1;
+    const categoria = 1;
+    const suspendido = 0;
+
+    const data = {
+        nombre,
+        medida,
+        precio_venta: precioVenta,
+        precio_trueque: precioTrueque,
+        nombre_corto: nombreCorto,
+        id_tamanio: tamanio,
+        id_categoria: categoria,
+        suspendido,
+    };
+
+    const response = http.post(`${API_URL}/productos`, JSON.stringify(data), {
+        headers: { 'Content-Type': 'application/json' },
+    });
+
+    check(
+        response, { "POST crearProducto status code is 201": (r) => r.status == 201 }
+    );
+
+    sleep(0.5);
+}
+
+export function getProductos() {
+    const response = http.get(`${API_URL}/productos`);
+    check(
+        response, { "GET productos status code is 200": (r) => r.status == 200 }
+    );
+    sleep(0.5);
+}
+
+export function getProductoId() {
+    let id = 1; // Rango adecuado para IDs de productos en tu base de datos.
+    const response = http.get(`${API_URL}/productos/${id}`);
+    check(
+        response, { "GET productos por ID status code is 200": (r) => r.status == 200 }
+    );
+    sleep(0.5);
+}
+
+export function editarProducto() {
+    const id = 1;
+    const nombre = new Date().getTime().toString();
+    const medida = "David";
+    const precioVenta = 1;
+    const precioTrueque = 1;
+    const nombreCorto = "Corto";
+    const tamanio = 1;
+    const categoria = 1;
+    const suspendido = 0;
+
+    const data = {
+        nombre,
+        medida,
+        precio_venta: precioVenta,
+        precio_trueque: precioTrueque,
+        nombre_corto: nombreCorto,
+        id_tamanio: tamanio,
+        id_categoria: categoria,
+        suspendido,
+    };
+
+    const response = http.put(`${API_URL}/productos/${id}`, JSON.stringify(data), {
+        headers: { 'Content-Type': 'application/json' },
+    });
+
+    check(
+        response, { "PUT editarProducto status code is 200": (r) => r.status == 200 }
+    );
+
+    sleep(0.5);
+}
+
+export function getProductoImage() {
+    let idProducto = 1;
+    const response = http.get(`${API_URL}/productos/${idProducto}/image`);
+    check(
+        response, { "GET producto imagen status code is 200": (r) => r.status == 200 }
+    );
     sleep(0.5);
 }
