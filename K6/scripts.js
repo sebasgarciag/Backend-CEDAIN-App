@@ -18,90 +18,90 @@ const runTime = '10s';
 export const options = {
 
     scenarios: {
-        // // Entradas POSTS
-        // postEntrada: {  //Test Case 1a
-        //     executor: 'constant-vus',
-        //     exec: 'crearEntrada',
-        //     vus: 10,
-        //     duration: runTime,
-        //   },
-        // postEntradasDetalles: {
-        //   executor: 'constant-vus',
-        //   exec: 'crearEntradaDetalles',
-        //   vus: 10,
-        //   duration: runTime,
-        // },
-        // // Entradas GETS
-        // getEntradas: {  //Test Case 1b
-        //     executor: 'constant-vus',
-        //     exec: 'getEntradas',
-        //     vus: 10,
-        //     duration: runTime,
-        // },
-        // getEntradasID: {  //Test Case 1b
-        //   executor: 'constant-vus',
-        //   exec: 'getEntradasID',
-        //   vus: 10,
-        //   duration: runTime,
-        // },
-        // getEntradasUsuario: {  //Test Case 1b
-        //   executor: 'constant-vus',
-        //   exec: 'getEntradasUsuario',
-        //   vus: 10,
-        //   duration: runTime,
-        // },
-        // getEntradaDetalles: {  //Test Case 1b
-        //   executor: 'constant-vus',
-        //   exec: 'getEntradaDetalles',
-        //   vus: 10,
-        //   duration: runTime,
-        // },
+        // Entradas POSTS
+        postEntrada: {  //Test Case 1a
+            executor: 'constant-vus',
+            exec: 'crearEntrada',
+            vus: 10,
+            duration: runTime,
+          },
+        postEntradasDetalles: {
+          executor: 'constant-vus',
+          exec: 'crearEntradaDetalles',
+          vus: 10,
+          duration: runTime,
+        },
+        // Entradas GETS
+        getEntradas: {  //Test Case 1b
+            executor: 'constant-vus',
+            exec: 'getEntradas',
+            vus: 10,
+            duration: runTime,
+        },
+        getEntradasID: {  //Test Case 1b
+          executor: 'constant-vus',
+          exec: 'getEntradasID',
+          vus: 10,
+          duration: runTime,
+        },
+        getEntradasUsuario: {  //Test Case 1b
+          executor: 'constant-vus',
+          exec: 'getEntradasUsuario',
+          vus: 10,
+          duration: runTime,
+        },
+        getEntradaDetalles: {  //Test Case 1b
+          executor: 'constant-vus',
+          exec: 'getEntradaDetalles',
+          vus: 10,
+          duration: runTime,
+        },
 
-        // //Salidas POSTS
-        // //Salids GETS
-        // getEntradas: {
-        //     executor: 'constant-vus',
-        //     exec: 'getSalidas',
-        //     vus: 10,
-        //     duration: runTime,
-        // },
-        // getComunidades: {
-        //     executor: 'constant-vus',
-        //     exec: 'getComunidades',
-        //     vus: 10,
-        //     duration: runTime,
-        // },
-        // getEventos: {
-        //     executor: 'constant-vus',
-        //     exec: 'getEventos',
-        //     vus: 10,
-        //     duration: runTime,
-        // },
-        // getSalidaDetalles: {
-        //     executor: 'constant-vus',
-        //     exec: 'getSalidaDetalles',
-        //     vus: 10,
-        //     duration: runTime,
-        // },
-        // getSalidasUsuario: {
-        //     executor: 'constant-vus',
-        //     exec: 'getSalidasUsuario',
-        //     vus: 10,
-        //     duration: runTime,
-        // },
-        // //POST SALIDAS
-        // postCrearSalida: {
-        //     executor: 'constant-vus',
-        //     exec: 'postCrearSalida',
-        //     vus: 10,
-        //     duration: runTime,
-        // },
-        // postSalidasDetalles: {
-        //     executor: 'constant-vus',
-        //     exec: 'postSalidasDetalles',
-        //     vus: 10,
-        //     duration: runTime,
-        // },
+        //Salidas POSTS
+        //Salids GETS
+        getEntradas: {
+            executor: 'constant-vus',
+            exec: 'getSalidas',
+            vus: 10,
+            duration: runTime,
+        },
+        getComunidades: {
+            executor: 'constant-vus',
+            exec: 'getComunidades',
+            vus: 10,
+            duration: runTime,
+        },
+        getEventos: {
+            executor: 'constant-vus',
+            exec: 'getEventos',
+            vus: 10,
+            duration: runTime,
+        },
+        getSalidaDetalles: {
+            executor: 'constant-vus',
+            exec: 'getSalidaDetalles',
+            vus: 10,
+            duration: runTime,
+        },
+        getSalidasUsuario: {
+            executor: 'constant-vus',
+            exec: 'getSalidasUsuario',
+            vus: 10,
+            duration: runTime,
+        },
+        //POST SALIDAS
+        postCrearSalida: {
+            executor: 'constant-vus',
+            exec: 'postCrearSalida',
+            vus: 10,
+            duration: runTime,
+        },
+        postSalidasDetalles: {
+            executor: 'constant-vus',
+            exec: 'postSalidasDetalles',
+            vus: 10,
+            duration: runTime,
+        },
         postProducto: {  
             executor: 'constant-vus',
             exec: 'crearProducto',
