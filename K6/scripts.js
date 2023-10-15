@@ -10,9 +10,10 @@ import { check, sleep } from 'k6';
 //const API_URL = "https://backend-cedain-app-xcfpf63vha-uc.a.run.app"; //Cloud's back end + DB <- DO NOT USE
 const API_URL = "http://localhost:8080"; //Your local Back end + DB
 
+
 //This variable controls how long each performance test takes.
 //'30s' is advisable. 
-const runTime = '10s';
+const runTime = '30s';
 
 export const options = {
 
@@ -158,7 +159,7 @@ export function getEntradas() {
 }
 
 export function getEntradasID() {
-    var id = Math.floor(Math.random() * (200 - 120 + 1)) + 120; //Check this range is actually on DB
+    var id = Math.floor(Math.random() * (200 - 50 + 1)) + 50; //Check this range is actually on DB
     const response = http.get(`${API_URL}/entradas/${id}`);
     check(
         response, { "GET entradas por ID status code is 200": (r) => r.status == 200 }
