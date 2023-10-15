@@ -25,11 +25,10 @@ router.post("/inventarios", [
 	//param("cantidad").isNumeric().withMessage("Producto debe ser numerico")
 ],inventarioController.postCrear)
 
+*/
+router.put("/",[
 
-router.put("/inventarios/:id",[
-	param("id").isNumeric().withMessage("Id debe ser numerico")
-
-], inventarioController.putProductos)*/
+], inventarioController.putProductos)
 
 
 router.get("/", inventarioController.getBuscarTodosProductos);

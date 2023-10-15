@@ -64,9 +64,9 @@ exports.putProductos = async function (req,res){
     if (result.errors.length > 0) {
         res.status(400).json({ success: false, error: result }); //aqui manda los errores
     } else {
-        let inventario = req.body;
-        let idInventario = req.params.id;
-        let inventarioActualizado = await inventarioService.updateInventario(idInventario,inventario);
+        let idInventario = req.query.id_inventario;
+        let cantidad = req.query.cantidad;
+        let inventarioActualizado = await inventarioService.updateInventario(idInventario,cantidad);
 
         if (inventarioActualizado == true) {
             res.status(200).json({ success: true });
