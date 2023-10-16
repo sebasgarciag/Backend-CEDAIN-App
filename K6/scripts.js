@@ -148,6 +148,32 @@ export const options = {
         vus: 10,  
         duration: runTime,
     },
+    buscarTodosProductos: {
+        executor: 'constant-vus',
+        exec: 'buscarTodosProductos',
+        vus: 10,
+        duration: runTime,
+    },
+    buscarInventarioPorAlmacen: {
+        executor: 'constant-vus',
+        exec: 'buscarInventarioPorAlmacen',
+        vus: 10,
+        duration: runTime,
+        tags: { type: 'inventario'}
+    },
+    getProductosPorAlmacenExistenteTest: {
+        executor: 'constant-vus',
+        exec: 'getProductosPorAlmacenExistente',
+        vus: 10,
+        duration: runTime,
+    },
+
+    getProductosPorAlmacenInexistenteTest: {
+        executor: 'constant-vus',
+        exec: 'getProductosPorAlmacenInexistente',
+        vus: 10,
+        duration: runTime,
+    }
 }}
 
 //Functions
@@ -426,4 +452,29 @@ export function exportarInventarioExcel() {
     let response = http.get(`${API_URL}/inventario/exportar-excel/1`);
     check(response, { "status code is 200": (r) => r.status === 200 });
     sleep(1);
+}
+export function getProductos() {
+    const response = http.get(`${API_URL}/productos`);
+    check(
+        response, { "GET productos status code is 200": (r) => r.status == 200 }
+    );
+    sleep(0.5);
+}
+
+export function getProductosPorAlmacenExistente() {
+    const id_almacen = 1; // Reemplaza con el ID del almacén existente
+    const response = http.get(`${API_URL}/productos?almacen=${id_almacen}`);
+    check(
+        response, { "GET productos por almacén existente status code is 200": (r) => r.status == 200 }
+    );
+    sleep(0.5);
+}
+
+export function getProductosPorAlmacenInexistente() {
+    const id_almacen = 9999; // Reemplaza con un ID de almacén que no exista
+    const response = http.get(`${API_URL}/productos?almacen=${id_almacen}`);
+    check(
+        response, { "GET productos por almacén inexistente status code is 200": (r) => r.status == 200 }
+    );
+    sleep(0.5);
 }
