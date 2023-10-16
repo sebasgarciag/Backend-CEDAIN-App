@@ -1,5 +1,6 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
+// import { getProductosPorNombre } from '../controllers/producto.controller';
 
 /**
  * Performance Tests (with K6)
@@ -102,15 +103,53 @@ export const options = {
             duration: runTime,
         },
 
-        exportarInventario: {
+        postProducto: {  
             executor: 'constant-vus',
-            exec: 'exportarInventarioExcel',
-            vus: 10, 
-            duration: runTime, 
-        }
+            exec: 'crearProducto',
+            vus: 10,
+            duration: runTime,
+        },
+        getProductos: {
+            executor: 'constant-vus',
+            exec: 'getProductos',
+            vus: 10,
+            duration: runTime,
+        },
+        getProductoId: {
+            executor: 'constant-vus',
+            exec: 'getProductoId',
+            vus: 10,
+            duration: runTime,
+        },
+        editarProducto: {
+            executor: 'constant-vus',
+            exec: 'editarProducto',
+            vus: 10,
+            duration: runTime,
+        },
+        getProductImage: {
+            executor: 'constant-vus',
+            exec: 'getProductoImage',
+            vus: 10,
+            duration: runTime,
+        },
 
-    }
-}
+
+        // PUT Inventario
+        putModificarInventario:{
+            executor: 'constant-vus',
+            exec: 'putEditarInventario',
+            vus:10
+    },
+
+    exportarInventario: {
+        executor: 'constant-vus',
+        exec: 'exportarInventarioExcel',
+        vus: 10,  
+        duration: runTime,
+    },
+}}
+
 //Functions
 //Entradas
 //Inventario
@@ -282,9 +321,112 @@ export function postSalidasDetalles() {
     sleep(0.5);
 }
 
+
+export function crearProducto() {
+    const nombre = new Date().getTime().toString();
+    const medida = "David";
+    const precioVenta = 1;
+    const precioTrueque = 1;
+    const nombreCorto = "Corto";
+    const tamanio = 1;
+    const categoria = 1;
+    const suspendido = 0;
+
+    const data = {
+        nombre,
+        medida,
+        precio_venta: precioVenta,
+        precio_trueque: precioTrueque,
+        nombre_corto: nombreCorto,
+        id_tamanio: tamanio,
+        id_categoria: categoria,
+        suspendido,
+    };
+
+    const response = http.post(`${API_URL}/productos`, JSON.stringify(data), {
+        headers: { 'Content-Type': 'application/json' },
+    });
+
+    check(
+        response, { "POST crearProducto status code is 201": (r) => r.status == 201 }
+    );
+
+    sleep(0.5);
+}
+
+export function getProductos() {
+    const response = http.get(`${API_URL}/productos`);
+    check(
+        response, { "GET productos status code is 200": (r) => r.status == 200 }
+    );
+    sleep(0.5);
+}
+
+export function getProductoId() {
+    let id = 1; // Rango adecuado para IDs de productos en tu base de datos.
+    const response = http.get(`${API_URL}/productos/${id}`);
+    check(
+        response, { "GET productos por ID status code is 200": (r) => r.status == 200 }
+    );
+    sleep(0.5);
+}
+
+export function editarProducto() {
+    const id = 1;
+    const nombre = new Date().getTime().toString();
+    const medida = "David";
+    const precioVenta = 1;
+    const precioTrueque = 1;
+    const nombreCorto = "Corto";
+    const tamanio = 1;
+    const categoria = 1;
+    const suspendido = 0;
+
+    const data = {
+        nombre,
+        medida,
+        precio_venta: precioVenta,
+        precio_trueque: precioTrueque,
+        nombre_corto: nombreCorto,
+        id_tamanio: tamanio,
+        id_categoria: categoria,
+        suspendido,
+    };
+
+    const response = http.put(`${API_URL}/productos/${id}`, JSON.stringify(data), {
+        headers: { 'Content-Type': 'application/json' },
+    });
+
+    check(
+        response, { "PUT editarProducto status code is 200": (r) => r.status == 200 }
+    );
+
+    sleep(0.5);
+}
+
+export function getProductoImage() {
+    let idProducto = 1;
+    const response = http.get(`${API_URL}/productos/${idProducto}/image`);
+    check(
+        response, { "GET producto imagen status code is 200": (r) => r.status == 200 }
+    );
+    sleep(0.5);
+}
+
+export function putEditarInventario(){
+    const id_inventario = Math.floor(Math.random()* 10)
+    const cantidad = Math.floor(Math.random()*100)
+
+    const response = http.put(`${API_URL}/inventario?id_inventario=${id_inventario}&cantidad=${cantidad}`)
+    check(
+        response, { "PUT editarInventario status code is 200": (r) => r.status == 200 }
+    );
+
+    sleep(0.5);
+}
+
 export function exportarInventarioExcel() {
     let response = http.get(`${API_URL}/inventario/exportar-excel/1`);
     check(response, { "status code is 200": (r) => r.status === 200 });
     sleep(1);
 }
-
