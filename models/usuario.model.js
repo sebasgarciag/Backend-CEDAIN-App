@@ -26,7 +26,8 @@ module.exports = (sequelize, Sequelize) => {
         },
         correo: {
             type: Sequelize.STRING(255),
-            allowNull: false
+            allowNull: false,
+            unique: true
 
         },
         password: {

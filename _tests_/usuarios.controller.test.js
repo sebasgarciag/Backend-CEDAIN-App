@@ -1,7 +1,7 @@
 const request = require('supertest');
 const server = require('../app');
 
-describe("usuario Controller Tests", () => {
+describe("Usuarios Controller Tests", () => {
     test("Obtener todos los usuarios", async () => {
         return request(server)
             .get('/usuarios')
@@ -12,7 +12,7 @@ describe("usuario Controller Tests", () => {
         const nombre = new Date().getTime().toString();;
         const apellido_paterno = "Rodriguez";
         const apellido_materno = "Hernandez";
-        const tipo= "Almacenista";
+        const tipo = "Almacenista";
         const correo = new Date().getTime().toString() + "@gmail.com";
         const password = "12456";
 
@@ -36,7 +36,7 @@ describe("usuario Controller Tests", () => {
                 expect(res.body.correo).toEqual(correo);
                 expect(res.body.password).toEqual(password);
 
-                
+
             });
     });
 
@@ -77,20 +77,19 @@ describe("usuario Controller Tests", () => {
         const correo = new Date().getTime().toString() + "@gmail.com";
         const password = "12456";
 
-                
-                return request(server)
-                    .put('/usuarios/' + 1)
-                    .send({
-                        nombre: nombre,
-                        apellido_paterno: apellido_paterno,
-                        apellido_materno: apellido_materno,
-                        tipo: tipo,
-                        correo: correo,
-                        password: password
-                    })
-                    .expect(200)
 
-            });
+        return request(server)
+            .put('/usuarios/' + 1)
+            .send({
+                nombre: nombre,
+                apellido_paterno: apellido_paterno,
+                apellido_materno: apellido_materno,
+                tipo: tipo,
+                correo: correo,
+                password: password
+            })
+            .expect(200)
+
     });
 
     test("Obtener usuario que no existe", async () => {
@@ -99,5 +98,46 @@ describe("usuario Controller Tests", () => {
             .send()
             .expect(404);
     });
+
+    test("Login", async () => {
+        const nombre = new Date().getTime().toString();;
+        const apellido_paterno = "Rodriguez";
+        const apellido_materno = "Hernandez";
+        const tipo = "Almacenista";
+        const correo = new Date().getTime().toString() + "@gmail.com";
+        const password = "12456";
+
+
+        return request(server)
+            .post('/usuarios/newUsuario')
+            .send({
+                nombre: nombre,
+                apellido_paterno: apellido_paterno,
+                apellido_materno: apellido_materno,
+                tipo: tipo,
+                correo: correo,
+                password: password
+            })
+            .expect((res) => {
+                if (![201, 500].includes(res.status)) throw new Error("Expected status 201 or 500");
+            })
+            .then((res) => {
+                return request(server)
+                    .post('/usuarios/login')
+                    .send({
+                        correo: correo,
+                        password: password
+                    })
+                    .expect(200)
+
+            });
+
+    });
+});
+
+
+
+
+    
 
 
