@@ -39,7 +39,7 @@ app.use('/inventario', apiInventario);
 
 
 // Establish Database Connection (if concerned about data persistence)
-db.sequelize.sync()
+db.sequelize.sync({force:true})
   .then(() => {
     console.log("Synced db.");
   })

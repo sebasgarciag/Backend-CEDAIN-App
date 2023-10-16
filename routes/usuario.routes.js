@@ -42,4 +42,10 @@ router.post("/login", [
 
 ], usuarioController.postLogin);
 
+router.get("/:correo", [
+
+    check("correo").notEmpty().withMessage("correo no debe estar vacio").isEmail().withMessage("correo debe ser un correo valido")
+
+], usuarioController.getUsuarioPorCorreoToken);
+
 module.exports = router;

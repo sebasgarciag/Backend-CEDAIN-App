@@ -73,6 +73,20 @@ exports.postLogin = async function (req, res) {
 };
 
 
+//Get UsuarioPorCorreoToken
+exports.getUsuarioPorCorreoToken = async function (correo) {
+  try {
+    let usuario = await db.Usuario.findOne({
+      where: { correo: correo },
+      attributes: ['id_usuario','nombre', 'apellido_paterno', 'correo']
+    });
+    return usuario;
+  } catch (error) {
+    console.error("Error al buscar usuario por correo: ", error);
+    throw error;
+  }
+};
+
 
 
 
