@@ -15,7 +15,7 @@ exports.postCrearUsuario = async function (req, res) {
     let newUsuario = req.body;     //todo lo que viene en el json payload
 
     let usuarioCreado = await usuarioService.crearUsuario(newUsuario);
-    return res.json(usuarioCreado).status(201);
+    return res.status(201).json(usuarioCreado);
   }
   catch (error) { //En caso de error relacionado a la base de datos, enter here.
     console.error("Error al intentar crear usuario: ", error);
