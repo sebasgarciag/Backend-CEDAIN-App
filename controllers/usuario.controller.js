@@ -15,7 +15,7 @@ exports.postCrearUsuario = async function (req, res) {
     let newUsuario = req.body;     //todo lo que viene en el json payload
 
     let usuarioCreado = await usuarioService.crearUsuario(newUsuario);
-    return res.json(usuarioCreado).status(201);
+    return res.status(201).json(usuarioCreado);
   }
   catch (error) { //En caso de error relacionado a la base de datos, enter here.
     console.error("Error al intentar crear usuario: ", error);
@@ -52,11 +52,14 @@ exports.postLogin = async function (req, res) {
   
 
     // Desencriptar la contraseña cifrada
+    let bytesIngresada = CryptoES.AES.decrypt(passwordIngresada, secretKey);
+    let passwordDesencriptadaIngresada = bytesIngresada.toString(CryptoES.enc.Utf8);
+
     let bytes = CryptoES.AES.decrypt(passwordCifrada, secretKey);
     let passwordDesencriptada = bytes.toString(CryptoES.enc.Utf8);
 
     // Comparar la contraseña ingresada con la contraseña desencriptada
-    passwordCorrecta = (passwordIngresada === passwordDesencriptada);
+    passwordCorrecta = (passwordDesencriptadaIngresada === passwordDesencriptada);
 
     if (!passwordCorrecta) {
       return res.status(401).json({ success: false, message: "Contraseña incorrecta" });
@@ -69,6 +72,23 @@ exports.postLogin = async function (req, res) {
     console.error("Error al intentar iniciar sesión: ", error);
     console.log("Error al intentar iniciar sesión: ", error);
     return res.status(500).json({ success: false, message: "Error durante proceso de inicio de sesión" });
+  }
+};
+
+
+//Get UsuarioPorCorreoToken
+exports.getUsuarioPorCorreoToken = async function (req, res) {
+  try {
+    const correoParam = req.params.correo; // Obtiene el correo del parámetro de la ruta
+    const usuario = await usuarioService.buscarUsuarioPorCorreo(correoParam);
+    if (!usuario) {
+      return res.status(404).json({ success: false, message: "Usuario no encontrado" });
+    }
+    const { id_usuario, nombre, apellido_paterno, correo } = usuario;
+    return res.json({ success: true, id_usuario, nombre, apellido_paterno, correo });
+  } catch (error) {
+    console.error("Error al buscar usuario por correo: ", error);
+    return res.status(500).json({ success: false, message: "Error durante proceso de búsqueda de usuario" });
   }
 };
 
