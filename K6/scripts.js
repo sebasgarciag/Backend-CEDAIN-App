@@ -100,6 +100,14 @@ export const options = {
             exec: 'postSalidasDetalles',
             vus: 10,
             duration: runTime,
+        },
+
+        // PUT Inventario
+        putModificarInventario:{
+            executor: 'constant-vus',
+            exec: 'putEditarInventario',
+            vus:10,
+            duration: runTime,
         }
     }
 }
@@ -266,6 +274,18 @@ export function postSalidasDetalles() {
 
     check(
         response, { "POST crearEntradaDetalle status code is 201": (r) => r.status == 201 }
+    );
+
+    sleep(0.5);
+}
+
+export function putEditarInventario(){
+    const id_inventario = Math.floor(Math.random()* 10)
+    const cantidad = Math.floor(Math.random()*100)
+
+    const response = http.put(`${API_URL}/inventario?id_inventario=${id_inventario}&cantidad=${cantidad}`)
+    check(
+        response, { "PUT editarInventario status code is 200": (r) => r.status == 200 }
     );
 
     sleep(0.5);
