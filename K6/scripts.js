@@ -102,6 +102,7 @@ export const options = {
             vus: 10,
             duration: runTime,
         },
+
         postProducto: {  
             executor: 'constant-vus',
             exec: 'crearProducto',
@@ -131,9 +132,17 @@ export const options = {
             exec: 'getProductoImage',
             vus: 10,
             duration: runTime,
-        }
+        },
+
+
+        // PUT Inventario
+        putModificarInventario:{
+            executor: 'constant-vus',
+            exec: 'putEditarInventario',
+            vus:10
     }
-}
+}}
+
 //Functions
 //Entradas
 export function crearEntrada() {
@@ -302,6 +311,7 @@ export function postSalidasDetalles() {
     sleep(0.5);
 }
 
+
 export function crearProducto() {
     const nombre = new Date().getTime().toString();
     const medida = "David";
@@ -390,5 +400,17 @@ export function getProductoImage() {
     check(
         response, { "GET producto imagen status code is 200": (r) => r.status == 200 }
     );
+    sleep(0.5);
+}
+
+export function putEditarInventario(){
+    const id_inventario = Math.floor(Math.random()* 10)
+    const cantidad = Math.floor(Math.random()*100)
+
+    const response = http.put(`${API_URL}/inventario?id_inventario=${id_inventario}&cantidad=${cantidad}`)
+    check(
+        response, { "PUT editarInventario status code is 200": (r) => r.status == 200 }
+    );
+
     sleep(0.5);
 }
