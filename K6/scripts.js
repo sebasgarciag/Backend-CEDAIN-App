@@ -139,9 +139,10 @@ export const options = {
         putModificarInventario:{
             executor: 'constant-vus',
             exec: 'putEditarInventario',
-            vus:10,
+            vus:10
     }
-}
+}}
+
 //Functions
 //Entradas
 export function crearEntrada() {
