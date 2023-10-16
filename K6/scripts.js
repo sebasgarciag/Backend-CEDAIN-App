@@ -140,7 +140,14 @@ export const options = {
             executor: 'constant-vus',
             exec: 'putEditarInventario',
             vus:10
-    }
+    },
+
+    exportarInventario: {
+        executor: 'constant-vus',
+        exec: 'exportarInventarioExcel',
+        vus: 10,  
+        duration: runTime,
+    },
 }}
 
 //Functions
@@ -413,4 +420,10 @@ export function putEditarInventario(){
     );
 
     sleep(0.5);
+}
+
+export function exportarInventarioExcel() {
+    let response = http.get(`${API_URL}/inventario/exportar-excel/1`);
+    check(response, { "status code is 200": (r) => r.status === 200 });
+    sleep(1);
 }
