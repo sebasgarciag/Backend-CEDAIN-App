@@ -100,11 +100,22 @@ export const options = {
             exec: 'postSalidasDetalles',
             vus: 10,
             duration: runTime,
+        },
+
+        exportarInventario: {
+            executor: 'constant-vus',
+            exec: 'exportarInventarioExcel',
+            vus: 10, 
+            duration: runTime, 
         }
+
     }
 }
 //Functions
 //Entradas
+//Inventario
+
+
 export function crearEntrada() {
 
     const serie = 11111;
@@ -270,3 +281,10 @@ export function postSalidasDetalles() {
 
     sleep(0.5);
 }
+
+export function exportarInventarioExcel() {
+    let response = http.get(`${API_URL}/inventario/exportar-excel/1`);
+    check(response, { "status code is 200": (r) => r.status === 200 });
+    sleep(1);
+}
+
