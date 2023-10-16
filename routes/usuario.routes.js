@@ -29,7 +29,6 @@ router.post("/newUsuario", [
     check("apellido_paterno").notEmpty().isLength({ max: 40 }).withMessage("apellido_paterno no debe exceder 40 caracteres"),
     check("apellido_materno").notEmpty().isLength({ max: 40 }).withMessage("apellido_materno no debe exceder 40 caracteres"),
     check("tipo").notEmpty().isLength({ max: 40 }).withMessage("tipo no debe exceder 40 caracteres"),
-    check("id_almacen").notEmpty().isNumeric().withMessage("id_almacen debe ser numérico"),
     check("correo").notEmpty().withMessage("correo no debe estar vacio").isEmail().withMessage("correo debe ser un correo valido"),
     check("password").notEmpty().isLength({ max: 255 }).withMessage("password no debe exceder 255 caracteres"),
 
@@ -41,5 +40,11 @@ router.post("/login", [
     check("password").notEmpty().isLength({ max: 255 }).withMessage("password no debe exceder 255 caracteres"),
 
 ], usuarioController.postLogin);
+
+router.get("/token/:correo", [
+
+    check("correo").notEmpty().withMessage("correo no debe estar vacio").isEmail().withMessage("correo debe ser un correo valido")
+
+], usuarioController.getUsuarioPorCorreoToken);
 
 module.exports = router;
