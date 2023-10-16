@@ -13,49 +13,49 @@ const API_URL = "http://localhost:8080"; //Your local Back end + DB
 
 //This variable controls how long each performance test takes.
 //'30s' is advisable. 
-const runTime = '10s';
+const runTime = '30s';
 
 export const options = {
 
     scenarios: {
         // Entradas POSTS
-        postEntrada: {  //Test Case 1a
-            executor: 'constant-vus',
-            exec: 'crearEntrada',
-            vus: 10,
-            duration: runTime,
-          },
-        postEntradasDetalles: {
-          executor: 'constant-vus',
-          exec: 'crearEntradaDetalles',
-          vus: 10,
-          duration: runTime,
-        },
-        // Entradas GETS
-        getEntradas: {  //Test Case 1b
-            executor: 'constant-vus',
-            exec: 'getEntradas',
-            vus: 10,
-            duration: runTime,
-        },
-        getEntradasID: {  //Test Case 1b
-          executor: 'constant-vus',
-          exec: 'getEntradasID',
-          vus: 10,
-          duration: runTime,
-        },
-        getEntradasUsuario: {  //Test Case 1b
-          executor: 'constant-vus',
-          exec: 'getEntradasUsuario',
-          vus: 10,
-          duration: runTime,
-        },
-        getEntradaDetalles: {  //Test Case 1b
-          executor: 'constant-vus',
-          exec: 'getEntradaDetalles',
-          vus: 10,
-          duration: runTime,
-        },
+        // postEntrada: {  //Test Case 1a
+        //     executor: 'constant-vus',
+        //     exec: 'crearEntrada',
+        //     vus: 10,
+        //     duration: runTime,
+        //   },
+        // postEntradasDetalles: {
+        //   executor: 'constant-vus',
+        //   exec: 'crearEntradaDetalles',
+        //   vus: 10,
+        //   duration: runTime,
+        // },
+        // // Entradas GETS
+        // getEntradas: {  //Test Case 1b
+        //     executor: 'constant-vus',
+        //     exec: 'getEntradas',
+        //     vus: 10,
+        //     duration: runTime,
+        // },
+        // getEntradasID: {  //Test Case 1b
+        //   executor: 'constant-vus',
+        //   exec: 'getEntradasID',
+        //   vus: 10,
+        //   duration: runTime,
+        // },
+        // getEntradasUsuario: {  //Test Case 1b
+        //   executor: 'constant-vus',
+        //   exec: 'getEntradasUsuario',
+        //   vus: 10,
+        //   duration: runTime,
+        // },
+        // getEntradaDetalles: {  //Test Case 1b
+        //   executor: 'constant-vus',
+        //   exec: 'getEntradaDetalles',
+        //   vus: 10,
+        //   duration: runTime,
+        // },
 
         //Salidas POSTS
         //Salids GETS
