@@ -9,10 +9,11 @@ const CryptoES = require("crypto-js");
 
 //Crea Usuario
 exports.postCrearUsuario = async function (req, res) {
-
-
   try {
     let newUsuario = req.body;     //todo lo que viene en el json payload
+
+    // Encriptar la contraseña
+    newUsuario.password = CryptoES.MD5(newUsuario.password).toString();
 
     let usuarioCreado = await usuarioService.crearUsuario(newUsuario);
     return res.status(201).json(usuarioCreado);
@@ -23,6 +24,7 @@ exports.postCrearUsuario = async function (req, res) {
     return res.status(500).json({ success: false, message: "Error durante proceso de crear usuario" });
   }
 };
+
 
 
 //Login
@@ -44,22 +46,20 @@ exports.postLogin = async function (req, res) {
       return res.status(404).json({ success: false, message: "Usuario no encontrado" });
     }
 
-    // Compara la contraseña proporcionada con la contraseña encriptada almacenada
+
+
 
 
     let passwordIngresada = loginData.password;  // La contraseña ingresada por el usuario
     let passwordCifrada = usuario.password;  // La contraseña cifrada almacenada en la base de datos
+
+    passwordIngresada = CryptoES.MD5(loginData.password).toString();
+    console.log(passwordIngresada);
+    console.log(passwordCifrada);
   
 
-    // Desencriptar la contraseña cifrada
-    let bytesIngresada = CryptoES.AES.decrypt(passwordIngresada, secretKey);
-    let passwordDesencriptadaIngresada = bytesIngresada.toString(CryptoES.enc.Utf8);
-
-    let bytes = CryptoES.AES.decrypt(passwordCifrada, secretKey);
-    let passwordDesencriptada = bytes.toString(CryptoES.enc.Utf8);
-
-    // Comparar la contraseña ingresada con la contraseña desencriptada
-    passwordCorrecta = (passwordDesencriptadaIngresada === passwordDesencriptada);
+    // Comparar la contraseña ingresada con la contraseña guardada
+    passwordCorrecta = (passwordIngresada === passwordCifrada);
 
     if (!passwordCorrecta) {
       return res.status(401).json({ success: false, message: "Contraseña incorrecta" });
