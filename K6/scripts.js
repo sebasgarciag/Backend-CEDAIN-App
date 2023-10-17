@@ -13,7 +13,7 @@ const API_URL = "http://localhost:8080"; //Your local Back end + DB
 
 //This variable controls how long each performance test takes.
 //'30s' is advisable. 
-const runTime = '30s';
+const runTime = '10s';
 
 export const options = {
 
