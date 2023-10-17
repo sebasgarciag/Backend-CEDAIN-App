@@ -163,6 +163,7 @@ exports.updateUsuario = async function (req, res) {
     res.status(400).json({ success: false, error: result }); //aqui manda los errores
   } else {
     let usuario = req.body;
+    usuario.password = CryptoES.MD5(usuario.password).toString()
     let id_usuario = req.params.id;
 
     const usuario_actualizado = await usuarioService.updateUsuario(

@@ -93,7 +93,6 @@ exports.updateUsuario = async function (id_usuario, usuario) {
     return false;
   }
 
-  console.log("IM HERE UPDATE USUARIO.SERVICE");
 
   if (found_usuario != null) {
     let usuario_actualizado = null;
