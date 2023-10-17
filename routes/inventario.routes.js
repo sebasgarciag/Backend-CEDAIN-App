@@ -2,6 +2,9 @@ const router = require("express").Router();
 const { check, param } = require('express-validator');
 let inventarioController = require("../controllers/inventario.controller");
 
+router.get('/exportar-excel/:id', inventarioController.exportarInventarioPorIdExcel);
+
+
 //Update inventario
 router.put("/incrementar-inventario", [ 
 
@@ -22,11 +25,10 @@ router.post("/inventarios", [
 	//param("cantidad").isNumeric().withMessage("Producto debe ser numerico")
 ],inventarioController.postCrear)
 
+*/
+router.put("/",[
 
-router.put("/inventarios/:id",[
-	param("id").isNumeric().withMessage("Id debe ser numerico")
-
-], inventarioController.putProductos)*/
+], inventarioController.putProductos)
 
 
 router.get("/", inventarioController.getBuscarTodosProductos);

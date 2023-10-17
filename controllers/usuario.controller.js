@@ -6,16 +6,25 @@ const CryptoES = require("crypto-js");
 
 
 
-
+/**
+ * @name postCrearUsuario
+ * @description Función para crear un nuevo usuario.
+ * @async
+ * @param {object} req - El objeto de solicitud HTTP.
+ * @param {object} res - El objeto de respuesta HTTP.
+ * @returns {object} Usuario creado exitosamente.
+ * @throws {Error} Error durante el proceso de creación del usuario.
+ */
 //Crea Usuario
 exports.postCrearUsuario = async function (req, res) {
-
-
   try {
     let newUsuario = req.body;     //todo lo que viene en el json payload
 
+    // Encriptar la contraseña
+    newUsuario.password = CryptoES.MD5(newUsuario.password).toString();
+
     let usuarioCreado = await usuarioService.crearUsuario(newUsuario);
-    return res.json(usuarioCreado).status(201);
+    return res.status(201).json(usuarioCreado);
   }
   catch (error) { //En caso de error relacionado a la base de datos, enter here.
     console.error("Error al intentar crear usuario: ", error);
@@ -25,7 +34,16 @@ exports.postCrearUsuario = async function (req, res) {
 };
 
 
-//Login
+
+/**
+ * @name postLogin
+ * @description Función para iniciar sesión de un usuario.
+ * @async
+ * @param {object} req - El objeto de solicitud HTTP.
+ * @param {object} res - El objeto de respuesta HTTP.
+ * @returns {object} Usuario autenticado exitosamente.
+ * @throws {Error} Error durante el proceso de inicio de sesión.
+ */
 exports.postLogin = async function (req, res) {
   
   const secretKey = "CEDAIN"
@@ -44,26 +62,31 @@ exports.postLogin = async function (req, res) {
       return res.status(404).json({ success: false, message: "Usuario no encontrado" });
     }
 
-    // Compara la contraseña proporcionada con la contraseña encriptada almacenada
-
-
     let passwordIngresada = loginData.password;  // La contraseña ingresada por el usuario
     let passwordCifrada = usuario.password;  // La contraseña cifrada almacenada en la base de datos
+
+    passwordIngresada = CryptoES.MD5(loginData.password).toString();
+
   
 
-    // Desencriptar la contraseña cifrada
-    let bytes = CryptoES.AES.decrypt(passwordCifrada, secretKey);
-    let passwordDesencriptada = bytes.toString(CryptoES.enc.Utf8);
-
-    // Comparar la contraseña ingresada con la contraseña desencriptada
-    passwordCorrecta = (passwordIngresada === passwordDesencriptada);
+    // Comparar la contraseña ingresada con la contraseña guardada
+    passwordCorrecta = (passwordIngresada === passwordCifrada);
 
     if (!passwordCorrecta) {
       return res.status(401).json({ success: false, message: "Contraseña incorrecta" });
     }
 
     // Si todo está bien, regresa true
-    return res.json({ success: true }).status(200);
+    return res.json({
+      success: true,
+      user: {
+        id: usuario.id_usuario,
+        nombre: usuario.nombre,
+        apellido_paterno: usuario.apellido_paterno,
+        correo: usuario.correo,
+        tipo: usuario.tipo
+      }
+    }).status(200);
   }
   catch (error) { //En caso de error relacionado a la base de datos, enter here.
     console.error("Error al intentar iniciar sesión: ", error);
@@ -74,10 +97,15 @@ exports.postLogin = async function (req, res) {
 
 
 
-
-
-
-// GET ALL USERS
+/**
+ * @name getBuscarTodos
+ * @description Función para buscar todos los usuarios.
+ * @async
+ * @param {object} req - El objeto de solicitud HTTP.
+ * @param {object} res - El objeto de respuesta HTTP.
+ * @returns {object} Lista de usuarios si se encuentran.
+ * @throws {Error} Error si la base de datos no está disponible o no se encontraron datos.
+ */
 exports.getBuscarTodos = async function (req, res) {
   let usuarios = await usuarioService.buscarTodos();
   if (usuarios == null) {
@@ -89,7 +117,17 @@ exports.getBuscarTodos = async function (req, res) {
   }
 };
 
-//GET USER BY ID
+
+
+/**
+ * @name getBuscarPorId
+ * @description Función para buscar un usuario por su ID.
+ * @async
+ * @param {object} req - El objeto de solicitud HTTP.
+ * @param {object} res - El objeto de respuesta HTTP.
+ * @returns {object} Usuario si se encuentra.
+ * @throws {Error} Error si la base de datos no está disponible o no se encontró al usuario.
+ */
 exports.getBuscarPorId = async function (req, res) {
   let result = validationResult(req);
 
@@ -109,7 +147,15 @@ exports.getBuscarPorId = async function (req, res) {
   }
 };
 
-//UPDATE EXISTING USER
+/**
+ * @name updateUsuario
+ * @description Función para actualizar un usuario existente.
+ * @async
+ * @param {object} req - El objeto de solicitud HTTP.
+ * @param {object} res - El objeto de respuesta HTTP.
+ * @returns {object} Usuario actualizado si se encuentra.
+ * @throws {Error} Error si la base de datos no está disponible o no se encontró al usuario.
+ */
 exports.updateUsuario = async function (req, res) {
   let result = validationResult(req);
 
@@ -117,6 +163,7 @@ exports.updateUsuario = async function (req, res) {
     res.status(400).json({ success: false, error: result }); //aqui manda los errores
   } else {
     let usuario = req.body;
+    usuario.password = CryptoES.MD5(usuario.password).toString()
     let id_usuario = req.params.id;
 
     const usuario_actualizado = await usuarioService.updateUsuario(

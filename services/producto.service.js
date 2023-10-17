@@ -1,29 +1,92 @@
 const { Op } = require('sequelize');
-const dbConfig = require('../config/db.config');
 const db = require('../models');
+const { exec } = require('child_process');
 
+/**
+ * Busca y devuelve todos los productos en la base de datos, incluyendo información
+ * de otras tablas asociadas, como 'Tamaño' y 'Categoría'.
+ *
+ * @async
+ * @function
+ * @returns {Promise<Array>} - Un array que contiene todos los productos.
+ * @throws {Error} - Lanza un error si la obtención de la base de datos falla.
+ */
 exports.buscarTodas = async function() { // RETURNS ALL
-    productos = await db.Producto.findAll();
+    let productos = await db.Producto.findAll({ include: [
+        db.Tamanio, 
+        db.Categoria,  
+    ]});
     return productos;
 }
 
-
-
+/**
+ * Busca y devuelve todas las categorías en la base de datos.
+ *
+ * @async
+ * @function
+ * @returns {<Array>} - Un array con todas las categorías.
+ * @throws {Error} - Lanza un error si la obtención de la base de datos falla.
+ */
 exports.buscarCategorias = async function() { // RETURNS ALL CATEGORIAS 
-    categorias = await db.Categoria.findAll();
+    let categorias = null
+    try{
+        categorias = await db.Categoria.findAll();
+    }
+    catch{
+        // 
+    }
     return categorias;
 }
 
+/**
+ * Busca y devuelve todos los tamaños en la base de datos.
+ *
+ * @async
+ * @function
+ * @returns {<Array>} - Un array con todos los tamaños.
+ * @throws {Error} - Lanza un error si la obtención de la base de datos falla.
+ */
+exports.buscarTamanios = async function() { // RETURNS ALL CATEGORIAS 
+    let tamanios = null
+    try{
+        tamanios = await db.Tamanio.findAll();
+    }
+    catch{
+        //
+    }
+    return tamanios;
+}
 
+/**
+ * Busca y devuelve un producto según el ID proporcionado.
+ *
+ * @async
+ * @function
+ * @param {number} idProducto - El ID del producto que se desea buscar en la base de datos.
+ * @returns {Object} - El producto que se está buscando.
+ * @throws {Error} - Lanza un error si la obtención de la base de datos falla.
+ */
 exports.buscarPorId = async function(idProducto) { //RETURNS ENTRY INFO FROM THE ID GIVEN ONLY
-    let producto = undefined;
-
-    producto = await db.Producto.findByPk(idProducto);
-    // console.log(idProducto)
+    let producto = null;
+    try{
+        producto = await db.Producto.findByPk(idProducto);
+    }
+    catch{
+        // 
+    }
 
     return producto;
 }
 
+/**
+ * Busca y devuelve todos los productos cuyos nombres contienen el valor proporcionado.
+ *
+ * @async
+ * @function
+ * @param {string} nombre - El valor a buscar en el nombre de los productos.
+ * @returns {<Array>} - Un array con productos que coinciden con el nombre.
+ * @throws {Error} - Lanza un error si la obtención de la base de datos falla.
+ */
 exports.productosPorNombre = async function(nombre) { //RETURNS ALL PRODUCTS BY NAME
 
     // Utiliza el operador [Op.iLike] para buscar de manera insensible a mayúsculas y minúsculas
@@ -38,29 +101,17 @@ exports.productosPorNombre = async function(nombre) { //RETURNS ALL PRODUCTS BY 
     return productos;
 }
 
-
-
-
-
-
-
+/**
+ * Crea un nuevo producto en la base de datos después de realizar varias comprobaciones de validación.
+ *
+ * @async
+ * @function
+ * @param {Object} producto - Contiene toda la información necesaria para crear un nuevo producto.
+ * @returns {Object} - Devuelve el objeto del producto creado.
+ * @throws {Error} - Lanza un error si alguna validación falla u ocurre otro error.
+ */
 exports.crear = async function(producto) {   //CREATES NEW ENTRADA. RECEIVES ALL THE REQUIRED DATA INSIDE THE OBJECT COUGHT BY THE FUNCTION. (entrada)
         
-    // A) check if received values exist on the db
-
-        //check if 'id_comunidad' existe
-/*     const comCheck = await db.Tamaño.findByPk(producto.id_tamaño);
-    
-    if (!comCheck) {
-        throw new Error("El id_tamaño #" + producto.id_tamaño + "(or 0) NO EXISTE en la BD!");
-    } */
-
-       
-    
-
-    
-
-        //Checks for errors. if not, create entrada.
     try {
         let nuevaProducto = await db.Producto.create(producto);
         console.log("Nuevo producto agregado " + nuevaProducto.id_producto);
@@ -72,6 +123,15 @@ exports.crear = async function(producto) {   //CREATES NEW ENTRADA. RECEIVES ALL
     }
 }
 
+/**
+ * Actualiza un producto existente en la base de datos.
+ *
+ * @async
+ * @function
+ * @param {number} idProducto - El ID del producto que se desea actualizar.
+ * @param {Object} producto - Datos del producto actualizado.
+ * @returns {boolean} - Devuelve true si el producto se actualizó correctamente.
+ */
 exports.updateProducto = async function(idProducto, producto) {
     let productoActualizado = false;
 
@@ -90,6 +150,15 @@ exports.updateProducto = async function(idProducto, producto) {
     return productoActualizado;
 }
 
+/**
+ * Suspende o reactiva un producto en función del estado proporcionado.
+ *
+ * @async
+ * @function
+ * @param {number} idProducto - El ID del producto que se desea suspender o reactivar.
+ * @param {boolean} estado - Un valor booleano que indica si se debe suspender (true) o reactivar (false) el producto.
+ * @returns {Object|null} - Devuelve el producto actualizado o null si el producto no se encuentra.
+ */
 exports.suspenderProducto = async function (idProducto, estado) {
     let productoActualizado = await db.Producto.findByPk(idProducto);
     if (productoActualizado) {

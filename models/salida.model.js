@@ -44,7 +44,7 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: true
         },
         id_usuario: {
-            type: Sequelize.INTEGER.UNSIGNED,
+            type: Sequelize.INTEGER,
             allowNull: false
         },
         id_almacen: {

@@ -16,6 +16,8 @@ const db = require("./models");
 //db.Usuario.sync({ alter: true }); ((((TO BE USED BY EVERYONE IN THE FUTURE. NACHO, KIKE, ANGEL. DO NOT DELETE))))
 //db.Producto.sync({ force: true });
 
+//db.Usuario.sync({ force: true }); 
+
 // Server Initialization
 const app = express();
 

@@ -1,5 +1,6 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
+// import { getProductosPorNombre } from '../controllers/producto.controller';
 
 /**
  * Performance Tests (with K6)
@@ -10,7 +11,6 @@ import { check, sleep } from 'k6';
 //const API_URL = "https://backend-cedain-app-xcfpf63vha-uc.a.run.app"; //Cloud's back end + DB <- DO NOT USE
 const API_URL = "http://localhost:8080"; //Your local Back end + DB
 
-
 //This variable controls how long each performance test takes.
 //'30s' is advisable. 
 const runTime = '10s';
@@ -19,43 +19,43 @@ export const options = {
 
     scenarios: {
         // Entradas POSTS
-        // postEntrada: {  //Test Case 1a
-        //     executor: 'constant-vus',
-        //     exec: 'crearEntrada',
-        //     vus: 10,
-        //     duration: runTime,
-        //   },
-        // postEntradasDetalles: {
-        //   executor: 'constant-vus',
-        //   exec: 'crearEntradaDetalles',
-        //   vus: 10,
-        //   duration: runTime,
-        // },
-        // // Entradas GETS
-        // getEntradas: {  //Test Case 1b
-        //     executor: 'constant-vus',
-        //     exec: 'getEntradas',
-        //     vus: 10,
-        //     duration: runTime,
-        // },
-        // getEntradasID: {  //Test Case 1b
-        //   executor: 'constant-vus',
-        //   exec: 'getEntradasID',
-        //   vus: 10,
-        //   duration: runTime,
-        // },
-        // getEntradasUsuario: {  //Test Case 1b
-        //   executor: 'constant-vus',
-        //   exec: 'getEntradasUsuario',
-        //   vus: 10,
-        //   duration: runTime,
-        // },
-        // getEntradaDetalles: {  //Test Case 1b
-        //   executor: 'constant-vus',
-        //   exec: 'getEntradaDetalles',
-        //   vus: 10,
-        //   duration: runTime,
-        // },
+        postEntrada: {  //Test Case 1a
+            executor: 'constant-vus',
+            exec: 'crearEntrada',
+            vus: 10,
+            duration: runTime,
+        },
+        postEntradasDetalles: {
+            executor: 'constant-vus',
+            exec: 'crearEntradaDetalles',
+            vus: 10,
+            duration: runTime,
+        },
+        // Entradas GETS
+        getEntradas: {  //Test Case 1b
+            executor: 'constant-vus',
+            exec: 'getEntradas',
+            vus: 10,
+            duration: runTime,
+        },
+        getEntradasID: {  //Test Case 1b
+            executor: 'constant-vus',
+            exec: 'getEntradasID',
+            vus: 10,
+            duration: runTime,
+        },
+        getEntradasUsuario: {  //Test Case 1b
+            executor: 'constant-vus',
+            exec: 'getEntradasUsuario',
+            vus: 10,
+            duration: runTime,
+        },
+        getEntradaDetalles: {  //Test Case 1b
+            executor: 'constant-vus',
+            exec: 'getEntradaDetalles',
+            vus: 10,
+            duration: runTime,
+        },
 
         //Salidas POSTS
         //Salids GETS
@@ -101,9 +101,117 @@ export const options = {
             exec: 'postSalidasDetalles',
             vus: 10,
             duration: runTime,
-        }
+        },
+
+        postProducto: {
+            executor: 'constant-vus',
+            exec: 'crearProducto',
+            vus: 10,
+            duration: runTime,
+        },
+        getProductos: {
+            executor: 'constant-vus',
+            exec: 'getProductos',
+            vus: 10,
+            duration: runTime,
+        },
+        getProductoId: {
+            executor: 'constant-vus',
+            exec: 'getProductoId',
+            vus: 10,
+            duration: runTime,
+        },
+        editarProducto: {
+            executor: 'constant-vus',
+            exec: 'editarProducto',
+            vus: 10,
+            duration: runTime,
+        },
+        getProductImage: {
+            executor: 'constant-vus',
+            exec: 'getProductoImage',
+            vus: 10,
+            duration: runTime,
+        },
+
+
+        // PUT Inventario
+        putModificarInventario: {
+            executor: 'constant-vus',
+            exec: 'putEditarInventario',
+            vus: 10
+        },
+
+        exportarInventario: {
+            executor: 'constant-vus',
+            exec: 'exportarInventarioExcel',
+            vus: 10,
+            duration: runTime,
+        },
+        buscarTodosProductos: {
+            executor: 'constant-vus',
+            exec: 'buscarTodosProductos',
+            vus: 10,
+            duration: runTime,
+        },
+        buscarInventarioPorAlmacen: {
+            executor: 'constant-vus',
+            exec: 'buscarInventarioPorAlmacen',
+            vus: 10,
+            duration: runTime,
+            tags: { type: 'inventario' }
+        },
+        getProductosPorAlmacenExistenteTest: {
+            executor: 'constant-vus',
+            exec: 'getProductosPorAlmacenExistente',
+            vus: 10,
+            duration: runTime,
+        },
+
+        getProductosPorAlmacenInexistenteTest: {
+            executor: 'constant-vus',
+            exec: 'getProductosPorAlmacenInexistente',
+            vus: 10,
+            duration: runTime,
+        },
+
+        //Usuarios
+        //Gets y Posts
+        getUsuarios: {
+            executor: 'constant-vus',
+            exec: 'getUsuarios',
+            vus: 10,
+            duration: runTime,
+        },
+        getUsuarioId: {
+            executor: 'constant-vus',
+            exec: 'getUsuarioId',
+            vus: 10,
+            duration: runTime,
+        },
+        postCrearUsuario: {
+            executor: 'constant-vus',
+            exec: 'postCrearUsuario',
+            vus: 10,
+            duration: runTime,
+        },
+        postLogin: {
+            executor: 'constant-vus',
+            exec: 'postLogin',
+            vus: 10,
+            duration: runTime,
+        },
+        putEditarUsuario: {
+            executor: 'constant-vus',
+            exec: 'putEditarUsuario',
+            vus: 10,
+            duration: runTime,
+        },
+
     }
 }
+
+
 //Functions
 //Entradas
 export function crearEntrada() {
@@ -159,7 +267,7 @@ export function getEntradas() {
 }
 
 export function getEntradasID() {
-    var id = Math.floor(Math.random() * (200 - 50 + 1)) + 50; //Check this range is actually on DB
+    var id = Math.floor(Math.random() * (200 - 120 + 1)) + 120; //Check this range is actually on DB
     const response = http.get(`${API_URL}/entradas/${id}`);
     check(
         response, { "GET entradas por ID status code is 200": (r) => r.status == 200 }
@@ -271,3 +379,234 @@ export function postSalidasDetalles() {
 
     sleep(0.5);
 }
+
+
+export function crearProducto() {
+    const nombre = new Date().getTime().toString();
+    const medida = "David";
+    const precioVenta = 1;
+    const precioTrueque = 1;
+    const nombreCorto = "Corto";
+    const tamanio = 1;
+    const categoria = 1;
+    const suspendido = 0;
+
+    const data = {
+        nombre,
+        medida,
+        precio_venta: precioVenta,
+        precio_trueque: precioTrueque,
+        nombre_corto: nombreCorto,
+        id_tamanio: tamanio,
+        id_categoria: categoria,
+        suspendido,
+    };
+
+    const response = http.post(`${API_URL}/productos`, JSON.stringify(data), {
+        headers: { 'Content-Type': 'application/json' },
+    });
+
+    check(
+        response, { "POST crearProducto status code is 201": (r) => r.status == 201 }
+    );
+
+    sleep(0.5);
+}
+
+export function getProductos() {
+    const response = http.get(`${API_URL}/productos`);
+    check(
+        response, { "GET productos status code is 200": (r) => r.status == 200 }
+    );
+    sleep(0.5);
+}
+
+export function getProductoId() {
+    let id = 1; // Rango adecuado para IDs de productos en tu base de datos.
+    const response = http.get(`${API_URL}/productos/${id}`);
+    check(
+        response, { "GET productos por ID status code is 200": (r) => r.status == 200 }
+    );
+    sleep(0.5);
+}
+
+export function editarProducto() {
+    const id = 1;
+    const nombre = new Date().getTime().toString();
+    const medida = "David";
+    const precioVenta = 1;
+    const precioTrueque = 1;
+    const nombreCorto = "Corto";
+    const tamanio = 1;
+    const categoria = 1;
+    const suspendido = 0;
+
+    const data = {
+        nombre,
+        medida,
+        precio_venta: precioVenta,
+        precio_trueque: precioTrueque,
+        nombre_corto: nombreCorto,
+        id_tamanio: tamanio,
+        id_categoria: categoria,
+        suspendido,
+    };
+
+    const response = http.put(`${API_URL}/productos/${id}`, JSON.stringify(data), {
+        headers: { 'Content-Type': 'application/json' },
+    });
+
+    check(
+        response, { "PUT editarProducto status code is 200": (r) => r.status == 200 }
+    );
+
+    sleep(0.5);
+}
+
+export function getProductoImage() {
+    let idProducto = 1;
+    const response = http.get(`${API_URL}/productos/${idProducto}/image`);
+    check(
+        response, { "GET producto imagen status code is 200": (r) => r.status == 200 }
+    );
+    sleep(0.5);
+}
+
+export function putEditarInventario() {
+    const id_inventario = Math.floor(Math.random() * 10)
+    const cantidad = Math.floor(Math.random() * 100)
+
+    const response = http.put(`${API_URL}/inventario?id_inventario=${id_inventario}&cantidad=${cantidad}`)
+    check(
+        response, { "PUT editarInventario status code is 200": (r) => r.status == 200 }
+    );
+
+    sleep(0.5);
+}
+
+export function exportarInventarioExcel() {
+    let response = http.get(`${API_URL}/inventario/exportar-excel/1`);
+    check(response, { "status code is 200": (r) => r.status === 200 });
+    sleep(1);
+}
+
+
+export function getProductosPorAlmacenExistente() {
+    const id_almacen = 1; // Reemplaza con el ID del almacén existente
+    const response = http.get(`${API_URL}/productos?almacen=${id_almacen}`);
+    check(
+        response, { "GET productos por almacén existente status code is 200": (r) => r.status == 200 }
+    );
+    sleep(0.5);
+}
+
+export function getProductosPorAlmacenInexistente() {
+    const id_almacen = 9999; // Reemplaza con un ID de almacén que no exista
+    const response = http.get(`${API_URL}/productos?almacen=${id_almacen}`);
+    check(
+        response, { "GET productos por almacén inexistente status code is 200": (r) => r.status == 200 }
+    );
+    sleep(0.5);
+}
+
+//Usuarios
+
+export function getUsuarios() {
+    const response = http.get(`${API_URL}/usuarios/`);
+    check(
+        response, { "GET usuarios status code is 200": (r) => r.status == 200 }
+    );
+    sleep(0.5);
+}
+
+
+export function getUsuarioId() {
+    let id = 1; // Rango adecuado para IDs de usuarios en tu base de datos.
+    const response = http.get(`${API_URL}/usuarios/${id}`);
+    check(
+        response, { "GET usuarios por ID status code is 200": (r) => r.status == 200 }
+    );
+    sleep(0.5);
+}
+
+export function postCrearUsuario() {
+    const nombre = new Date().getTime().toString();;
+    const apellido_paterno = "Rodriguez";
+    const apellido_materno = "Hernandez";
+    const tipo = "Almacenista";
+    const correo = new Date().getTime().toString() + "@gmail.com";
+    const password = "12456";
+
+    const data = {
+        nombre: nombre,
+        apellido_paterno: apellido_paterno,
+        apellido_materno: apellido_materno,
+        tipo: tipo,
+        correo: correo,
+        password: password
+    };
+
+    const response = http.post(`${API_URL}/usuarios/newUsuario`, JSON.stringify(data), {
+        headers: { 'Content-Type': 'application/json' },
+    });
+
+    check(
+        response, { "POST crearUsuario status code is 201": (r) => r.status == 201 }
+    );
+
+    sleep(0.5);
+}
+
+
+export function postLogin() {
+    const correo = "kkperez@example.com";
+    const password = "password123";
+
+    const data = {
+
+        correo: correo,
+        password: password
+    };
+
+    const response = http.post(`${API_URL}/usuarios/login`, JSON.stringify(data), {
+        headers: { 'Content-Type': 'application/json' },
+    });
+
+    check(
+        response, { "POST login status code is 200": (r) => r.status == 200 }
+    );
+
+    sleep(0.5);
+}
+
+export function putEditarUsuario() {
+    const nombre = new Date().getTime().toString();;
+    const apellido_paterno = "Rodriguez";
+    const apellido_materno = "Hernandez";
+    const tipo = "Almacenista";
+    const correo = "kkperez@example.com";
+    const password = "password123";
+
+    const id = 1; // Rango adecuado para IDs de usuarios en tu base de datos.
+
+    const data = {
+        nombre: nombre,
+        apellido_paterno: apellido_paterno,
+        apellido_materno: apellido_materno,
+        tipo: tipo,
+        correo: correo,
+        password: password
+    };
+
+    const response = http.put(`${API_URL}/usuarios/${id}`, JSON.stringify(data), {
+        headers: { 'Content-Type': 'application/json' },
+    });
+
+    check(
+        response, { "POST login status code is 200": (r) => r.status == 200 }
+    );
+
+    sleep(0.5);
+}
+
+
