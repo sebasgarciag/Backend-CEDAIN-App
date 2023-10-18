@@ -13,7 +13,7 @@ const API_URL = "http://localhost:8080"; //Your local Back end + DB
 
 //This variable controls how long each performance test takes.
 //'30s' is advisable. 
-const runTime = '10s';
+const runTime = '3s';
 
 export const options = {
 
@@ -103,6 +103,7 @@ export const options = {
             duration: runTime,
         },
 
+        //==PRODUCTOS==
         postProducto: {
             executor: 'constant-vus',
             exec: 'crearProducto',
@@ -127,40 +128,40 @@ export const options = {
             vus: 10,
             duration: runTime,
         },
-        getProductImage: {
-            executor: 'constant-vus',
-            exec: 'getProductoImage',
-            vus: 10,
-            duration: runTime,
-        },
+        // getProductImage: {
+        //     executor: 'constant-vus',
+        //     exec: 'getProductoImage',
+        //     vus: 10,
+        //     duration: runTime,
+        // },
 
-
+//=====INVENTARIO=====
         // PUT Inventario
-        putModificarInventario: {
-            executor: 'constant-vus',
-            exec: 'putEditarInventario',
-            vus: 10
-        },
-
-        exportarInventario: {
-            executor: 'constant-vus',
-            exec: 'exportarInventarioExcel',
-            vus: 10,
-            duration: runTime,
-        },
-        buscarTodosProductos: {
-            executor: 'constant-vus',
-            exec: 'buscarTodosProductos',
-            vus: 10,
-            duration: runTime,
-        },
-        buscarInventarioPorAlmacen: {
-            executor: 'constant-vus',
-            exec: 'buscarInventarioPorAlmacen',
-            vus: 10,
-            duration: runTime,
-            tags: { type: 'inventario' }
-        },
+        // putModificarInventario: {
+        //     executor: 'constant-vus',
+        //     exec: 'putEditarInventario',
+        //     vus: 10
+        // },
+        // exportarInventario: {
+        //     executor: 'constant-vus',
+        //     exec: 'exportarInventarioExcel',
+        //     vus: 10,
+        //     duration: runTime,
+        // },
+        // buscarTodosProductos: {
+        //     executor: 'constant-vus',
+        //     exec: 'buscarTodosProductos',
+        //     vus: 10,
+        //     duration: runTime,
+        // },
+        // buscarInventarioPorAlmacen: {
+        //     executor: 'constant-vus',
+        //     exec: 'buscarInventarioPorAlmacen',
+        //     vus: 10,
+        //     duration: runTime,
+        //     tags: { type: 'inventario' }
+        // },
+//=====INVENTARIO=====
         getProductosPorAlmacenExistenteTest: {
             executor: 'constant-vus',
             exec: 'getProductosPorAlmacenExistente',
@@ -175,8 +176,8 @@ export const options = {
             duration: runTime,
         },
 
-        //Usuarios
-        //Gets y Posts
+        // //Usuarios
+        // //Gets y Posts
         getUsuarios: {
             executor: 'constant-vus',
             exec: 'getUsuarios',
