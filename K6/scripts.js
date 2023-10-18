@@ -8,8 +8,8 @@ import { check, sleep } from 'k6';
  */
 
 //Tests can be conducted on the cloud's back end + DB, or on your local Back end + DB:
-//const API_URL = "https://backend-cedain-app-xcfpf63vha-uc.a.run.app"; //Cloud's back end + DB <- DO NOT USE
-const API_URL = "http://localhost:8080"; //Your local Back end + DB
+const API_URL = "https://backend-cedain-app-xcfpf63vha-uc.a.run.app"; //Cloud's back end + DB <- DO NOT USE
+//const API_URL = "http://localhost:8080"; //Your local Back end + DB
 
 //This variable controls how long each performance test takes.
 //'30s' is advisable. 
