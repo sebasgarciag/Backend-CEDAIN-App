@@ -18,7 +18,6 @@ router.put("/incrementar-inventario", [
 // GET EM ALL	
 
 router.post("/", [
-	check("id_inventario").isNumeric().withMessage("ID debe ser numerico"),
 	check("id_producto").isNumeric().withMessage("ID producto debe ser numerico"),
 	check("id_almacen").isNumeric().withMessage("ID debe ser numerico"),
 	check("cantidad").isNumeric().withMessage("Producto debe ser numerico")
