@@ -16,16 +16,15 @@ router.put("/incrementar-inventario", [
 
 
 // GET EM ALL	
-/*router.get("/inventarios", inventarioController.getBuscarTodas);
 
-router.post("/inventarios", [
-	//param("id_inventario").isNumeric().withMessage("ID debe ser numerico"),
-	//param("id_producto").isNumeric().withMessage("ID producto debe ser numerico"),
-	//param("id_almacen").isNumeric().withMessage("ID debe ser numerico"),
-	//param("cantidad").isNumeric().withMessage("Producto debe ser numerico")
+router.post("/", [
+	check("id_inventario").isNumeric().withMessage("ID debe ser numerico"),
+	check("id_producto").isNumeric().withMessage("ID producto debe ser numerico"),
+	check("id_almacen").isNumeric().withMessage("ID debe ser numerico"),
+	check("cantidad").isNumeric().withMessage("Producto debe ser numerico")
 ],inventarioController.postCrear)
 
-*/
+
 router.put("/",[
 
 ], inventarioController.putProductos)
