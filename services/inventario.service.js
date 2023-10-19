@@ -14,7 +14,6 @@ exports.crear = async function(inventario) { // RETURNS ALL
 
     nuevoInventario = await db.Inventario.create(inventario)
 
-    console.log("Inventario - producto creado")
     return nuevoInventario;
 }
 
